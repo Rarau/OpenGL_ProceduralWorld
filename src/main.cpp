@@ -1,6 +1,4 @@
-#include "Dependencies\glew\glew.h"
-#include "Dependencies\freeglut\freeglut.h"
-#include <iostream>
+#include "Engine.h"
 
 void renderScene(void)
 {
@@ -13,6 +11,9 @@ void renderScene(void)
 
 int main(int argc, char **argv)
 {
+
+	engine::TestClass test = engine::TestClass(1, 3);
+	test.print_stuff();
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
