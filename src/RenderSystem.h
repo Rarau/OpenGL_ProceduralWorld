@@ -2,6 +2,7 @@ namespace engine
 {
 	class RenderSystem
 	{
+
 	private:
 
 		GLFWwindow *_window;

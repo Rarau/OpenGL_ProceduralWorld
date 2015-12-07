@@ -61,8 +61,7 @@ namespace engine
 				printf("Running game loop\n");
 				glfwPollEvents(); //get input events
 
-				_renderSystem->Render();
-				
+				_renderSystem->Render();				
 			}
 		}
 	};
