@@ -1,15 +1,14 @@
 #include "Engine.h"
-#include "../GameManager.h"
+
 
 int main(int argc, char **argv)
 {
-	glutInit(&argc, argv);
-
+	
 	engine::GameManager *gameManager = &(engine::GameManager::GetGameManager());
-	// register callbacks
-	//glutDisplayFunc(renderScene);
+	
+	
+	
 
-	//glutMainLoop();
 	engine::GameManager::DestroyGameManager();
 }
 
@@ -21,7 +20,7 @@ int main(int argc, char **argv)
 //
 //	glutSwapBuffers();
 //}
-//
+
 //int main(int argc, char **argv)
 //{
 //
