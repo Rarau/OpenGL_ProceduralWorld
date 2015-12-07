@@ -10,7 +10,6 @@ namespace engine
 #include "..\Dependencies\glfw\glfw3.h"
 #include <iostream>
 
-#include "TestClass.h"
 #include "GameManager.h"
 
 #endif

@@ -2,9 +2,11 @@ namespace engine
 {
 	class GameManager
 	{
-	private:	
+	private:
+		bool _running;
+		GLFWwindow *_window;
 
-		GameManager()
+		GameManager(bool running) : _running(running), _window(glfwGetCurrentContext())
 		{
 			printf("GameManager created\n");
 		}
@@ -12,7 +14,7 @@ namespace engine
 		{
 			printf("GameManager destroyed\n");
 		}
-	public:		
+	public:
 		//Singleton implementation
 		static GameManager& GetGameManager()
 		{
@@ -22,7 +24,7 @@ namespace engine
 			{
 				//OpenGL initialization code
 				glfwInit();
-				
+
 				glfwWindowHint(GLFW_DEPTH_BITS, 24);
 				glfwWindowHint(GLFW_RED_BITS, 8);
 				glfwWindowHint(GLFW_GREEN_BITS, 8);
@@ -32,30 +34,36 @@ namespace engine
 				GLFWwindow *window = glfwCreateWindow(1280, 720, "Procedural World", NULL, NULL);
 				glfwMakeContextCurrent(window);
 
-				glEnable(GL_DEPTH_TEST);				
-				
-				gameManager = new GameManager();
+				glEnable(GL_DEPTH_TEST);
+
+				gameManager = new GameManager(true);
 			}
 			return *gameManager;
 		}
 
 		static void DestroyGameManager()
 		{
-			GameManager *gameManager = &(GetGameManager());						
+			GameManager *gameManager = &(GetGameManager());
 			delete gameManager;
 			GLFWwindow *window = glfwGetCurrentContext();
 			glfwDestroyWindow(window);
 			glfwTerminate();
-
-			
 		}
 
 		void RunGameLoop()
 		{
-			printf("Running game loop\n");			
-		}
+			while (_running)
+			{
+				printf("Running game loop\n");
 
-		
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+				_running = !glfwWindowShouldClose(_window);
+
+				glfwSwapBuffers(_window);
+				glfwPollEvents();
+			}
+		}
 	};
 
 
