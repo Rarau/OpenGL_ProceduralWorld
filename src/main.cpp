@@ -4,10 +4,7 @@
 int main(int argc, char **argv)
 {
 	
-	engine::GameManager *gameManager = &(engine::GameManager::GetGameManager());
-	
-	
-	
+	engine::GameManager *gameManager = &(engine::GameManager::GetGameManager());	
 
 	engine::GameManager::DestroyGameManager();
 }
