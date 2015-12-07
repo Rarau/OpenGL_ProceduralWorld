@@ -3,3 +3,10 @@
 *.tlog
 *.opensdf
 *.sdf
+*.exe
+*.ilk
+*.log
+*.pdb
+*.suo
+*.vcxproj
+*.filters
