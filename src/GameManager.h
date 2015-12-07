@@ -5,13 +5,15 @@ namespace engine
 	private:
 		bool _running;
 		GLFWwindow *_window;
+		engine::RenderSystem *_renderSystem;
 
-		GameManager(bool running) : _running(running), _window(glfwGetCurrentContext())
+		GameManager(bool running) : _running(running), _window(glfwGetCurrentContext()), _renderSystem(&engine::RenderSystem::GetRenderSystem())
 		{
 			printf("GameManager created\n");
 		}
 		~GameManager()
 		{
+			engine::RenderSystem::DestroyRenderSystem();
 			printf("GameManager destroyed\n");
 		}
 	public:
@@ -54,14 +56,13 @@ namespace engine
 		{
 			while (_running)
 			{
-				printf("Running game loop\n");
-
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 				_running = !glfwWindowShouldClose(_window);
 
-				glfwSwapBuffers(_window);
-				glfwPollEvents();
+				printf("Running game loop\n");
+				glfwPollEvents(); //get input events
+
+				_renderSystem->Render();
+				
 			}
 		}
 	};
