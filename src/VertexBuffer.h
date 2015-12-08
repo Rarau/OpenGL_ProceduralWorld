@@ -6,6 +6,7 @@ namespace engine
 	private:
 
 		GLuint _vertexBufferID;
+
 		ShaderInterface *_shader;
 
 		GLenum _mode;
