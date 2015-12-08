@@ -8,10 +8,13 @@ namespace engine
 		ShaderLoader *shader;
 
 		GLint _aPositionVertex;
+		GLint _aNormalVertex;
 		GLint _uColor;
 
 		char *_vertexShaderString;
 		char *_fragmentShaderString;
+
+		
 
 		char* LoadTextFromFile(const char *file)
 		{
@@ -47,6 +50,11 @@ namespace engine
 		GLint Get_aPositionVertex()
 		{
 			return _aPositionVertex;
+		}
+
+		GLint Get_aNormalVertex()
+		{
+			return _aNormalVertex;
 		}
 
 		GLint get_uColor()

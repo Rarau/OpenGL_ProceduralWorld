@@ -33,6 +33,18 @@
     <ClInclude Include="src\ShaderInterface.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Vector3.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VertexData.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ResourceManager.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CubeVertices.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -44,6 +56,12 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="Assets\Shaders\ColorVertexShader.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Assets\Shaders\SimpleLightFragmentShader.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Assets\Shaders\SimpleLightVertexShader.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

@@ -16,9 +16,15 @@ namespace engine
 #include <stdlib.h>
 #include <vector>
 
+#include "Vector3.h"
+#include "VertexData.h"
+
+#include"CubeVertices.h"
+
 #include "ShaderLoader.h"
 #include "ShaderInterface.h"
 #include "VertexBuffer.h"
+#include "ResourceManager.h"
 #include "RenderSystem.h"
 #include "GameManager.h"
 

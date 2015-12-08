@@ -6,26 +6,19 @@ namespace engine
 		bool _running;
 		GLFWwindow *_window;
 		engine::RenderSystem *_renderSystem;
+		engine::ResourceManager *_resourceManager;
 
 		VertexBuffer *vertexBuffer;
 
-		GameManager(bool running) : _running(running), _window(glfwGetCurrentContext()), _renderSystem(&engine::RenderSystem::GetRenderSystem())
+		GameManager(bool running) : _running(running), _window(glfwGetCurrentContext()), 
+		_renderSystem(&engine::RenderSystem::GetRenderSystem()), _resourceManager(&ResourceManager::GetResourceManager())
 		{
-			printf("GameManager created\n");
-			// temporal -------------
-			
-			GLfloat vertices[] =
-			{
-				-0.5f, -0.5f, 0.0f,
-				0.5f, -0.5f, 0.0f,
-				0.0f, 0.5f, 0.0f,
-			};
-			// temporal -------------
-			vertexBuffer = new VertexBuffer(vertices, sizeof(vertices), GL_TRIANGLES, 3, sizeof(GLfloat) * 3);
+			printf("GameManager created\n");			
 		}
 		~GameManager()
 		{
-			engine::RenderSystem::DestroyRenderSystem();
+			engine::ResourceManager::DestroyResourceManager();
+			engine::RenderSystem::DestroyRenderSystem();			
 			printf("GameManager destroyed\n");
 		}
 	public:
@@ -70,10 +63,11 @@ namespace engine
 			{
 				_running = !glfwWindowShouldClose(_window);
 
-				printf("Running game loop\n");
+				//printf("Running game loop\n");
 				glfwPollEvents(); //get input events
 
-				_renderSystem->Render(vertexBuffer);				
+				//TO-DO: we are rendering a concrete vertex buffer, not all
+				_renderSystem->Render((_resourceManager->GetVertexBufferArray())->at(0));				
 			}
 		}
 	};
