@@ -6,15 +6,18 @@ namespace engine
 	private:
 
 		GLFWwindow *_window;
+		std::vector<ShaderInterface*> *shaderArray;
 
 		RenderSystem() : _window(glfwGetCurrentContext())
 		{
-
+			shaderArray = new std::vector<ShaderInterface*>();
+			ShaderInterface *shader = new ShaderInterface("ColorVertexShader.txt", "ColorFragmentShader.txt");
 		}
 
 		~RenderSystem()
 		{
-
+			delete shaderArray->at(0);
+			delete shaderArray;
 		}
 
 	public:
@@ -26,6 +29,13 @@ namespace engine
 			{
 				renderSystem = new RenderSystem();
 				glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+				// set the camera projection
+				glMatrixMode(GL_PROJECTION);
+				// FOV, aspect ratio, near clipping plane, far clipping plane
+				gluPerspective(75.0f, 1280.0f / 720.0f, 1, 1000);
+				glViewport(0.0f, 0.0f, 1280.0f, 720.0f);
+				glMatrixMode(GL_MODELVIEW);
 			}
 			return *renderSystem;
 		}
@@ -36,9 +46,26 @@ namespace engine
 			delete renderSystem;
 		}
 
-		void Render()
+		void Render(VertexBuffer *vertexBuffer)
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			glUseProgram(1);
+
+			// resets all the transformations
+			glLoadIdentity();
+			// set the camera transform
+			gluLookAt(
+				0.0f, 0.0f, -5.0f, 
+				0.0f, 0.0f, 0.0f, 
+				0.0f, 1.0f, 0.0f
+				);
+			// set the color uniform
+			glUniform4f(0, 1.0f, 0.0f, 0.0f, 1.0f);
+
+			vertexBuffer->ConfigureVertexAttributes(0);
+			vertexBuffer->RenderVertexBuffer();
+
 			glfwSwapBuffers(_window);
 		}
 	};

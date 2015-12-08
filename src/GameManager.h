@@ -7,9 +7,21 @@ namespace engine
 		GLFWwindow *_window;
 		engine::RenderSystem *_renderSystem;
 
+		VertexBuffer *vertexBuffer;
+
 		GameManager(bool running) : _running(running), _window(glfwGetCurrentContext()), _renderSystem(&engine::RenderSystem::GetRenderSystem())
 		{
 			printf("GameManager created\n");
+			// temporal -------------
+			
+			GLfloat vertices[] =
+			{
+				-0.5f, -0.5f, 0.0f,
+				0.5f, -0.5f, 0.0f,
+				0.0f, 0.5f, 0.0f,
+			};
+			// temporal -------------
+			vertexBuffer = new VertexBuffer(vertices, sizeof(vertices), GL_TRIANGLES, 3, sizeof(GLfloat) * 3);
 		}
 		~GameManager()
 		{
@@ -61,7 +73,7 @@ namespace engine
 				printf("Running game loop\n");
 				glfwPollEvents(); //get input events
 
-				_renderSystem->Render();				
+				_renderSystem->Render(vertexBuffer);				
 			}
 		}
 	};
