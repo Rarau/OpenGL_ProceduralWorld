@@ -11,25 +11,31 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CubeVertices.h" />
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\GameManager.h" />
     <ClInclude Include="src\RenderSystem.h" />
+    <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\ShaderInterface.h" />
     <ClInclude Include="src\ShaderLoader.h" />
+    <ClInclude Include="src\Vector3.h" />
     <ClInclude Include="src\VertexBuffer.h" />
+    <ClInclude Include="src\VertexData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\Shaders\ColorFragmentShader.txt">
-	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <DeploymentContent>true</DeploymentContent>	  
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DeploymentContent>true</DeploymentContent>
     </Text>
     <Text Include="Assets\Shaders\ColorVertexShader.txt">
-	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <DeploymentContent>true</DeploymentContent>	  
-    </Text>	
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DeploymentContent>true</DeploymentContent>
+    </Text>
+    <Text Include="Assets\Shaders\SimpleLightFragmentShader.txt" />
+    <Text Include="Assets\Shaders\SimpleLightVertexShader.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FF662602-2C96-45FC-AB08-0CD6AA055A35}</ProjectGuid>

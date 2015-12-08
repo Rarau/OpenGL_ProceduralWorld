@@ -18,14 +18,11 @@ namespace engine
 				exit(EXIT_FAILURE);
 			}
 
-			// add shaders. TO-DO: delete this part as it is hardcoded
-			shaderArray = new std::vector<ShaderInterface*>();
-			ShaderInterface *shader = new ShaderInterface("Assets/Shaders/ColorVertexShader.txt", "Assets/Shaders/ColorFragmentShader.txt", "Assets/Shaders/PassThroughGeometryShader.txt");
+			
 		}
 
 		~RenderSystem()
-		{
-			delete shaderArray->at(0);
+		{			
 			delete shaderArray;
 		}
 
@@ -46,6 +43,8 @@ namespace engine
 				gluPerspective(75.0f, 1280.0f / 720.0f, 1, 1000);
 				glViewport(0.0f, 0.0f, 1280.0f, 720.0f);
 				glMatrixMode(GL_MODELVIEW);
+
+				glEnable(GL_CULL_FACE);
 			}
 			return *renderSystem;
 		}
@@ -60,20 +59,20 @@ namespace engine
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			glUseProgram(1);
+			glUseProgram(vertexBuffer->GetShader()->GetProgramHandle());
 
 			// resets all the transformations
 			glLoadIdentity();
 			// set the camera transform
 			gluLookAt(
-				0.0f, 0.0f, -5.0f, 
-				0.0f, 0.0f, 0.0f, 
+				3.0f, 2.0f, -2.0f, //position of the camera
+				0.0f, 0.0f, 0.0f,  //where are we looking at
 				0.0f, 1.0f, 0.0f
 				);
 			// set the color uniform
 			glUniform4f(0, 1.0f, 0.0f, 0.0f, 1.0f);
 
-			vertexBuffer->ConfigureVertexAttributes(0);
+			vertexBuffer->ConfigureVertexAttributes();
 			vertexBuffer->RenderVertexBuffer();
 
 			glfwSwapBuffers(_window);
