@@ -19,7 +19,8 @@ namespace engine
 															"Assets/Shaders/ColorFragmentShader.txt");
 			_shaderArray->push_back(shader);
 			ShaderInterface *lightShader = new ShaderInterface("Assets/Shaders/SimpleLightVertexShader.txt", 
-															"Assets/Shaders/SimpleLightFragmentShader.txt");
+															"Assets/Shaders/SimpleLightFragmentShader.txt",
+															"Assets/Shaders/DuplicateGeometryShader.txt");
 
 			_shaderArray->push_back(lightShader);
 
