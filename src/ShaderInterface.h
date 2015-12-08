@@ -44,7 +44,7 @@ namespace engine
 
 		GLuint GetProgramHandle()
 		{
-			shader->GetProgramHandle();
+			return shader->GetProgramHandle();
 		}
 
 		GLint Get_aPositionVertex()

@@ -59,7 +59,7 @@ namespace engine
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			glUseProgram(1);
+			glUseProgram(vertexBuffer->GetShader()->GetProgramHandle());
 
 			// resets all the transformations
 			glLoadIdentity();

@@ -14,7 +14,7 @@ namespace engine
 		// size of the attributes
 		GLsizei _stride;		
 
-		// offset in the vertex array
+		// offsets in the vertex data array
 		GLvoid *_positionOffset;
 		GLvoid *_normalOffset;
 
@@ -23,6 +23,11 @@ namespace engine
 		GLuint getVertexBufferID()
 		{
 			return _vertexBufferID;
+		}
+
+		ShaderInterface* GetShader()
+		{
+			return _shader;
 		}
 
 		VertexBuffer(const GLvoid *data, 
