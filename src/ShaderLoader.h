@@ -40,6 +40,26 @@ namespace engine
 			glDeleteShader(fragmentShader);
 
 		}
+
+		//VS: vertex shader, FS: fragment shader, GS: geometry shader
+		ShaderLoader(const char *sourceVS, const char *sourceFS, const char *sourceGS)
+		{
+			_programHandle = glCreateProgram();
+
+			GLuint vertexShader = CompileShader(GL_VERTEX_SHADER, sourceVS);
+			GLuint fragmentShader = CompileShader(GL_FRAGMENT_SHADER, sourceFS);
+			GLuint geometryShader = CompileShader(GL_GEOMETRY_SHADER, sourceGS);
+
+			glAttachShader(_programHandle, vertexShader);
+			glAttachShader(_programHandle, fragmentShader);
+			glAttachShader(_programHandle, geometryShader);
+
+			glLinkProgram(_programHandle);
+
+			glDeleteShader(vertexShader);
+			glDeleteShader(fragmentShader);
+			glDeleteShader(geometryShader);
+		}
 		~ShaderLoader()
 		{
 			glDeleteProgram(_programHandle);
