@@ -5,8 +5,7 @@ namespace engine
 
 	private:
 
-		GLFWwindow *_window;
-		std::vector<ShaderInterface*> *shaderArray;
+		GLFWwindow *_window;		
 
 		RenderSystem() : _window(glfwGetCurrentContext())
 		{
@@ -16,14 +15,12 @@ namespace engine
 			{
 				printf("ERROR: %s\n", glewGetErrorString(GlewInitResult));
 				exit(EXIT_FAILURE);
-			}
-
-			
+			}			
 		}
 
 		~RenderSystem()
 		{			
-			delete shaderArray;
+			
 		}
 
 	public:
@@ -70,7 +67,7 @@ namespace engine
 				0.0f, 1.0f, 0.0f
 				);
 			// set the color uniform
-			glUniform4f(0, 1.0f, 0.0f, 0.0f, 1.0f);
+			glUniform4f((vertexBuffer->GetShader())->Get_aPositionVertex(), 1.0f, 1.0f, 0.0f, 1.0f);
 
 			vertexBuffer->ConfigureVertexAttributes();
 			vertexBuffer->RenderVertexBuffer();
