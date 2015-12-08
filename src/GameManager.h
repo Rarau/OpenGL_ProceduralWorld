@@ -37,7 +37,7 @@ namespace engine
 			if (gameManager == nullptr)
 			{
 				//OpenGL initialization code
-				glfwInit();
+				glfwInit();				
 
 				glfwWindowHint(GLFW_DEPTH_BITS, 24);
 				glfwWindowHint(GLFW_RED_BITS, 8);

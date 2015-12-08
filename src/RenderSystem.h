@@ -10,8 +10,17 @@ namespace engine
 
 		RenderSystem() : _window(glfwGetCurrentContext())
 		{
+			// finish glew initialization
+			GLint GlewInitResult = glewInit();
+			if (GLEW_OK != GlewInitResult)
+			{
+				printf("ERROR: %s\n", glewGetErrorString(GlewInitResult));
+				exit(EXIT_FAILURE);
+			}
+
+			// add shaders. TO-DO: delete this part as it is hardcoded
 			shaderArray = new std::vector<ShaderInterface*>();
-			ShaderInterface *shader = new ShaderInterface("ColorVertexShader.txt", "ColorFragmentShader.txt");
+			ShaderInterface *shader = new ShaderInterface("Assets/Shaders/ColorVertexShader.txt", "Assets/Shaders/ColorFragmentShader.txt");
 		}
 
 		~RenderSystem()
@@ -28,6 +37,7 @@ namespace engine
 			if (renderSystem == nullptr)
 			{
 				renderSystem = new RenderSystem();
+
 				glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 				// set the camera projection
