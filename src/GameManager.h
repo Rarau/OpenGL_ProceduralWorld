@@ -70,7 +70,7 @@ namespace engine
 			{
 				_running = !glfwWindowShouldClose(_window);
 
-				printf("Running game loop\n");
+				//printf("Running game loop\n");
 				glfwPollEvents(); //get input events
 
 				_renderSystem->Render(vertexBuffer);				

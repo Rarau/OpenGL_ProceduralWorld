@@ -20,7 +20,7 @@ namespace engine
 
 			// add shaders. TO-DO: delete this part as it is hardcoded
 			shaderArray = new std::vector<ShaderInterface*>();
-			ShaderInterface *shader = new ShaderInterface("Assets/Shaders/ColorVertexShader.txt", "Assets/Shaders/ColorFragmentShader.txt");
+			ShaderInterface *shader = new ShaderInterface("Assets/Shaders/ColorVertexShader.txt", "Assets/Shaders/ColorFragmentShader.txt", "Assets/Shaders/PassThroughGeometryShader.txt");
 		}
 
 		~RenderSystem()
