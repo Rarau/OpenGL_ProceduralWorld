@@ -10,6 +10,7 @@ namespace engine
 		GLint _aPositionVertex;
 		GLint _aNormalVertex;
 		GLint _uColor;
+		GLuint _uLightPosition;
 
 		char *_vertexShaderString;
 		char *_fragmentShaderString;
@@ -63,6 +64,11 @@ namespace engine
 			return _uColor;
 		}
 
+		GLint get_uLightPosition()
+		{
+			return _uLightPosition;
+		}
+
 		ShaderInterface(const char *VS, const char *FS)
 		{
 			// read shaders from strings
@@ -74,7 +80,10 @@ namespace engine
 			free(_fragmentShaderString);
 
 			_aPositionVertex = glGetAttribLocation(shader->GetProgramHandle(), "aPositionVertex");
+			_aNormalVertex = glGetAttribLocation(shader->GetProgramHandle(), "aPositionNormal");
+
 			_uColor = glGetUniformLocation(shader->GetProgramHandle(), "uColor");
+			_uLightPosition = glGetUniformLocation(shader->GetProgramHandle(), "uLightPosition");
 		}
 
 		ShaderInterface(const char *VS, const char *FS, const char *GS)

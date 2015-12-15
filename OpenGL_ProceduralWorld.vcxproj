@@ -11,14 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CameraSystem.h" />
     <ClInclude Include="src\CubeVertices.h" />
     <ClInclude Include="src\Engine.h" />
+    <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\GameManager.h" />
+    <ClInclude Include="src\MovementSystem.h" />
     <ClInclude Include="src\RenderSystem.h" />
     <ClInclude Include="src\ResourceManager.h" />
+    <ClInclude Include="src\ShaderData.h" />
     <ClInclude Include="src\ShaderInterface.h" />
     <ClInclude Include="src\ShaderLoader.h" />
     <ClInclude Include="src\Vector3.h" />
+    <ClInclude Include="src\Vector4.h" />
     <ClInclude Include="src\VertexBuffer.h" />
     <ClInclude Include="src\VertexData.h" />
   </ItemGroup>

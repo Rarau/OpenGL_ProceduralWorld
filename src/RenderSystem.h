@@ -5,9 +5,12 @@ namespace engine
 
 	private:
 
-		GLFWwindow *_window;		
+		GLFWwindow *_window;	
 
-		RenderSystem() : _window(glfwGetCurrentContext())
+		CameraSystem *_cameraSystem;
+		Entity *_currentCamera;
+
+		RenderSystem() : _window(glfwGetCurrentContext()), _cameraSystem(&CameraSystem::GetCameraSystem())
 		{
 			// finish glew initialization
 			GLint GlewInitResult = glewInit();
@@ -15,7 +18,7 @@ namespace engine
 			{
 				printf("ERROR: %s\n", glewGetErrorString(GlewInitResult));
 				exit(EXIT_FAILURE);
-			}			
+			}				
 		}
 
 		~RenderSystem()
@@ -42,6 +45,7 @@ namespace engine
 				glMatrixMode(GL_MODELVIEW);
 
 				glEnable(GL_CULL_FACE);
+				glEnable(GL_DEPTH_TEST);
 			}
 			return *renderSystem;
 		}
@@ -52,25 +56,55 @@ namespace engine
 			delete renderSystem;
 		}
 
-		void Render(VertexBuffer *vertexBuffer)
+		void Render(Entity *entity)
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			glUseProgram(vertexBuffer->GetShader()->GetProgramHandle());
+			glUseProgram(entity->GetVertexBuffer()->GetShader()->GetProgramHandle());
 
 			// resets all the transformations
 			glLoadIdentity();
+
+			_currentCamera = _cameraSystem->GetCurrentCamera();
 			// set the camera transform
 			gluLookAt(
-				3.0f, 2.0f, -2.0f, //position of the camera
-				0.0f, 0.0f, 0.0f,  //where are we looking at
-				0.0f, 1.0f, 0.0f
+				_currentCamera->GetPosition().x,
+				_currentCamera->GetPosition().y,
+				_currentCamera->GetPosition().z,
+				_currentCamera->GetEyeVector().x,
+				_currentCamera->GetEyeVector().y,
+				_currentCamera->GetEyeVector().z,
+				_currentCamera->GetUpVector().x,
+				_currentCamera->GetUpVector().y,
+				_currentCamera->GetUpVector().z
 				);
-			// set the color uniform
-			glUniform4f((vertexBuffer->GetShader())->Get_aPositionVertex(), 1.0f, 1.0f, 0.0f, 1.0f);
 
-			vertexBuffer->ConfigureVertexAttributes();
-			vertexBuffer->RenderVertexBuffer();
+			//transform the entity			
+			glTranslatef(entity->GetPosition().x, entity->GetPosition().y, entity->GetPosition().z);
+
+			glRotatef(entity->GetRotation().x, 0.0f, 0.0f, 1.0f);
+			glRotatef(entity->GetRotation().y, 0.0f, 1.0f, 0.0f);
+			glRotatef(entity->GetRotation().z, 1.0f, 0.0f, 0.0f);
+
+			glScalef(entity->GetScale().x, entity->GetScale().y, entity->GetScale().z);
+
+
+			// set the color uniform
+			glUniform4f((entity->GetVertexBuffer()->GetShader())->get_uColor(),
+				entity->GetVertexBuffer()->GetShaderData()->Get_uColorValue().x,
+				entity->GetVertexBuffer()->GetShaderData()->Get_uColorValue().y,
+				entity->GetVertexBuffer()->GetShaderData()->Get_uColorValue().z,
+				entity->GetVertexBuffer()->GetShaderData()->Get_uColorValue().w
+				);
+
+			glUniform3f((entity->GetVertexBuffer()->GetShader())->get_uLightPosition(),
+				entity->GetVertexBuffer()->GetShaderData()->Get_uLightPosition().x,
+				entity->GetVertexBuffer()->GetShaderData()->Get_uLightPosition().y,
+				entity->GetVertexBuffer()->GetShaderData()->Get_uLightPosition().z
+				);
+
+			entity->GetVertexBuffer()->ConfigureVertexAttributes();
+			entity->GetVertexBuffer()->RenderVertexBuffer();
 
 			glfwSwapBuffers(_window);
 		}

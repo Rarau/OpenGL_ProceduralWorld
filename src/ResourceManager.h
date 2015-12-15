@@ -7,6 +7,8 @@ namespace engine
 		std::vector<engine::ShaderInterface*> *_shaderArray;
 		std::vector<engine::VertexBuffer*> *_vertexBufferArray;
 
+		ShaderData *_shaderData;
+
 		ResourceManager()
 		{
 			_shaderArray = new std::vector<engine::ShaderInterface*>();
@@ -18,12 +20,28 @@ namespace engine
 			ShaderInterface *shader = new ShaderInterface("Assets/Shaders/ColorVertexShader.txt", 
 															"Assets/Shaders/ColorFragmentShader.txt");
 			_shaderArray->push_back(shader);
+			
 			ShaderInterface *lightShader = new ShaderInterface("Assets/Shaders/SimpleLightVertexShader.txt", 
 															"Assets/Shaders/SimpleLightFragmentShader.txt");
-
 			_shaderArray->push_back(lightShader);
 
+			_shaderData = new ShaderData(makeVector4(1.0f, 0.0f, 1.0f, 1.0f), MakeVector3(1.0f, 1.0f, 1.0f));
+
 			// add geometry
+
+			/*engine::VertexBuffer *triangleVertexBuffer = new engine::VertexBuffer(
+				engine::cubeVertices,
+				sizeof(engine::cubeVertices),
+				GL_TRIANGLES,
+				1,
+				sizeof(GLfloat) * 3,
+				_shaderArray->at(1),
+				(GLvoid*)(offsetof(VertexDataPN, positionCoordinates)),
+				(GLvoid*)(offsetof(VertexDataPN, normalCoordinates))
+			);
+
+			_vertexBufferArray->push_back(triangleVertexBuffer);*/
+
 			// cube with simple light shader
 			engine::VertexBuffer *cubeVertexBuffer = new engine::VertexBuffer(
 				engine::cubeVertices, 
@@ -32,7 +50,8 @@ namespace engine
 				36, 
 				sizeof(GLfloat) * 3, 
 				_shaderArray->at(1), 
-				(GLvoid*)(offsetof(VertexDataPN, positionCoordinates)), 
+				_shaderData,
+				(GLvoid*)(offsetof(VertexDataPN, positionCoordinates)),
 				(GLvoid*)(offsetof(VertexDataPN, normalCoordinates))
 			);
 
@@ -54,7 +73,11 @@ namespace engine
 			{
 				delete *vertexIterator;
 			}
+
 			delete _vertexBufferArray;
+			delete _shaderData;
+
+			
 		}
 
 	public:

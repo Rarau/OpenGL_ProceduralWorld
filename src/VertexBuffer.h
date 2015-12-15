@@ -8,11 +8,12 @@ namespace engine
 		GLuint _vertexBufferID;
 
 		ShaderInterface *_shader;
+		ShaderData *_shaderData;
 
 		GLenum _mode;
 		// amount of vertices per mesh
 		GLsizei _count;
-		// size of the attributes
+		// size of the attributes of the object
 		GLsizei _stride;		
 
 		// offsets in the vertex data array
@@ -31,15 +32,21 @@ namespace engine
 			return _shader;
 		}
 
+		ShaderData* GetShaderData()
+		{
+			return _shaderData;
+		}
+
 		VertexBuffer(const GLvoid *data, 
 			GLsizeiptr size, 
 			GLenum mode, 
 			GLsizei count, 
 			GLsizei stride,
 			ShaderInterface *shader,
+			ShaderData *shaderData,
 			GLvoid *positionOffset,
 			GLvoid *normalOffset) :
-			_mode(mode), _count(count), _stride(stride), _shader(shader), _positionOffset(positionOffset), _normalOffset(normalOffset)
+			_mode(mode), _count(count), _stride(stride), _shader(shader), _positionOffset(positionOffset), _normalOffset(normalOffset), _shaderData(shaderData)
 		{
 			glGenBuffers(1, &_vertexBufferID);
 			glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferID);
@@ -54,16 +61,13 @@ namespace engine
 
 		void ConfigureVertexAttributes()
 		{
-			if (_shader->Get_aPositionVertex() != -1)
-			{
-				// set vertices attributes
+			glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferID);
+			if (_shader->Get_aPositionVertex() != -1) {
 				glEnableVertexAttribArray(_shader->Get_aPositionVertex());
-				// describe those attributes
 				glVertexAttribPointer(_shader->Get_aPositionVertex(), 3, GL_FLOAT, GL_FALSE, _stride, _positionOffset);
 			}
 
-			if (_shader->Get_aNormalVertex() != -1)
-			{
+			if (_shader->Get_aNormalVertex() != -1) {
 				glEnableVertexAttribArray(_shader->Get_aNormalVertex());
 				glVertexAttribPointer(_shader->Get_aNormalVertex(), 3, GL_FLOAT, GL_FALSE, _stride, _normalOffset);
 			}
