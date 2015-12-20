@@ -31,11 +31,15 @@ namespace engine
 			delete movementSystem;
 		}
 
-		void Update(Entity *entity)
+		void Update(std::vector<Entity*> *entityArray)
 		{
-			entity->SetPosition(AddVector3(entity->GetPosition(), entity->GetVelocity()));
-			entity->SetRotation(AddVector3(entity->GetRotation(), entity->GetRotationVelocity()));
-			entity->SetScale(AddVector3(entity->GetScale(), entity->GetScaleVelocity()));
+			for (std::vector<Entity*>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
+			{
+				Entity *entity = *iterator;
+				entity->SetPosition(AddVector3(entity->GetPosition(), entity->GetVelocity()));
+				entity->SetRotation(AddVector3(entity->GetRotation(), entity->GetRotationVelocity()));
+				entity->SetScale(AddVector3(entity->GetScale(), entity->GetScaleVelocity()));
+			}
 		}
 	};
 }

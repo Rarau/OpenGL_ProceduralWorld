@@ -1,3 +1,6 @@
+#pragma once
+
+
 namespace engine
 {
 	class CameraSystem
@@ -25,6 +28,8 @@ namespace engine
 		void SetCurrentCamera(Entity *newCamera)
 		{
 			_currentCamera = newCamera;
+			RenderSystem *renderSystem = &RenderSystem::GetRenderSystem();
+			renderSystem->SetCurrentCamera(_currentCamera);
 		}
 
 		static CameraSystem& GetCameraSystem()
