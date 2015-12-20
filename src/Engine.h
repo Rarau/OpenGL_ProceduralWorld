@@ -15,6 +15,7 @@ namespace engine
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
+#include <math.h>
 
 #include "Vector3.h"
 #include "Vector4.h"
@@ -28,10 +29,12 @@ namespace engine
 #include "ShaderInterface.h"
 #include "VertexBuffer.h"
 #include "Entity.h"
+#include "PlayerInputSystem.h"
 #include "MovementSystem.h"
-#include "CameraSystem.h"
 #include "ResourceManager.h"
 #include "RenderSystem.h"
+#include "CameraSystem.h"
+#include "Scene.h"
 #include "GameManager.h"
 
 #endif

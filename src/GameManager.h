@@ -12,37 +12,30 @@ namespace engine
 		engine::RenderSystem *_renderSystem;
 		engine::ResourceManager *_resourceManager;
 		engine::MovementSystem *_movementSystem;	
-		engine::CameraSystem *_cameraSystem;
+		engine::CameraSystem *_cameraSystem;	
+		engine::PlayerInputSystem *_playerInputSystem;
 
-		Entity *_entity;
-		Entity *_camera;
-
-		VertexBuffer *vertexBuffer;
+		Scene *_scene;
 
 		GameManager(bool running) : _running(running), _window(glfwGetCurrentContext()), 
 			_renderSystem(&engine::RenderSystem::GetRenderSystem()), 
 			_resourceManager(&ResourceManager::GetResourceManager()), 
 			_movementSystem(&MovementSystem::GetMovementSystem()),
-			_cameraSystem(&CameraSystem::GetCameraSystem())
+			_cameraSystem(&CameraSystem::GetCameraSystem()),
+			_playerInputSystem(&PlayerInputSystem::GetPlayerInputSystem())
 		{
-			printf("GameManager created\n");	
+			printf("GameManager created\n");
 
-			//TO-DO: this is hardcoded, can't be here
-			_camera = new Entity(nullptr, MakeVector3(2.0f, 2.0f, 4.0f));
-			_camera->SetEyeVector(MakeVector3(0.0f, 0.0f, 0.0f));
-			_cameraSystem->SetCurrentCamera(_camera);
-
-			_entity = new Entity(_resourceManager->GetVertexBufferArray()->at(0), MakeVector3(0.0f, 0.0f, 0.0f));
-			_entity->SetRotation(MakeVector3(30.0f, 0.0f, 0.0f));
-			_entity->SetScale(MakeVector3(2.0f, 2.0f, 2.0f));
-			_entity->SetRotationVelocity(MakeVector3(0.3f, 0.0f, 0.0f));
-
+			_scene = new Scene();
 		}
+
 		~GameManager()
 		{
 			engine::ResourceManager::DestroyResourceManager();
 			engine::RenderSystem::DestroyRenderSystem();	
 			engine::CameraSystem::DestroyCameraSystem();
+			engine::PlayerInputSystem::DestroyInputSystem();
+
 			printf("GameManager destroyed\n");
 		}
 	public:
@@ -100,12 +93,14 @@ namespace engine
 					
 					glfwPollEvents(); //get input events
 
-					_movementSystem->Update(_entity);
+					_playerInputSystem->Update();
+					_movementSystem->Update(_scene->GetChildren());
+
 					deltaTime = 0.0f;
 				}				
 
 				//TO-DO: we are rendering a concrete entity, not all
-				_renderSystem->Render(_entity);				
+				_renderSystem->Render(_scene->GetChildren());
 			}
 		}
 	};
