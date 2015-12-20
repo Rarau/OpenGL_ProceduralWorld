@@ -26,23 +26,23 @@ namespace engine
 			ShaderInterface *lightShader = new ShaderInterface("Assets/Shaders/SimpleLightVertexShader.txt",
 				"Assets/Shaders/SimpleLightFragmentShader.txt");
 
-			_shaderData = new ShaderData(makeVector4(1.0f, 0.0f, 1.0f, 1.0f), MakeVector3(1.0f, 1.0f, 1.0f));
+			_shaderData = new ShaderData(makeVector4(0.30f, 0.10f, 0.80f, 1.0f), MakeVector3(-1.0f, 1.0f, 1.0f));
 			_shaderArray->push_back(lightShader);
 
 			// add geometry
 			// cube with simple light shader
 			engine::VertexBuffer *cubeVertexBuffer = new engine::VertexBuffer(
-				engine::cubeVertices, 
-				sizeof(engine::cubeVertices), 
+				engine::sphereVertices, 
+				sizeof(engine::sphereVertices), 
 				GL_TRIANGLES, 
-				36, 
-				sizeof(GLfloat) * 3, 
+				2880, 
+				sizeof(VertexDataPN),
 				_shaderArray->at(1), 
 				_shaderData,
 				(GLvoid*)(offsetof(VertexDataPN, positionCoordinates)), 
 				(GLvoid*)(offsetof(VertexDataPN, normalCoordinates))
 			);
-
+			
 			_vertexBufferArray->push_back(cubeVertexBuffer);
 			// temporal ---------------
 		}
