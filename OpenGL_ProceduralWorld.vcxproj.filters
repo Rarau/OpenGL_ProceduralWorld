@@ -66,6 +66,9 @@
     <ClInclude Include="src\PlayerInputSystem.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Terrain.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">

@@ -96,6 +96,10 @@ namespace engine
 					_playerInputSystem->Update();
 					_movementSystem->Update(_scene->GetChildren());
 
+					//TO-DO: Testing the terrain 
+
+					Terrain::FillDensityVolume(0.0f, 0.0f, 0.0f, 1.5f);
+
 					deltaTime = 0.0f;
 				}				
 

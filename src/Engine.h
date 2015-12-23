@@ -35,6 +35,7 @@ namespace engine
 #include "RenderSystem.h"
 #include "CameraSystem.h"
 #include "Scene.h"
+#include "Terrain.h"
 #include "GameManager.h"
 
 #endif
