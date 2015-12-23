@@ -17,13 +17,14 @@ namespace engine
 		//for implementing lookAt method
 		Vector3 _eyeVector;
 		Vector3 _upVector;
+		Vector3 _rightVector;
 
 	public:
 
 		Entity(VertexBuffer *vertexBuffer, Vector3 position) :
 			_vertexBuffer(vertexBuffer), _position(position), _scale(MakeVector3(1.0f, 1.0f, 1.0f)), _rotation(MakeVector3(0.0f, 0.0f, 0.0f)),
 			_velocity(MakeVector3(0.0f, 0.0f, 0.0f)), _scaleVelocity(MakeVector3(0.0f, 0.0f, 0.0f)), _rotationVelocity(MakeVector3(0.0f, 0.0f, 0.0f)),
-			_eyeVector(MakeVector3(0.0f, 0.0f, 0.0f)), _upVector(MakeVector3(0.0f, 1.0f, 0.0f))
+			_eyeVector(MakeVector3(0.0f, 0.0f, 0.0f)), _upVector(MakeVector3(0.0f, 1.0f, 0.0f)), _rightVector(MakeVector3(1.0f, 0.0f, 0.0f))
 		{
 
 		}
@@ -121,6 +122,16 @@ namespace engine
 		void SetUpVector(Vector3 newVector)
 		{
 			_upVector = newVector;
+		}
+
+		Vector3 GetRightVector()
+		{
+			return _rightVector;
+		}
+
+		void SetRightVector(Vector3 newVector)
+		{
+			_rightVector = newVector;
 		}
 	};
 }

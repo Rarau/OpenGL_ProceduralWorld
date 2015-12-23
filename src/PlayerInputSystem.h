@@ -58,6 +58,14 @@ namespace engine
 				{
 					_currentPlayer->SetPosition(SubstractVector3(_currentPlayer->GetPosition(), scalarMultiplyVector3(_eyeVector, 0.07f)));
 				}
+				if (glfwGetKey(_window, GLFW_KEY_A))
+				{
+					_currentPlayer->SetPosition(SubstractVector3(_currentPlayer->GetPosition(), scalarMultiplyVector3(_currentPlayer->GetRightVector(), -0.07f)));
+				}
+				if (glfwGetKey(_window, GLFW_KEY_D))
+				{
+					_currentPlayer->SetPosition(SubstractVector3(_currentPlayer->GetPosition(), scalarMultiplyVector3(_currentPlayer->GetRightVector(), 0.07f)));
+				}
 				_currentPlayer->SetEyeVector(AddVector3(_currentPlayer->GetPosition(), _eyeVector));
 			}
 		}
