@@ -76,6 +76,11 @@ namespace engine
 		void RenderVertexBuffer()
 		{
 			glDrawArrays(_mode, 0, _count);
-		}		
+		}	
+
+		void RenderVertexBufferInstanced(GLsizei numInstances)
+		{
+			glDrawArraysInstanced(_mode, 0, _count, numInstances);
+		}
 	};
 }

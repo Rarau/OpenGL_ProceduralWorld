@@ -25,9 +25,14 @@ namespace engine
 															"Assets/Shaders/PassThroughGeometryShader.txt");*/
 			ShaderInterface *lightShader = new ShaderInterface("Assets/Shaders/SimpleLightVertexShader.txt",
 				"Assets/Shaders/SimpleLightFragmentShader.txt");
-
 			_shaderData = new ShaderData(makeVector4(0.30f, 0.10f, 0.80f, 1.0f), MakeVector3(-1.0f, 1.0f, 1.0f));
 			_shaderArray->push_back(lightShader);
+
+			// Instanced Rendering shader
+			ShaderInterface *instanceShader = new ShaderInterface("Assets/Shaders/InstancedVertexShader.txt",
+				"Assets/Shaders/InstancedFragmentShader.txt",
+				"Assets/Shaders/InstancedGeometryShader.txt");
+			_shaderArray->push_back(instanceShader);
 
 			// add geometry
 			// cube with simple light shader
@@ -44,6 +49,21 @@ namespace engine
 			);
 			
 			_vertexBufferArray->push_back(cubeVertexBuffer);
+
+
+			engine::VertexBuffer *quadVertexBuffer = new engine::VertexBuffer(
+				engine::quadVertices,
+				sizeof(engine::quadVertices),
+				GL_TRIANGLES,
+				6,
+				sizeof(VertexDataP),
+				_shaderArray->at(2),
+				_shaderData,
+				0,
+				0
+				);
+			_vertexBufferArray->push_back(quadVertexBuffer);
+
 			// temporal ---------------
 		}
 

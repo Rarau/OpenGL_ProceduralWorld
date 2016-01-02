@@ -19,12 +19,15 @@ namespace engine
 		Vector3 _upVector;
 		Vector3 _rightVector;
 
+		// 0 default, 1 terrain
+		int _type;
+
 	public:
 
 		Entity(VertexBuffer *vertexBuffer, Vector3 position) :
 			_vertexBuffer(vertexBuffer), _position(position), _scale(MakeVector3(1.0f, 1.0f, 1.0f)), _rotation(MakeVector3(0.0f, 0.0f, 0.0f)),
 			_velocity(MakeVector3(0.0f, 0.0f, 0.0f)), _scaleVelocity(MakeVector3(0.0f, 0.0f, 0.0f)), _rotationVelocity(MakeVector3(0.0f, 0.0f, 0.0f)),
-			_eyeVector(MakeVector3(0.0f, 0.0f, 0.0f)), _upVector(MakeVector3(0.0f, 1.0f, 0.0f)), _rightVector(MakeVector3(1.0f, 0.0f, 0.0f))
+			_eyeVector(MakeVector3(0.0f, 0.0f, 0.0f)), _upVector(MakeVector3(0.0f, 1.0f, 0.0f)), _rightVector(MakeVector3(1.0f, 0.0f, 0.0f)), _type(0)
 		{
 
 		}
@@ -52,6 +55,16 @@ namespace engine
 		void SetPosition(Vector3 newPosition)
 		{
 			_position = newPosition;
+		}
+
+		int GetType()
+		{
+			return _type;
+		}
+
+		void SetType(int type)
+		{
+			_type = type;
 		}
 
 		Vector3 GetScale()

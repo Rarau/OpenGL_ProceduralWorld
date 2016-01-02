@@ -37,12 +37,24 @@ namespace engine
 			_cameraSystem->SetCurrentCamera(camera);
 			_playerInputSystem->SetCurrentPlayer(camera);
 
+			/*
 			Entity *entity = new Entity(_resourceManager->GetVertexBufferArray()->at(0), MakeVector3(0.0f, 0.0f, 5.0f));
 			entity->SetRotation(MakeVector3(30.0f, 0.0f, 0.0f));
 			entity->SetScale(MakeVector3(2.0f, 2.0f, 2.0f));
 			entity->SetRotationVelocity(MakeVector3(0.3f, 0.0f, 0.0f));
 			_children->push_back(entity);
+			*/
+
+			Entity *entity = new Entity(_resourceManager->GetVertexBufferArray()->at(1), MakeVector3(0.0f, 0.0f, 5.0f));
+			// Set the entity type to terrain
+			entity->SetType(1);
+			//entity->SetRotation(MakeVector3(30.0f, 0.0f, 0.0f));
+			//entity->SetScale(MakeVector3(2.0f, 2.0f, 2.0f));
+			//entity->SetRotationVelocity(MakeVector3(0.3f, 0.0f, 0.0f));
+			_children->push_back(entity);
 		}
+
+
 
 		~Scene()
 		{
