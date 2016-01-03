@@ -50,7 +50,6 @@ namespace engine
 			
 			_vertexBufferArray->push_back(cubeVertexBuffer);
 
-
 			engine::VertexBuffer *quadVertexBuffer = new engine::VertexBuffer(
 				engine::quadVertices,
 				sizeof(engine::quadVertices),
@@ -63,6 +62,21 @@ namespace engine
 				0
 				);
 			_vertexBufferArray->push_back(quadVertexBuffer);
+
+
+			VertexDataP *blockPoints = GenerateSamplingPoints();
+			engine::VertexBuffer *blockVertexBuffer = new engine::VertexBuffer(
+				blockPoints,
+				sizeof(VertexDataP) * 32 * 32 * 32,
+				GL_POINTS,
+				32 * 32 * 32,
+				sizeof(VertexDataP),
+				_shaderArray->at(0),
+				_shaderData,
+				0,
+				0
+				);
+			_vertexBufferArray->push_back(blockVertexBuffer);
 
 			// temporal ---------------
 		}
