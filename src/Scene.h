@@ -52,6 +52,9 @@ namespace engine
 			//entity->SetScale(MakeVector3(2.0f, 2.0f, 2.0f));
 			//entity->SetRotationVelocity(MakeVector3(0.3f, 0.0f, 0.0f));
 			_children->push_back(entity);
+
+			Entity *block = new Entity(_resourceManager->GetVertexBufferArray()->at(2), MakeVector3(0.0f, 0.0f, 0.0f));
+			_children->push_back(block);
 		}
 
 

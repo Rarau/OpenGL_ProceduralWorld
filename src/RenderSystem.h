@@ -147,7 +147,8 @@ namespace engine
 						glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 
-						
+						glViewport(0.0f, 0.0f, 1280.0f, 720.0f);
+
 						
 					}
 					else
@@ -195,7 +196,7 @@ namespace engine
 							);
 
 						entity->GetVertexBuffer()->ConfigureVertexAttributes();
-						//entity->GetVertexBuffer()->RenderVertexBuffer();
+						entity->GetVertexBuffer()->RenderVertexBuffer();
 					}
 				}
 
