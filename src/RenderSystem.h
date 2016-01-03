@@ -148,13 +148,19 @@ namespace engine
 
 
 						glViewport(0.0f, 0.0f, 1280.0f, 720.0f);
-
-						
 					}
 					else
 					{
+						GLuint textArrayIndex = entity->GetVertexBuffer()->GetShader()->get_uTextureArray();
+
 						glUseProgram(entity->GetVertexBuffer()->GetShader()->GetProgramHandle());
 
+						
+
+						glUniform1i(textArrayIndex, 0);
+						glActiveTexture(GL_TEXTURE0);
+						glBindTexture(GL_TEXTURE_2D_ARRAY, tex);
+						glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 						// resets all the transformations
 						glLoadIdentity();
 
@@ -178,7 +184,7 @@ namespace engine
 						glRotatef(entity->GetRotation().y, 0.0f, 1.0f, 0.0f);
 						glRotatef(entity->GetRotation().z, 1.0f, 0.0f, 0.0f);
 
-						glScalef(entity->GetScale().x, entity->GetScale().y, entity->GetScale().z);
+						//glScalef(entity->GetScale().x, entity->GetScale().y, entity->GetScale().z);
 
 
 						// set the color uniform

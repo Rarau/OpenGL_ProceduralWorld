@@ -12,6 +12,7 @@ namespace engine
 		GLint _uColor;
 		GLuint _uLightPosition;
 		GLuint _uInstanceSeparation;
+		GLuint _uTextureArray;
 
 		char *_vertexShaderString;
 		char *_fragmentShaderString;
@@ -75,6 +76,11 @@ namespace engine
 			return _uInstanceSeparation;
 		}
 
+		GLuint get_uTextureArray()
+		{
+			return _uTextureArray;
+		}
+
 		ShaderInterface(const char *VS, const char *FS)
 		{
 			// read shaders from strings
@@ -91,6 +97,7 @@ namespace engine
 			_uColor = glGetUniformLocation(shader->GetProgramHandle(), "uColor");
 			_uLightPosition = glGetUniformLocation(shader->GetProgramHandle(), "uLightPosition");
 			_uInstanceSeparation = glGetUniformLocation(shader->GetProgramHandle(), "uInstanceSeparation");
+			_uTextureArray = glGetUniformLocation(shader->GetProgramHandle(), "uTextureArray");
 		}
 
 		ShaderInterface(const char *VS, const char *FS, const char *GS)
