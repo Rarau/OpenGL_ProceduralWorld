@@ -11,8 +11,7 @@ namespace engine
 		PlayerInputSystem *_playerInputSystem;
 
 		// all our objects will be children of our scene
-		std::vector<Entity *> *_children;
-		
+		std::vector<Entity *> *_children;		
 
 	public:
 
@@ -57,15 +56,12 @@ namespace engine
 			_children->push_back(block);
 		}
 
-
-
 		~Scene()
 		{
 			for (std::vector<Entity*>::iterator iterator = _children->begin(); iterator != _children->end(); iterator++)
 			{
 				delete *iterator;
 			}
-
 		}
 
 	};

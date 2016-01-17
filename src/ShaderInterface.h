@@ -14,12 +14,6 @@ namespace engine
 		GLuint _uInstanceSeparation;
 		GLuint _uTextureArray;
 
-		char *_vertexShaderString;
-		char *_fragmentShaderString;
-		char *_geometryShaderString;
-
-		
-
 		char* LoadTextFromFile(const char *file)
 		{
 			FILE *currentFile;
@@ -84,12 +78,12 @@ namespace engine
 		ShaderInterface(const char *VS, const char *FS)
 		{
 			// read shaders from strings
+			char *_vertexShaderString;
+			char *_fragmentShaderString;
 			_vertexShaderString = LoadTextFromFile(VS);
 			_fragmentShaderString = LoadTextFromFile(FS);
-			shader = new ShaderLoader(_vertexShaderString, _fragmentShaderString);
-			// deallocate strings, we wont use them again
-			free(_vertexShaderString);
-			free(_fragmentShaderString);
+
+			shader = new ShaderLoader(_vertexShaderString, _fragmentShaderString);			
 
 			_aPositionVertex = glGetAttribLocation(shader->GetProgramHandle(), "aPositionVertex");
 			_aNormalVertex = glGetAttribLocation(shader->GetProgramHandle(), "aPositionNormal");
@@ -103,15 +97,14 @@ namespace engine
 		ShaderInterface(const char *VS, const char *FS, const char *GS)
 		{
 			// read shaders from strings
+			char *_vertexShaderString;
+			char *_fragmentShaderString;
+			char *_geometryShaderString;
 			_vertexShaderString = LoadTextFromFile(VS);
 			_fragmentShaderString = LoadTextFromFile(FS);
 			_geometryShaderString = LoadTextFromFile(GS);
 
-			shader = new ShaderLoader(_vertexShaderString, _fragmentShaderString, _geometryShaderString);
-			// deallocate strings, we wont use them again
-			free(_vertexShaderString);
-			free(_fragmentShaderString);
-			free(_geometryShaderString);
+			shader = new ShaderLoader(_vertexShaderString, _fragmentShaderString, _geometryShaderString);			
 
 			_aPositionVertex = glGetAttribLocation(shader->GetProgramHandle(), "aPositionVertex");
 			_uColor = glGetUniformLocation(shader->GetProgramHandle(), "uColor");
@@ -122,7 +115,6 @@ namespace engine
 		{
 			delete shader;
 		}
-
 
 	};	
 }

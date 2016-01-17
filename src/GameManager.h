@@ -1,10 +1,12 @@
 namespace engine
 {
-#define Updates_Per_Second 60.0f
 
 	class GameManager
 	{
 	private:
+
+		// game simulation time step
+		const float Updates_Per_Second = 60.0f;
 
 		bool _running;
 		GLFWwindow *_window;
@@ -25,43 +27,28 @@ namespace engine
 			_playerInputSystem(&PlayerInputSystem::GetPlayerInputSystem())
 		{
 			printf("GameManager created\n");
-
+			_window = _renderSystem->GetWindow();
 			_scene = new Scene();
 		}
 
 		~GameManager()
-		{
+		{			
+			engine::RenderSystem::DestroyRenderSystem();
 			engine::ResourceManager::DestroyResourceManager();
-			engine::RenderSystem::DestroyRenderSystem();	
+			engine::MovementSystem::DestroyMovementSystem();
 			engine::CameraSystem::DestroyCameraSystem();
 			engine::PlayerInputSystem::DestroyInputSystem();
 
 			printf("GameManager destroyed\n");
 		}
 	public:
-		//Singleton implementation
+		// Singleton implementation
 		static GameManager& GetGameManager()
 		{
 			static GameManager *gameManager = nullptr;
 
 			if (gameManager == nullptr)
 			{
-				//OpenGL initialization code
-				glfwInit();				
-
-				glfwWindowHint(GLFW_DEPTH_BITS, 24);
-				glfwWindowHint(GLFW_RED_BITS, 8);
-				glfwWindowHint(GLFW_GREEN_BITS, 8);
-				glfwWindowHint(GLFW_BLUE_BITS, 8);
-				glfwWindowHint(GLFW_ALPHA_BITS, 8);
-				glfwWindowHint(GLFW_SAMPLES, 16);
-				glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-
-				GLFWwindow *window = glfwCreateWindow(1280, 720, "Procedural World", NULL, NULL);
-				glfwMakeContextCurrent(window);
-
-				glEnable(GL_DEPTH_TEST);
-
 				gameManager = new GameManager(true);
 			}
 			return *gameManager;
@@ -70,10 +57,7 @@ namespace engine
 		static void DestroyGameManager()
 		{
 			GameManager *gameManager = &(GetGameManager());
-			delete gameManager;
-			GLFWwindow *window = glfwGetCurrentContext();
-			glfwDestroyWindow(window);
-			glfwTerminate();
+			delete gameManager;			
 		}
 
 		void RunGameLoop()
@@ -83,9 +67,9 @@ namespace engine
 
 			while (_running)
 			{
+				// run the game simulation at a defined frequency
 				double currentTime = glfwGetTime();
 				deltaTime += (currentTime - lastTime) * Updates_Per_Second;
-
 				if (deltaTime >= 1.0f)
 				{
 					//printf("Running game loop\n");
@@ -97,14 +81,12 @@ namespace engine
 					_movementSystem->Update(_scene->GetChildren());
 
 					deltaTime = 0.0f;
-				}				
+				}
 
-				//TO-DO: we are rendering a concrete entity, not all
+				// render the scenes as many times as possible
 				_renderSystem->Render(_scene->GetChildren());
 			}
 		}
 	};
-
-
 
 }

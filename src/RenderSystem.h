@@ -9,15 +9,32 @@ namespace engine
 	{
 
 	private:
+
 		GLuint tex;
 		GLuint fbo;
 
 		GLFWwindow *_window;
 		Entity *_currentCamera;
 
-		RenderSystem() : _window(glfwGetCurrentContext())
+		RenderSystem()
 		{
-			// finish glew initialization
+			//OpenGL initialization code
+			glfwInit();
+
+			glfwWindowHint(GLFW_DEPTH_BITS, 24);
+			glfwWindowHint(GLFW_RED_BITS, 8);
+			glfwWindowHint(GLFW_GREEN_BITS, 8);
+			glfwWindowHint(GLFW_BLUE_BITS, 8);
+			glfwWindowHint(GLFW_ALPHA_BITS, 8);
+			glfwWindowHint(GLFW_SAMPLES, 16);
+			glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
+			_window = glfwCreateWindow(1280, 720, "Procedural World", NULL, NULL);
+			glfwMakeContextCurrent(_window);
+
+			glEnable(GL_DEPTH_TEST);
+
+			// Glew initialization
 			GLint GlewInitResult = glewInit();
 			if (GLEW_OK != GlewInitResult)
 			{
@@ -25,6 +42,19 @@ namespace engine
 				exit(EXIT_FAILURE);
 			}			
 
+			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+			// set the camera projection
+			glMatrixMode(GL_PROJECTION);
+			// FOV, aspect ratio, near clipping plane, far clipping plane
+			gluPerspective(75.0f, 1280.0f / 720.0f, 1, 1000);
+			glViewport(0.0f, 0.0f, 1280.0f, 720.0f);
+			glMatrixMode(GL_MODELVIEW);
+
+			//glEnable(GL_NONE);
+			glEnable(GL_DEPTH_TEST);
+
+			// TO-DO: move this to each entity render function
 			//Texture creation -------------------------------------------------------------------------------------------
 
 			glGenTextures(1, &tex);
@@ -36,25 +66,30 @@ namespace engine
 			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-			*/
-			
+			*/			
 
 			glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA, 33, 33, 33, 0, GL_RGBA, GL_FLOAT, NULL);
 
 			// Now create a framebuffer object and attach the
 			// 2D array texture to one of its color attachments
-			glGenFramebuffers(1, &fbo);
-			
+			glGenFramebuffers(1, &fbo);			
 
 			//Texture creation -------------------------------------------------------------------------------------------
 		}
 
 		~RenderSystem()
 		{			
-			
+			GLFWwindow *window = glfwGetCurrentContext();
+			glfwDestroyWindow(window);
+			glfwTerminate();
 		}
 
 	public:
+
+		GLFWwindow* GetWindow()
+		{
+			return _window;
+		}
 
 		Entity* GetCurrentCamera()
 		{
@@ -71,21 +106,7 @@ namespace engine
 			static RenderSystem *renderSystem = nullptr;
 			if (renderSystem == nullptr)
 			{
-				renderSystem = new RenderSystem();
-
-				glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
-				// set the camera projection
-				glMatrixMode(GL_PROJECTION);
-				// FOV, aspect ratio, near clipping plane, far clipping plane
-				gluPerspective(75.0f, 1280.0f / 720.0f, 1, 1000);
-				glViewport(0.0f, 0.0f, 1280.0f, 720.0f);
-				glMatrixMode(GL_MODELVIEW);
-
-				//glEnable(GL_NONE);
-				glEnable(GL_DEPTH_TEST);
-
-
+				renderSystem = new RenderSystem();				
 			}
 			return *renderSystem;
 		}
@@ -104,6 +125,9 @@ namespace engine
 			{
 				Entity *entity = *iterator;
 
+				// TO-DO: move this code to the entity class.
+				// Create different entity types with inheritance and locate render-specific code there.
+
 				if (entity->GetVertexBuffer() != nullptr)
 				{
 					// If rendering terrain
@@ -113,7 +137,6 @@ namespace engine
 
 						// set uniforms						
 						glUniform1f((entity->GetVertexBuffer()->GetShader())->get_uInstanceSeparation(), 0.03f);
-
 
 						//3d texture buffer to evaluate the density function
 						glBindFramebuffer(GL_FRAMEBUFFER, fbo);
@@ -153,9 +176,7 @@ namespace engine
 					{
 						GLuint textArrayIndex = entity->GetVertexBuffer()->GetShader()->get_uTextureArray();
 
-						glUseProgram(entity->GetVertexBuffer()->GetShader()->GetProgramHandle());
-
-						
+						glUseProgram(entity->GetVertexBuffer()->GetShader()->GetProgramHandle());						
 
 						glUniform1i(textArrayIndex, 0);
 						glActiveTexture(GL_TEXTURE0);
@@ -209,8 +230,6 @@ namespace engine
 			}
 
 			glfwSwapBuffers(_window);
-
-
 		}
 	};
 }

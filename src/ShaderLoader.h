@@ -92,8 +92,6 @@ namespace engine
 			printf("linked successful\n");
 			CHECK_GL_ERROR();
 
-
-
 			glDeleteShader(vertexShader);
 			glDeleteShader(fragmentShader);
 

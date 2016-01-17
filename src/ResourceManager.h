@@ -3,7 +3,9 @@ namespace engine
 	//This class is responsible of tracking all our resources
 	class ResourceManager
 	{
+
 	private:
+
 		std::vector<engine::ShaderInterface*> *_shaderArray;
 		std::vector<engine::VertexBuffer*> *_vertexBufferArray;
 
