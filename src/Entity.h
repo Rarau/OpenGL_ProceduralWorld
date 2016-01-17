@@ -17,24 +17,31 @@ namespace engine
 		//for implementing lookAt method
 		Vector3 _eyeVector;
 		Vector3 _upVector;
-		Vector3 _rightVector;
+		Vector3 _rightVector;		
 
-		// 0 default, 1 terrain
-		int _type;
+		// Possible components
+		Renderer *_renderer;
 
-	public:
+	public:		
+
+		
 
 		Entity(VertexBuffer *vertexBuffer, Vector3 position) :
 			_vertexBuffer(vertexBuffer), _position(position), _scale(MakeVector3(1.0f, 1.0f, 1.0f)), _rotation(MakeVector3(0.0f, 0.0f, 0.0f)),
 			_velocity(MakeVector3(0.0f, 0.0f, 0.0f)), _scaleVelocity(MakeVector3(0.0f, 0.0f, 0.0f)), _rotationVelocity(MakeVector3(0.0f, 0.0f, 0.0f)),
-			_eyeVector(MakeVector3(0.0f, 0.0f, 0.0f)), _upVector(MakeVector3(0.0f, 1.0f, 0.0f)), _rightVector(MakeVector3(1.0f, 0.0f, 0.0f)), _type(0)
+			_eyeVector(MakeVector3(0.0f, 0.0f, 0.0f)), _upVector(MakeVector3(0.0f, 1.0f, 0.0f)), _rightVector(MakeVector3(1.0f, 0.0f, 0.0f)), _renderer(nullptr)
 		{
 
 		}
 
 		~Entity()
 		{
+			delete _renderer;
+		}
 
+		void SetRenderer(Renderer *newRenderer)
+		{
+			_renderer = newRenderer;
 		}
 
 		VertexBuffer *GetVertexBuffer()
@@ -55,17 +62,7 @@ namespace engine
 		void SetPosition(Vector3 newPosition)
 		{
 			_position = newPosition;
-		}
-
-		int GetType()
-		{
-			return _type;
-		}
-
-		void SetType(int type)
-		{
-			_type = type;
-		}
+		}		
 
 		Vector3 GetScale()
 		{
@@ -145,6 +142,12 @@ namespace engine
 		void SetRightVector(Vector3 newVector)
 		{
 			_rightVector = newVector;
+		}
+
+		void Render()
+		{
+			if (_renderer != nullptr && _vertexBuffer != nullptr)
+				_renderer->Render(this);
 		}
 	};
 }

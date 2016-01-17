@@ -5,8 +5,10 @@ namespace engine
 	{
 	private:
 
-		// game simulation time step
+		// game logic time step
 		const float Updates_Per_Second = 60.0f;
+		// physics time step
+		const float Physics_Updates_Per_Second = 30.0f;
 
 		bool _running;
 		GLFWwindow *_window;
@@ -41,7 +43,9 @@ namespace engine
 
 			printf("GameManager destroyed\n");
 		}
+
 	public:
+
 		// Singleton implementation
 		static GameManager& GetGameManager()
 		{
@@ -62,25 +66,37 @@ namespace engine
 
 		void RunGameLoop()
 		{
-			double lastTime = glfwGetTime(); //milliseconds from when we called glfwInit()
-			double deltaTime = 0.0f;			
+			double lastTime = glfwGetTime(); //milliseconds from when we called glfwInit()			
+			double deltaTime = 0.0f;
 
+			double p_lastTime = glfwGetTime(); //milliseconds from when we called glfwInit()			
+			double p_deltaTime = 0.0f;
+			
 			while (_running)
 			{
-				// run the game simulation at a defined frequency
 				double currentTime = glfwGetTime();
+
+				// run the game logic at a defined frequency				
 				deltaTime += (currentTime - lastTime) * Updates_Per_Second;
 				if (deltaTime >= 1.0f)
-				{
-					//printf("Running game loop\n");
+				{					
 					_running = !glfwWindowShouldClose(_window);
 					
 					glfwPollEvents(); //get input events
+					_playerInputSystem->Update();					
 
-					_playerInputSystem->Update();
+					lastTime = currentTime;
+					deltaTime = 0.0f;
+				}		
+
+				// run the physics calculus at a defined frequency
+				p_deltaTime += (currentTime - p_lastTime) * Physics_Updates_Per_Second;
+				if (p_deltaTime >= 1.0f)
+				{					
 					_movementSystem->Update(_scene->GetChildren());
 
-					deltaTime = 0.0f;
+					p_lastTime = currentTime;
+					p_deltaTime = 0.0f;
 				}
 
 				// render the scenes as many times as possible

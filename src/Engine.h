@@ -24,16 +24,19 @@ namespace engine
 
 #include"CubeVertices.h"
 
-
+#include "Renderer.h"
 #include "ShaderLoader.h"
 #include "ShaderInterface.h"
 #include "VertexBuffer.h"
 #include "Entity.h"
+
 #include "PlayerInputSystem.h"
 #include "MovementSystem.h"
 #include "ResourceManager.h"
 #include "RenderSystem.h"
 #include "CameraSystem.h"
+#include "Renderers/TerrainRenderer.h"
+#include "Renderers/GeometryRenderer.h"
 #include "Scene.h"
 #include "Terrain.h"
 #include "GameManager.h"

@@ -36,6 +36,8 @@ namespace engine
 			for (std::vector<Entity*>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
 			{
 				Entity *entity = *iterator;
+
+				// For the moment it's just a cinematic integrator
 				entity->SetPosition(AddVector3(entity->GetPosition(), entity->GetVelocity()));
 				entity->SetRotation(AddVector3(entity->GetRotation(), entity->GetRotationVelocity()));
 				entity->SetScale(AddVector3(entity->GetScale(), entity->GetScaleVelocity()));

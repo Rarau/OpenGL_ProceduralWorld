@@ -21,9 +21,6 @@
     <ClInclude Include="src\GameManager.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\RenderSystem.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\VertexBuffer.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
@@ -67,6 +64,18 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Terrain.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RenderSystem.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderers\TerrainRenderer.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderers\GeometryRenderer.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>

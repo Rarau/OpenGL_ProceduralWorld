@@ -2,9 +2,8 @@ namespace engine
 {
 	class PlayerInputSystem
 	{
+
 	private:
-
-
 
 		Vector3 _eyeVector;
 
@@ -23,7 +22,7 @@ namespace engine
 
 		void keyCallBack(GLFWwindow *window, int key, int scancode, int action, int mods)
 		{
-			std::cout << "test" << std::endl;
+			//std::cout << "test" << std::endl;
 			if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 			{
 				if (glfwGetInputMode(glfwGetCurrentContext(), GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
@@ -48,6 +47,7 @@ namespace engine
 
 		void Update()
 		{
+			// TO-DO: We should call the entity setVelocity() method instead of moving directly.
 			if (_currentPlayer != nullptr && glfwGetInputMode(glfwGetCurrentContext(), GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
 			{
 				if (glfwGetKey(_window, GLFW_KEY_W))
@@ -78,6 +78,7 @@ namespace engine
 			}
 		}
 
+		//TO-DO: manage all keys with events and delete the update function
 		// actions: onPress, onRelease... mods: alt, shift...
 		static void keyCallBackFun(GLFWwindow *window, int key, int scancode, int action, int mods)
 		{

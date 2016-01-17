@@ -17,7 +17,8 @@ namespace engine
 			_vertexBufferArray = new std::vector<engine::VertexBuffer*>();
 
 
-			// temporal --------------- TO-DO: delete this part as it is hardcoded
+			// temporal --------------- 
+			// TO-DO: delete this part as it is hardcoded -> createShader(), createGeometry()
 			// add shaders:			
 			ShaderInterface *shader = new ShaderInterface("Assets/Shaders/ColorVertexShader.txt", 
 															"Assets/Shaders/ColorFragmentShader.txt");
