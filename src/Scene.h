@@ -28,7 +28,7 @@ namespace engine
 
 			_children = new std::vector<Entity*>();
 
-			//TO-DO: this is hardcoded, can't be here
+			//TO-DO: this is hardcoded, can't be here -----------------------------------------------------------------------------
 			Entity *camera = new Entity(nullptr, MakeVector3(0.0f, 0.0f, 0.0f));
 			camera->SetEyeVector(NormalizeVector3(MakeVector3(0.0f, 0.0f, 1.0f)));
 			_children->push_back(camera);
@@ -36,25 +36,21 @@ namespace engine
 			_cameraSystem->SetCurrentCamera(camera);
 			_playerInputSystem->SetCurrentPlayer(camera);			
 
-			Entity *entity = new Entity(_resourceManager->GetVertexBufferArray()->at(1), MakeVector3(0.0f, 0.0f, 5.0f));
+			// Terrain entity
+			Entity *entity = new Entity(nullptr, MakeVector3(0.0f, 0.0f, 0.0f));
 			// Add terrain renderer.
-			entity->SetRenderer(new TerrainRenderer());
-			
-			//entity->SetRotation(MakeVector3(30.0f, 0.0f, 0.0f));
-			//entity->SetScale(MakeVector3(2.0f, 2.0f, 2.0f));
-			//entity->SetRotationVelocity(MakeVector3(0.3f, 0.0f, 0.0f));
+			entity->SetRenderer(new TerrainRenderer());		
 			_children->push_back(entity);
 
+			// rotating Sphere
 			Entity *entity2 = new Entity(_resourceManager->GetVertexBufferArray()->at(0), MakeVector3(0.0f, 0.0f, 5.0f));
 			entity2->SetRotation(MakeVector3(30.0f, 0.0f, 0.0f));
 			entity2->SetScale(MakeVector3(2.0f, 2.0f, 2.0f));
 			entity2->SetRotationVelocity(MakeVector3(0.3f, 0.0f, 0.0f));
 			entity2->SetRenderer(new GeometryRenderer());
-			_children->push_back(entity2);
+			_children->push_back(entity2);			
 
-			Entity *block = new Entity(_resourceManager->GetVertexBufferArray()->at(2), MakeVector3(0.0f, 0.0f, 0.0f));
-			block->SetRenderer(new GeometryRenderer());
-			_children->push_back(block);
+			//TO-DO: this is hardcoded, can't be here -----------------------------------------------------------------------------
 		}
 
 		~Scene()

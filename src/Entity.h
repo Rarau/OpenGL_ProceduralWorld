@@ -146,7 +146,7 @@ namespace engine
 
 		void Render()
 		{
-			if (_renderer != nullptr && _vertexBuffer != nullptr)
+			if (_renderer != nullptr)
 				_renderer->Render(this);
 		}
 	};

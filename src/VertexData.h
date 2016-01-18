@@ -3,7 +3,6 @@ namespace engine
 	typedef struct
 	{
 		Vector3 positionCoordinates;
-
 	}VertexDataP;
 
 	typedef struct

@@ -19,6 +19,9 @@ namespace engine
 
 		void Render(Entity* entity)
 		{
+			// In this renderer, we need the entity's geometry
+			if (entity->GetVertexBuffer() == nullptr) return;
+
 			GLuint textArrayIndex = entity->GetVertexBuffer()->GetShader()->get_uTextureArray();
 
 			glUseProgram(entity->GetVertexBuffer()->GetShader()->GetProgramHandle());

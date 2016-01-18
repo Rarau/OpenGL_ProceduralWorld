@@ -1,33 +1,5 @@
 namespace engine 
 {
-	VertexDataP* GenerateSamplingPoints()
-	{
-		VertexDataP verts[32*32*32];
-
-		for (int x = 0; x < 32; x++)
-		{
-			for (int y = 0; y < 32; y++)
-			{
-				for (int z = 0; z < 32; z++)
-				{
-					verts[32 * 32 * z + 32 * y + x] = { (float)x / 32.0f, (float)y / 32.0f, (float)z / 32.0f };
-				}
-			}
-		}
-
-		return verts;
-	}
-	
-	VertexDataP  quadVertices[] = {
-		{ 0.0f, 0.0f, 0.0f },
-		{ 0.0f, 1.0f, 0.0f },
-		{ 1.0f, 0.0f, 0.0f },
-
-		{ 0.0f, 1.0f, 0.0f },
-		{ 1.0f, 1.0f, 0.0f },
-		{ 1.0f, 0.0f, 0.0f }
-	};
-
 	VertexDataPN cubeVertices[] = {
 			{ { 0.500000, 0.500000, -0.500000 }, { 0.000000, 0.000000, -1.000000 } },
 			{ { 0.500000, -0.500000, -0.500000 }, { 0.000000, 0.000000, -1.000000 } },
