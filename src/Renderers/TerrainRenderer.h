@@ -1,4 +1,4 @@
-namespace engine
+﻿namespace engine
 {
 	// Vertices for the evaluator quads
 	// TO-DO: this quad should apply the block's transformations
@@ -49,6 +49,7 @@ namespace engine
 		ShaderInterface *_blockShader;	
 
 
+
 	public:
 
 		TerrainRenderer()
@@ -57,6 +58,8 @@ namespace engine
 			glGenBuffers(1, &_quadVertexBufferID);
 			glBindBuffer(GL_ARRAY_BUFFER, _quadVertexBufferID);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(quadEvaluatorVertices), quadEvaluatorVertices, GL_STATIC_DRAW);
+
+			//glUniformBlockBinding​(GLuint program​, GLuint uniformBlockIndex​, GLuint uniformBlockBinding​);
 
 			// Create hard-coded the block vertex buffer
 			_blockVertices = GenerateSamplingVertices();
@@ -104,6 +107,7 @@ namespace engine
 			// set uniforms						
 			// TO-DO: hardcoded 0.03, it should be the block side length/32
 			glUniform1f(_functionEvaluatorShader->get_uInstanceSeparation(), 0.03f);
+
 
 			// bind 3d texture buffer
 			glBindFramebuffer(GL_FRAMEBUFFER, frameBufferObjectId);
@@ -178,6 +182,9 @@ namespace engine
 			glBindBuffer(GL_ARRAY_BUFFER, _blockVertexBufferID);			
 			glEnableVertexAttribArray(_blockShader->Get_aPositionVertex());
 			glVertexAttribPointer(_blockShader->Get_aPositionVertex(), 3, GL_FLOAT, GL_FALSE, sizeof(VertexDataP), 0);
+			
+			// Pass the lookup tables to the shader
+			glUniform1uiv(_blockShader->get_uCaseToNumpolys(), 256, case_to_numpolys);
 			
 			// execute drawing shader
 			glDrawArrays(GL_POINTS, 0, 33 * 33 * 33);

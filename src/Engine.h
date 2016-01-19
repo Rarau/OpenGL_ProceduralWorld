@@ -22,7 +22,9 @@ namespace engine
 #include "VertexData.h"
 #include "ShaderData.h"
 
-#include"CubeVertices.h"
+#include "CubeVertices.h"
+#include "Tables.h"
+
 
 #include "Renderer.h"
 #include "ShaderLoader.h"

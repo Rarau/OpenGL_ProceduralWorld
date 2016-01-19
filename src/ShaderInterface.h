@@ -13,6 +13,7 @@ namespace engine
 		GLuint _uLightPosition;
 		GLuint _uInstanceSeparation;
 		GLuint _uTextureArray;
+		GLuint _uCaseToNumpolys;
 
 		char* LoadTextFromFile(const char *file)
 		{
@@ -75,6 +76,11 @@ namespace engine
 			return _uTextureArray;
 		}
 
+		GLuint get_uCaseToNumpolys()
+		{
+			return _uCaseToNumpolys;
+		}
+
 		ShaderInterface(const char *VS, const char *FS)
 		{
 			// read shaders from strings
@@ -92,6 +98,8 @@ namespace engine
 			_uLightPosition = glGetUniformLocation(shader->GetProgramHandle(), "uLightPosition");
 			_uInstanceSeparation = glGetUniformLocation(shader->GetProgramHandle(), "uInstanceSeparation");
 			_uTextureArray = glGetUniformLocation(shader->GetProgramHandle(), "uTextureArray");
+
+			_uCaseToNumpolys = glGetUniformBlockIndex(shader->GetProgramHandle(), "case_to_numpolys");
 		}
 
 		ShaderInterface(const char *VS, const char *FS, const char *GS)
@@ -109,6 +117,8 @@ namespace engine
 			_aPositionVertex = glGetAttribLocation(shader->GetProgramHandle(), "aPositionVertex");
 			_uColor = glGetUniformLocation(shader->GetProgramHandle(), "uColor");
 			_uInstanceSeparation = glGetUniformLocation(shader->GetProgramHandle(), "uInstanceSeparation");
+
+			_uCaseToNumpolys = glGetUniformLocation(shader->GetProgramHandle(), "case_to_numpolys");
 		}
 
 		~ShaderInterface()

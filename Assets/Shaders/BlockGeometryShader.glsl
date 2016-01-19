@@ -2,8 +2,10 @@
  
 layout(points) in;
 layout (triangle_strip, max_vertices=3) out;
- 
- void main()
+
+uniform uint case_to_numpolys[256];
+
+void main()
 {
 	// emit one triangle per point
 	gl_Position = gl_in[0].gl_Position;

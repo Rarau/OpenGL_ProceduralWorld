@@ -27,6 +27,7 @@
     <ClInclude Include="src\ShaderData.h" />
     <ClInclude Include="src\ShaderInterface.h" />
     <ClInclude Include="src\ShaderLoader.h" />
+    <ClInclude Include="src\Tables.h" />
     <ClInclude Include="src\Terrain.h" />
     <ClInclude Include="src\Vector3.h" />
     <ClInclude Include="src\Vector4.h" />

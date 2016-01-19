@@ -78,6 +78,9 @@
     <ClInclude Include="src\Renderers\GeometryRenderer.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Tables.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
