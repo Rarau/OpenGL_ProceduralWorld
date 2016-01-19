@@ -1,6 +1,7 @@
 namespace engine
 {
 	// Vertices for the evaluator quads
+	// TO-DO: this quad should apply the block's transformations
 	VertexDataP quadEvaluatorVertices[] = {
 		{ 0.0f, 0.0f, 0.0f },
 		{ 0.0f, 1.0f, 0.0f },
@@ -69,8 +70,8 @@ namespace engine
 				"Assets/Shaders/InstancedGeometryShader.txt");
 
 			// Create block shader
-			_blockShader = new ShaderInterface("Assets/Shaders/ColorVertexShader.txt",
-				"Assets/Shaders/ColorFragmentShader.txt");
+			_blockShader = new ShaderInterface("Assets/Shaders/BlockVertexShader.txt",
+				"Assets/Shaders/BlockFragmentShader.txt");// "Assets/Shaders/BlockGeometryShader.txt");
 
 			// Create texture 3D 
 			glGenTextures(1, &textureId);
@@ -100,6 +101,7 @@ namespace engine
 			glUseProgram(_functionEvaluatorShader->GetProgramHandle());
 
 			// set uniforms						
+			// TO-DO: hardcoded 0.03, it should be the block side length/32
 			glUniform1f(_functionEvaluatorShader->get_uInstanceSeparation(), 0.03f);
 
 			// bind 3d texture buffer

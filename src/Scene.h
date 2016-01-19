@@ -40,6 +40,7 @@ namespace engine
 			Entity *entity = new Entity(nullptr, MakeVector3(0.0f, 0.0f, 0.0f));
 			// Add terrain renderer.
 			entity->SetRenderer(new TerrainRenderer());		
+			//entity->SetRotationVelocity(MakeVector3(0.3f, 0.0f, 0.0f));
 			_children->push_back(entity);
 
 			// rotating Sphere
