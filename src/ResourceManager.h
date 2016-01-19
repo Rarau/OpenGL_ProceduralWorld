@@ -20,14 +20,14 @@ namespace engine
 			// temporal --------------- 
 			// TO-DO: delete this part as it is hardcoded -> createShader(), createGeometry()
 			// add shaders:			
-			ShaderInterface *shader = new ShaderInterface("Assets/Shaders/ColorVertexShader.txt", 
-															"Assets/Shaders/ColorFragmentShader.txt");
+			ShaderInterface *shader = new ShaderInterface("Assets/Shaders/ColorVertexShader.glsl", 
+															"Assets/Shaders/ColorFragmentShader.glsl");
 			_shaderArray->push_back(shader);
-			/*ShaderInterface *lightShader = new ShaderInterface("Assets/Shaders/SimpleLightVertexShader.txt", 
-															"Assets/Shaders/SimpleLightFragmentShader.txt",
-															"Assets/Shaders/PassThroughGeometryShader.txt");*/
-			ShaderInterface *lightShader = new ShaderInterface("Assets/Shaders/SimpleLightVertexShader.txt",
-				"Assets/Shaders/SimpleLightFragmentShader.txt");
+			/*ShaderInterface *lightShader = new ShaderInterface("Assets/Shaders/SimpleLightVertexShader.glsl", 
+															"Assets/Shaders/SimpleLightFragmentShader.glsl",
+															"Assets/Shaders/PassThroughGeometryShader.glsl");*/
+			ShaderInterface *lightShader = new ShaderInterface("Assets/Shaders/SimpleLightVertexShader.glsl",
+				"Assets/Shaders/SimpleLightFragmentShader.glsl");
 			_shaderData = new ShaderData(makeVector4(0.30f, 0.10f, 0.80f, 1.0f), MakeVector3(-1.0f, 1.0f, 1.0f));
 			_shaderArray->push_back(lightShader);			
 

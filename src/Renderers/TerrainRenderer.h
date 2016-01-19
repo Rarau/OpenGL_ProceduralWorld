@@ -65,13 +65,14 @@ namespace engine
 			glBufferData(GL_ARRAY_BUFFER, sizeof(VertexDataP) * 32 * 32 * 32, _blockVertices, GL_STATIC_DRAW);
 			
 			// Create Instanced Rendering evaluator shader
-			_functionEvaluatorShader = new ShaderInterface("Assets/Shaders/InstancedVertexShader.txt",
-				"Assets/Shaders/InstancedFragmentShader.txt",
-				"Assets/Shaders/InstancedGeometryShader.txt");
+			_functionEvaluatorShader = new ShaderInterface("Assets/Shaders/InstancedVertexShader.glsl",
+				"Assets/Shaders/InstancedFragmentShader.glsl",
+				"Assets/Shaders/InstancedGeometryShader.glsl");
 
 			// Create block shader
-			_blockShader = new ShaderInterface("Assets/Shaders/BlockVertexShader.txt",
-				"Assets/Shaders/BlockFragmentShader.txt");// "Assets/Shaders/BlockGeometryShader.txt");
+			_blockShader = new ShaderInterface("Assets/Shaders/BlockVertexShader.glsl",
+				"Assets/Shaders/BlockFragmentShader.glsl", 
+				"Assets/Shaders/BlockGeometryShader.glsl");
 
 			// Create texture 3D 
 			glGenTextures(1, &textureId);
