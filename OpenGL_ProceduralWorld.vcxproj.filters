@@ -101,4 +101,39 @@
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Shaders\BlockFragmentShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Assets\Shaders\BlockGeometryShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Assets\Shaders\BlockVertexShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Assets\Shaders\ColorFragmentShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Assets\Shaders\ColorVertexShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Assets\Shaders\InstancedFragmentShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Assets\Shaders\InstancedGeometryShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Assets\Shaders\InstancedVertexShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Assets\Shaders\PassThroughGeometryShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Assets\Shaders\SimpleLightFragmentShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Assets\Shaders\SimpleLightVertexShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

@@ -15,18 +15,20 @@
 	// Auxiliar function to generate the block sampling vertices
 	VertexDataP* GenerateSamplingVertices()
 	{
-		VertexDataP verts[32 * 32 * 32];
+		VertexDataP verts[32 * 32 * 33];
 		for (int x = 0; x < 32; x++)
 		{
 			for (int y = 0; y < 32; y++)
 			{
-				for (int z = 0; z < 32; z++)
+				for (int z = 0; z < 33; z++)
 				{
 					verts[32 * 32 * z + 32 * y + x] = { (float)x / 32.0f, (float)y / 32.0f, (float)z / 32.0f };
 				}
 			}
 		}
 		return verts;
+		
+
 	}
 
 	class TerrainRenderer : public Renderer
@@ -68,13 +70,15 @@
 			glBufferData(GL_ARRAY_BUFFER, sizeof(VertexDataP) * 32 * 32 * 32, _blockVertices, GL_STATIC_DRAW);
 			
 			// Create Instanced Rendering evaluator shader
-			_functionEvaluatorShader = new ShaderInterface("Assets/Shaders/InstancedVertexShader.glsl",
+			_functionEvaluatorShader = new ShaderInterface(
+				"Assets/Shaders/InstancedVertexShader.glsl",
 				"Assets/Shaders/InstancedFragmentShader.glsl",
 				"Assets/Shaders/InstancedGeometryShader.glsl");
 
 			// Create block shader
-			_blockShader = new ShaderInterface("Assets/Shaders/BlockVertexShader.glsl",
-				"Assets/Shaders/BlockFragmentShader.glsl", 
+			_blockShader = new ShaderInterface(
+				"Assets/Shaders/BlockVertexShader.glsl",
+				"Assets/Shaders/BlockFragmentShader.glsl",
 				"Assets/Shaders/BlockGeometryShader.glsl");
 
 			// Create texture 3D 
@@ -187,7 +191,7 @@
 			glUniform1uiv(_blockShader->get_uCaseToNumpolys(), 256, case_to_numpolys);
 			
 			// execute drawing shader
-			glDrawArrays(GL_POINTS, 0, 33 * 33 * 33);
+			glDrawArrays(GL_POINTS, 0, 32*32*32);
 		}
 	};
 }

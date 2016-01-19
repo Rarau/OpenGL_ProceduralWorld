@@ -49,6 +49,19 @@
     <Text Include="Assets\Shaders\SimpleLightFragmentShader.txt" />
     <Text Include="Assets\Shaders\SimpleLightVertexShader.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Shaders\BlockFragmentShader.glsl" />
+    <None Include="Assets\Shaders\BlockGeometryShader.glsl" />
+    <None Include="Assets\Shaders\BlockVertexShader.glsl" />
+    <None Include="Assets\Shaders\ColorFragmentShader.glsl" />
+    <None Include="Assets\Shaders\ColorVertexShader.glsl" />
+    <None Include="Assets\Shaders\InstancedFragmentShader.glsl" />
+    <None Include="Assets\Shaders\InstancedGeometryShader.glsl" />
+    <None Include="Assets\Shaders\InstancedVertexShader.glsl" />
+    <None Include="Assets\Shaders\PassThroughGeometryShader.glsl" />
+    <None Include="Assets\Shaders\SimpleLightFragmentShader.glsl" />
+    <None Include="Assets\Shaders\SimpleLightVertexShader.glsl" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FF662602-2C96-45FC-AB08-0CD6AA055A35}</ProjectGuid>
     <RootNamespace>OpenGL_ProceduralWorld</RootNamespace>
