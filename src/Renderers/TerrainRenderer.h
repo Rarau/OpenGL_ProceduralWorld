@@ -193,7 +193,7 @@
 			
 			// Pass the lookup tables to the shader
 			glUniform1uiv(_blockShader->get_uCaseToNumpolys(), 256, case_to_numpolys);
-			glUniform1iv(_blockShader->get_uEdgeConnectList(), 3840, edge_connect_list);
+			glUniform3iv(_blockShader->get_uEdgeConnectList(), 1280, edge_connect_list);
 
 			
 			// execute drawing shader

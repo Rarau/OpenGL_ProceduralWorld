@@ -11,7 +11,7 @@ void main()
 	//TO-DO: Evaluate the density function here
 	
 	// we are rendering to a texture buffer with 1 float per pixel
-	if(pos.y < 13.1f)
+	if(pos.y < 15f)
 	{
 		gl_FragColor.r = 10.0f;	
 	}
