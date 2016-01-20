@@ -8,13 +8,16 @@ void main()
 	vec4 pos = gl_FragCoord;
 	pos.z = _layer;
 	
-	if(pos.y > 16)
-		gl_FragColor.g = 1.0f;
+	//TO-DO: Evaluate the density function here
+	
+	// we are rendering to a texture buffer with 1 float per pixel
+	if(pos.y < 10f)
+	{
+		gl_FragColor.r = 10.0f;	
+	}
 	else
-		gl_FragColor.g = 0.0f;
-	//gl_FragColor = uColor;
-	gl_FragColor.r = _layer * 0.1;
-	//gl_FragColor.g = 0.6;
-	gl_FragColor.b = 0.6;
-	gl_FragColor.a = 0.6;
+	{
+		gl_FragColor.r = 0.0f;
+	}	
+	
 }

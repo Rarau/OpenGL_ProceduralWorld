@@ -91,7 +91,7 @@
 			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 			*/
-			glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA, 33, 33, 33, 0, GL_RGBA, GL_FLOAT, NULL);
+			glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_R32F, 33, 33, 33, 0, GL_RED, GL_FLOAT, NULL);
 
 			// Create a framebuffer object			
 			glGenFramebuffers(1, &frameBufferObjectId);			
@@ -123,7 +123,7 @@
 			glDrawBuffers(1, draw_buffers);
 
 			// clear the texture buffer
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT);
 
 			// configure our camera and viewport to render properly to the 3d texture
 			float m[] = {
@@ -154,9 +154,10 @@
 
 			glUseProgram(_blockShader->GetProgramHandle());
 			
-			//glUniform1i(textArrayIndex, 0);
+			//glUniform1i(textureId, 0);
+			glUniform1i(_blockShader->get_uTextureArray(), textureId);
 			glActiveTexture(GL_TEXTURE0);
-			//glBindTexture(GL_TEXTURE_2D_ARRAY, textureId);
+			glBindTexture(GL_TEXTURE_2D_ARRAY, textureId);
 			glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 			// resets all the transformations
