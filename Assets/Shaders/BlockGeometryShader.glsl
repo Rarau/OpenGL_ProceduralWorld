@@ -30,7 +30,7 @@ void main()
 	// compute case:
 	
 	// 1 - check sign of each voxel vertex	
-	vec3 scaledLocalPosition = vec3(localPosition[0].x + 1/64, localPosition[0].y + 1/34, localPosition[0].z + 1/64); // to match the 3d texture size (33x33x33)
+	vec3 scaledLocalPosition = vec3(localPosition[0].x + 1.0/64.0, localPosition[0].y + 1.0/64.0, localPosition[0].z * 32); // to match the 3d texture size (33x33x33)
 	
 	vec4 vertex0Value = texture(uTextureArray, vec3(scaledLocalPosition.x, scaledLocalPosition.y, scaledLocalPosition.z));	
 	int v0 = 0;
@@ -53,24 +53,24 @@ void main()
 	int v4 = 0;
 	if(vertex4Value.r > 0.0){v4 = 16;};
 	
-	vec4 vertex5Value = texture(uTextureArray, vec3(scaledLocalPosition.x, scaledLocalPosition.y + separation, scaledLocalPosition.z + separation));
+	vec4 vertex5Value = texture(uTextureArray, vec3(scaledLocalPosition.x, scaledLocalPosition.y + separation, scaledLocalPosition.z + 1));
 	int v5 = 0;
 	if(vertex5Value.r > 0.0){v5 = 32;};
 	
-	vec4 vertex6Value = texture(uTextureArray, vec3(scaledLocalPosition.x + separation, scaledLocalPosition.y + (separation), scaledLocalPosition.z + separation));
+	vec4 vertex6Value = texture(uTextureArray, vec3(scaledLocalPosition.x + separation, scaledLocalPosition.y + (separation), scaledLocalPosition.z + 1));
 	int v6 = 0;
 	if(vertex6Value.r > 0.0){v6 = 64;};
 	
-	vec4 vertex7Value = texture(uTextureArray, vec3(scaledLocalPosition.x + separation, scaledLocalPosition.y, scaledLocalPosition.z + separation));
+	vec4 vertex7Value = texture(uTextureArray, vec3(scaledLocalPosition.x + separation, scaledLocalPosition.y, scaledLocalPosition.z + 1));
 	int v7 = 0;
 	if(vertex7Value.r > 0.0){v7 = 128;};
 	
 	int voxelCase = v7|v6|v5|v4|v3|v2|v1|v0;
-	//int voxelCase = v7;
+	
 	
 	// debug the case
-	vec4 face_color = vec4(float(voxelCase), 0.0, 0.0, 1.0);
-	//vec4 face_color = texture(uTextureArray, vec3(0, 0.9, 0));
+	vec4 face_color = vec4(float(voxelCase)/255, 0.0, 0.0, 1.0);
+	
 	
 	//if(scaledLocalPosition.y + 1.0/32.0 >= 0.97f)
 	if(voxelCase != 0 && voxelCase != 255)
