@@ -11,6 +11,9 @@ layout(location = 3) uniform sampler2DArray uTextureArray;
 // numpolys case table
 uniform uint case_to_numpolys[256];
 
+// Edge connection lookup table
+uniform vec3 edge_connect_list[1280];
+
 // local vertex coordinates
 // even if its only one float, the geometry shader receives an array
 in vec3 localPosition[];
