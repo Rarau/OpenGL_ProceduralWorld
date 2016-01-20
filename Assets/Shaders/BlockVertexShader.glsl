@@ -1,10 +1,10 @@
 attribute vec3 aPositionVertex;
 
-out float test;
+out vec3 localPosition;
 
 void main()
 {
 	gl_Position = gl_ModelViewProjectionMatrix * vec4(aPositionVertex, 1.0);
-	test = 1.0f;
+	localPosition = aPositionVertex;
 	
 }
