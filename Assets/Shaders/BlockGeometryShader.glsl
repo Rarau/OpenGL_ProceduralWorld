@@ -14,7 +14,7 @@ void main()
 	vec4 vertex1Value = texture(uTextureArray, vec3(1f, 1f, 1f));
 	
 	// value arrives here /2 WTF??
-	if(vertex1Value.r == 5.0f)
+	if(vertex1Value.r == 10.0f)
 	{	
 		//PROBLEM!!! We need the ModelViewProjectionMatrix to project points!
 

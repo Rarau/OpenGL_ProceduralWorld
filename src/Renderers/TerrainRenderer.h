@@ -158,7 +158,10 @@
 			glUniform1i(_blockShader->get_uTextureArray(), textureId);
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D_ARRAY, textureId);
-			glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+			// turn off linear texture interpolation so we can sample the texture correctly
+			glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 			// resets all the transformations
 			glLoadIdentity();
