@@ -76,7 +76,7 @@ void main()
 		// emit one triangle per point
 		gl_Position = gl_in[0].gl_Position;
 		EmitVertex();
-		gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0, 0.0, 0.0);
+		gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, edge_connect_list[1].x * 1.0/32.0, 0.0, 0.0);
 		EmitVertex();
 		gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0, 0.0, 0.0);
 		EmitVertex();  
