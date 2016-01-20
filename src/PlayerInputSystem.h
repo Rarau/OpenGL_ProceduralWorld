@@ -52,27 +52,27 @@ namespace engine
 			{
 				if (glfwGetKey(_window, GLFW_KEY_W))
 				{
-					_currentPlayer->SetPosition(AddVector3(_currentPlayer->GetPosition(), scalarMultiplyVector3(_eyeVector, 0.07f)));					
+					_currentPlayer->SetPosition(AddVector3(_currentPlayer->GetPosition(), scalarMultiplyVector3(_eyeVector, 0.03f)));					
 				}
 				if (glfwGetKey(_window, GLFW_KEY_S))
 				{
-					_currentPlayer->SetPosition(SubstractVector3(_currentPlayer->GetPosition(), scalarMultiplyVector3(_eyeVector, 0.07f)));
+					_currentPlayer->SetPosition(SubstractVector3(_currentPlayer->GetPosition(), scalarMultiplyVector3(_eyeVector, 0.03f)));
 				}
 				if (glfwGetKey(_window, GLFW_KEY_A))
 				{
-					_currentPlayer->SetPosition(SubstractVector3(_currentPlayer->GetPosition(), scalarMultiplyVector3(_currentPlayer->GetRightVector(), -0.07f)));
+					_currentPlayer->SetPosition(SubstractVector3(_currentPlayer->GetPosition(), scalarMultiplyVector3(_currentPlayer->GetRightVector(), -0.03f)));
 				}
 				if (glfwGetKey(_window, GLFW_KEY_D))
 				{
-					_currentPlayer->SetPosition(SubstractVector3(_currentPlayer->GetPosition(), scalarMultiplyVector3(_currentPlayer->GetRightVector(), 0.07f)));
+					_currentPlayer->SetPosition(SubstractVector3(_currentPlayer->GetPosition(), scalarMultiplyVector3(_currentPlayer->GetRightVector(), 0.03f)));
 				}
 				if (glfwGetKey(_window, GLFW_KEY_Q))
 				{
-					_currentPlayer->SetPosition(AddVector3(_currentPlayer->GetPosition(), scalarMultiplyVector3(MakeVector3(0.0f, 1.0f, 0.0f), 0.037f)));
+					_currentPlayer->SetPosition(AddVector3(_currentPlayer->GetPosition(), scalarMultiplyVector3(MakeVector3(0.0f, 1.0f, 0.0f), 0.03f)));
 				}
 				if (glfwGetKey(_window, GLFW_KEY_E))
 				{
-					_currentPlayer->SetPosition(SubstractVector3(_currentPlayer->GetPosition(), scalarMultiplyVector3(MakeVector3(0.0f, 1.0f, 0.0f), 0.037f)));
+					_currentPlayer->SetPosition(SubstractVector3(_currentPlayer->GetPosition(), scalarMultiplyVector3(MakeVector3(0.0f, 1.0f, 0.0f), 0.03f)));
 				}
 				_currentPlayer->SetEyeVector(AddVector3(_currentPlayer->GetPosition(), _eyeVector));
 			}
