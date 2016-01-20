@@ -14,6 +14,7 @@ namespace engine
 		GLuint _uInstanceSeparation;
 		GLuint _uTextureArray;
 		GLuint _uCaseToNumpolys;
+		GLint _uEdgeConnectList;
 
 		char* LoadTextFromFile(const char *file)
 		{
@@ -81,6 +82,11 @@ namespace engine
 			return _uCaseToNumpolys;
 		}
 
+		GLint get_uEdgeConnectList()
+		{
+			return _uEdgeConnectList;
+		}
+
 		ShaderInterface(const char *VS, const char *FS)
 		{
 			// read shaders from strings
@@ -119,6 +125,8 @@ namespace engine
 			_uInstanceSeparation = glGetUniformLocation(shader->GetProgramHandle(), "uInstanceSeparation");
 
 			_uCaseToNumpolys = glGetUniformLocation(shader->GetProgramHandle(), "case_to_numpolys");
+			_uEdgeConnectList = glGetUniformLocation(shader->GetProgramHandle(), "edge_connect_list");
+
 		}
 
 		~ShaderInterface()
