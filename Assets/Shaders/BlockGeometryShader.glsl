@@ -18,6 +18,8 @@ uniform vec3 edge_connect_list[1280];
 // even if its only one float, the geometry shader receives an array
 in vec3 localPosition[];
 
+in mat4 MVP[];
+
 
 void main()
 {
@@ -25,7 +27,7 @@ void main()
 	
 	// 1 - check sign of each voxel vertex
 	
-	vec3 scaledLocalPosition = localPosition[0] * 33.0; // to match the 3d texture size (33x33x33)
+	vec3 scaledLocalPosition = localPosition[0] * 32.0; // to match the 3d texture size (33x33x33)
 	
 	vec4 vertex0Value = texture(uTextureArray, vec3(scaledLocalPosition.x, scaledLocalPosition.y, scaledLocalPosition.z));	
 	int v0 = 0;
@@ -74,9 +76,9 @@ void main()
 		// emit one triangle per point
 		gl_Position = gl_in[0].gl_Position;
 		EmitVertex();
-		gl_Position = gl_in[0].gl_Position + vec4(0.0, 0.03, 0.0, 0.0);
+		gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0, 0.0, 0.0);
 		EmitVertex();
-		gl_Position = gl_in[0].gl_Position + vec4(0.03, 0.0, 0.0, 0.0);
+		gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0, 0.0, 0.0);
 		EmitVertex();  
 		
 		EndPrimitive();
