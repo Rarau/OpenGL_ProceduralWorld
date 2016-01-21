@@ -108,12 +108,18 @@
 			}
 
 			ubo = 0;
-			glGenBuffers(1, &ubo);
-			glBindBuffer(GL_UNIFORM_BUFFER, ubo);
-			glBufferData(GL_UNIFORM_BUFFER, sizeof(edge_table), &edge_table, GL_DYNAMIC_DRAW);
+			//glGenBuffers(1, &ubo);
+			//glBindBuffer(GL_UNIFORM_BUFFER, ubo);
+			//glBufferData(GL_UNIFORM_BUFFER, sizeof(edge_table), &(edge_table), GL_STATIC_DRAW);
+			////this line is causing problems
+			//glBindBufferRange(GL_UNIFORM_BUFFER, 0, ubo, 0, sizeof(edge_table.table)); // this binds UBO to Buffer Index
 
-			//this line is causing problems
-			glBindBufferRange(GL_UNIFORM_BUFFER, 0, ubo, 0, sizeof(edge_connect_list)); // this binds UBO to Buffer Index
+			glGenBuffers(1, &ubo);
+			glBindBuffer(GL_SHADER_STORAGE_BUFFER, ubo);
+			glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(edge_table), &(edge_table), GL_STATIC_DRAW);
+			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ubo);
+
+			
 		}
 		~TerrainRenderer()
 		{
@@ -214,7 +220,10 @@
 			glUniform1uiv(_blockShader->get_uCaseToNumpolys(), 256, case_to_numpolys);
 			glUniform1iv(_blockShader->get_uEdgeConnectList(), 3840, edge_connect_list);
 
+			/*glBindBuffer(GL_UNIFORM_BUFFER, ubo);
+			glBufferData(GL_UNIFORM_BUFFER, sizeof(edge_table), &(edge_table), GL_DYNAMIC_DRAW);	*/		
 			
+
 			// execute drawing shader
 			glDrawArrays(GL_POINTS, 0, 32*32*32);
 		}

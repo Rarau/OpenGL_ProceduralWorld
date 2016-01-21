@@ -15,7 +15,7 @@ uniform uint case_to_numpolys[256];
 
 // Edge connection lookup table
 //layout(location = 5) uniform int edge_connect_list[3840];
-layout (std140) uniform edge_table
+layout (std430) buffer edge_table
 { 
   int table[3840];  
 };
@@ -104,8 +104,8 @@ void main()
 	
 	//if(scaledLocalPosition.y + 1.0/32.0 >= 0.97f)
 	//if(voxelCase != 0 && voxelCase != 255)
-	//if(numpolys != 0)
-	if(table[16] == 8)
+	//if(true)
+	if(table[17] == 3)
 	{	
 		vColor = face_color;
 		
