@@ -74,50 +74,43 @@ void main()
 	
 	// concatenate bits
 	int voxelCase = v7|v6|v5|v4|v3|v2|v1|v0;
+	int voxelcase2 = v7|v6|v5|v4|v3|v2|v1|v0;
 	
 	// look up table to see number of polys needed
 	uint numpolys = case_to_numpolys[voxelCase];
 	
-	// which edges hold our vertices
-	
-	//uint edge_connect = edge_connect_list[voxelCase];
-	
-	// int edge_connect[5]; 
-	// edge_connect[0] = edge_connect_list[voxelCase];
-	// edge_connect[1] = edge_connect_list[voxelCase + 1];
-	// edge_connect[2] = edge_connect_list[voxelCase + 2];
-	// edge_connect[3] = edge_connect_list[voxelCase + 3];
-	// edge_connect[4] = edge_connect_list[voxelCase + 4];
-	
-	// vec3 triangles[5]; // careful, each component is the identifier of an edge
-	// triangles[0] = vec3( edge_connect_list[voxelCase*5*3], edge_connect_list[voxelCase*5*3 +1], edge_connect_list[voxelCase*5*3 +2]);
-	// triangles[1] = vec3( edge_connect_list[voxelCase*5*3 + 3], edge_connect_list[voxelCase*5*3 + 3 + 1], edge_connect_list[voxelCase*5*3 + 3 + 2]);
-	// triangles[2] = vec3( edge_connect_list[voxelCase*5*3 + 6], edge_connect_list[voxelCase*5*3 + 6 + 1], edge_connect_list[voxelCase*5*3 + 6 + 2]);
-	// triangles[3] = vec3( edge_connect_list[voxelCase*5*3 + 9], edge_connect_list[voxelCase*5*3 + 9 + 1], edge_connect_list[voxelCase*5*3 + 9 + 2]);
-	// triangles[4] = vec3( edge_connect_list[voxelCase*5*3 + 12], edge_connect_list[voxelCase*5*3 + 12 + 1], edge_connect_list[voxelCase*5*3 + 12 + 2]);
+	// which edges hold our vertices	
+	vec3 triangles[5]; // careful, each component is the identifier of an edge
+	triangles[0] = vec3( table[voxelcase2*5*3], table[voxelcase2*5*3 +1], table[voxelcase2*5*3 +2]);
+	triangles[1] = vec3( table[voxelcase2*5*3 + 3], table[voxelcase2*5*3 + 3 + 1], table[voxelcase2*5*3 + 3 + 2]);
+	triangles[2] = vec3( table[voxelcase2*5*3 + 6], table[voxelcase2*5*3 + 6 + 1], table[voxelcase2*5*3 + 6 + 2]);
+	triangles[3] = vec3( table[voxelcase2*5*3 + 9], table[voxelcase2*5*3 + 9 + 1], table[voxelcase2*5*3 + 9 + 2]);
+	triangles[4] = vec3( table[voxelcase2*5*3 + 12], table[voxelcase2*5*3 + 12 + 1], table[voxelcase2*5*3 + 12 + 2]);
 	
 	// debug the case
 	// vec4 face_color = vec4(float(voxelCase)/255, float(numpolys * 45), 0.0, 1.0);
-	vec4 face_color = vec4(0.0, float(numpolys * 45), 0.0, 1.0);
-
-	
+	vec4 face_color = vec4(float(numpolys)/10, 0.0, 0.0, 1.0);	
 	
 	//if(scaledLocalPosition.y + 1.0/32.0 >= 0.97f)
-	//if(voxelCase != 0 && voxelCase != 255)
 	//if(true)
-	if(table[17] == 3)
+	//if(table[62] == 10)
+	//if(voxelCase != 0 && voxelCase != 255)
+	if(numpolys != 0)
 	{	
-		vColor = face_color;
-		
-		// emit one triangle per point
-		gl_Position = gl_in[0].gl_Position;
-		EmitVertex();
-		gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0, 0.0, 0.0);
-		EmitVertex();
-		gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0, 0.0, 0.0);
-		EmitVertex();  
-		
-		EndPrimitive();
+		// for(uint j = 0; j < numpolys; j++)
+		// {
+			vColor = face_color;
+			
+			// emit one triangle per point
+			gl_Position = gl_in[0].gl_Position;
+			EmitVertex();
+			gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0, 0.0, 0.0);
+			EmitVertex();
+			gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0, 0.0, 0.0);
+			EmitVertex();  
+			
+			EndPrimitive();
+		// }
 	}
 	
 }
