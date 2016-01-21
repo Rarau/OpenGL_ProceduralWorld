@@ -27,9 +27,12 @@
 			}
 		}
 		return verts;
-		
-
 	}
+
+	struct shader_edge_table
+	{
+		GLint table[3840];
+	};
 
 	class TerrainRenderer : public Renderer
 	{
@@ -50,7 +53,8 @@
 
 		ShaderInterface *_blockShader;	
 
-
+		GLuint ubo = 0;		
+		shader_edge_table edge_table;
 
 	public:
 
@@ -94,7 +98,20 @@
 			glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_R32F, 33, 33, 33, 0, GL_RED, GL_FLOAT, NULL);
 
 			// Create a framebuffer object			
-			glGenFramebuffers(1, &frameBufferObjectId);			
+			glGenFramebuffers(1, &frameBufferObjectId);		
+
+
+			// Create uniform buffer
+			for (int i = 0; i < 3840; i++)
+			{
+				edge_table.table[i] = edge_connect_list[i];
+			}
+
+			ubo = 0;
+			glGenBuffers(1, &ubo);
+			glBindBuffer(GL_UNIFORM_BUFFER, ubo);
+			glBufferData(GL_UNIFORM_BUFFER, sizeof(edge_table), &edge_table, GL_DYNAMIC_DRAW);
+
 		}
 		~TerrainRenderer()
 		{
@@ -193,7 +210,7 @@
 			
 			// Pass the lookup tables to the shader
 			glUniform1uiv(_blockShader->get_uCaseToNumpolys(), 256, case_to_numpolys);
-			glUniform3iv(_blockShader->get_uEdgeConnectList(), 1280, edge_connect_list);
+			glUniform1iv(_blockShader->get_uEdgeConnectList(), 3840, edge_connect_list);
 
 			
 			// execute drawing shader

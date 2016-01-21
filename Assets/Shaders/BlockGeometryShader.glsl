@@ -11,8 +11,14 @@ layout(location = 3) uniform sampler2DArray uTextureArray;
 // numpolys case table
 uniform uint case_to_numpolys[256];
 
+
+
 // Edge connection lookup table
-uniform vec3 edge_connect_list[1280];
+//layout(location = 5) uniform int edge_connect_list[3840];
+layout (std140) uniform edge_table
+{ 
+  int table[3840];  
+};
 
 // local vertex coordinates
 // even if its only one float, the geometry shader receives an array
@@ -28,7 +34,7 @@ void main()
 	
 	// compute case:
 	
-	// 1 - check sign of each voxel vertex	
+	// check sign of each voxel vertex	
 	
 	// CAREFUL: x[0-1], y[0-1], z[0-31]
 	vec3 scaledLocalPosition = vec3(localPosition[0].x + 1.0/64.0, localPosition[0].y + 1.0/64.0, localPosition[0].z * 32); // to match the 3d texture size (33x33x33)
@@ -66,16 +72,40 @@ void main()
 	int v7 = 0;
 	if(vertex7Value.r > 0.0){v7 = 128;};
 	
+	// concatenate bits
 	int voxelCase = v7|v6|v5|v4|v3|v2|v1|v0;
 	
+	// look up table to see number of polys needed
+	uint numpolys = case_to_numpolys[voxelCase];
+	
+	// which edges hold our vertices
+	
+	//uint edge_connect = edge_connect_list[voxelCase];
+	
+	// int edge_connect[5]; 
+	// edge_connect[0] = edge_connect_list[voxelCase];
+	// edge_connect[1] = edge_connect_list[voxelCase + 1];
+	// edge_connect[2] = edge_connect_list[voxelCase + 2];
+	// edge_connect[3] = edge_connect_list[voxelCase + 3];
+	// edge_connect[4] = edge_connect_list[voxelCase + 4];
+	
+	// vec3 triangles[5]; // careful, each component is the identifier of an edge
+	// triangles[0] = vec3( edge_connect_list[voxelCase*5*3], edge_connect_list[voxelCase*5*3 +1], edge_connect_list[voxelCase*5*3 +2]);
+	// triangles[1] = vec3( edge_connect_list[voxelCase*5*3 + 3], edge_connect_list[voxelCase*5*3 + 3 + 1], edge_connect_list[voxelCase*5*3 + 3 + 2]);
+	// triangles[2] = vec3( edge_connect_list[voxelCase*5*3 + 6], edge_connect_list[voxelCase*5*3 + 6 + 1], edge_connect_list[voxelCase*5*3 + 6 + 2]);
+	// triangles[3] = vec3( edge_connect_list[voxelCase*5*3 + 9], edge_connect_list[voxelCase*5*3 + 9 + 1], edge_connect_list[voxelCase*5*3 + 9 + 2]);
+	// triangles[4] = vec3( edge_connect_list[voxelCase*5*3 + 12], edge_connect_list[voxelCase*5*3 + 12 + 1], edge_connect_list[voxelCase*5*3 + 12 + 2]);
 	
 	// debug the case
-	vec4 face_color = vec4(float(voxelCase)/255, 0.0, 0.0, 1.0);
+	// vec4 face_color = vec4(float(voxelCase)/255, float(numpolys * 45), 0.0, 1.0);
+	vec4 face_color = vec4(0.0, float(numpolys * 45), 0.0, 1.0);
+
 	
 	
 	//if(scaledLocalPosition.y + 1.0/32.0 >= 0.97f)
-	if(voxelCase != 0 && voxelCase != 255)
-	//if(true)
+	//if(voxelCase != 0 && voxelCase != 255)
+	if(numpolys != 0)
+	//if(edge_connect[0].x > 0)
 	{	
 		vColor = face_color;
 		
