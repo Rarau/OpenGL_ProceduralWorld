@@ -112,6 +112,8 @@
 			glBindBuffer(GL_UNIFORM_BUFFER, ubo);
 			glBufferData(GL_UNIFORM_BUFFER, sizeof(edge_table), &edge_table, GL_DYNAMIC_DRAW);
 
+			//this line is causing problems
+			glBindBufferRange(GL_UNIFORM_BUFFER, 0, ubo, 0, sizeof(edge_connect_list)); // this binds UBO to Buffer Index
 		}
 		~TerrainRenderer()
 		{

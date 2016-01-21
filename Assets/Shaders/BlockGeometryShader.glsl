@@ -104,8 +104,8 @@ void main()
 	
 	//if(scaledLocalPosition.y + 1.0/32.0 >= 0.97f)
 	//if(voxelCase != 0 && voxelCase != 255)
-	if(numpolys != 0)
-	//if(edge_connect[0].x > 0)
+	//if(numpolys != 0)
+	if(table[16] == 8)
 	{	
 		vColor = face_color;
 		
