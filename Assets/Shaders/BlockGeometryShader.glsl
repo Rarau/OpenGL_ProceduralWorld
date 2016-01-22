@@ -190,26 +190,52 @@ void main()
 	rawTriangles[3] = vec3( table[voxelcase2*5*3 + 9], table[voxelcase2*5*3 + 9 + 1], table[voxelcase2*5*3 + 9 + 2]);
 	rawTriangles[4] = vec3( table[voxelcase2*5*3 + 12], table[voxelcase2*5*3 + 12 + 1], table[voxelcase2*5*3 + 12 + 2]);
 	
-	vec4 triPos;
-	edge_to_point(0, triPos);
+	//vec4 triPos;
+	//edge_to_point(0, triPos);
+	
+	// final triangles. Already in view space
+	vec4 finalTriangle1[3]; // first triangle
+	edge_to_point(int(rawTriangles[0].x), finalTriangle1[0]);
+	edge_to_point(int(rawTriangles[0].y), finalTriangle1[1]);
+	edge_to_point(int(rawTriangles[0].z), finalTriangle1[2]);	
+	
+	vec4 finalTriangle2[3]; // second triangle
+	edge_to_point(int(rawTriangles[1].x), finalTriangle2[0]);
+	edge_to_point(int(rawTriangles[1].y), finalTriangle2[1]);
+	edge_to_point(int(rawTriangles[1].z), finalTriangle2[2]);	
+	
+	vec4 finalTriangle3[3]; // third triangle
+	edge_to_point(int(rawTriangles[2].x), finalTriangle3[0]);
+	edge_to_point(int(rawTriangles[2].y), finalTriangle3[1]);
+	edge_to_point(int(rawTriangles[2].z), finalTriangle3[2]);
+	
+	vec4 finalTriangle4[3]; // fourth triangle
+	edge_to_point(int(rawTriangles[3].x), finalTriangle4[0]);
+	edge_to_point(int(rawTriangles[3].y), finalTriangle4[1]);
+	edge_to_point(int(rawTriangles[3].z), finalTriangle4[2]);
+	
+	vec4 finalTriangle5[3]; // fifth triangle
+	edge_to_point(int(rawTriangles[4].x), finalTriangle5[0]);
+	edge_to_point(int(rawTriangles[4].y), finalTriangle5[1]);
+	edge_to_point(int(rawTriangles[4].z), finalTriangle5[2]);
+	
 	
 	
 	// debug the case
 	// vec4 face_color = vec4(float(voxelCase)/255, float(numpolys * 45), 0.0, 1.0);
-	//vec4 face_color = vec4(float(numpolys)/10, 0.0, test(), 1.0);
+	vec4 face_color = vec4(float(numpolys)/10, 0.0, 0.0, 1.0);
 	
-	vec4 face_color = vec4(triPos.x, 0.0, 0.0, 1.0);
+	//vec4 face_color = vec4(finalTriangle3[0].x, 0.0, 0.0, 1.0);
 	
 	//if(scaledLocalPosition.y + 1.0/32.0 >= 0.97f)
 	//if(true)
 	//if(table[62] == 10)
 	//if(voxelCase != 0 && voxelCase != 255)
-	if(numpolys != 0)
+	if(numpolys > 0)
 	{	
 		for(uint j = 0; j < numpolys; j++)
 		{
-			vColor = face_color;
-			
+			vColor = face_color;		
 			
 			// emit one triangle per point
 			// Test triangles. To-do: create the real triangles.
