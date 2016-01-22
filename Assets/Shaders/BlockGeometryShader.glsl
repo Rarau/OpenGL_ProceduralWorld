@@ -233,20 +233,90 @@ void main()
 	//if(voxelCase != 0 && voxelCase != 255)
 	if(numpolys > 0)
 	{	
-		for(uint j = 0; j < numpolys; j++)
-		{
-			vColor = face_color;		
+		vColor = face_color;
+		// for(uint j = 0; j < numpolys; j++)
+		// {
+			// vColor = face_color;		
 			
-			// emit one triangle per point
+			//emit one triangle per point
+			//Test triangles. To-do: create the real triangles.
+			// gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, float(j), 0.0, 0.0);
+			// EmitVertex();
+			// gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0 + float(j), 0.0, 0.0);
+			// EmitVertex();
+			// gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0 + float(j), 0.0, 0.0);
+			// EmitVertex();  
+			
+			// EndPrimitive();
+		// }
+		
+				
+		
+		// emit first triangle
+		// Test triangles. To-do: create the real triangles.
+		gl_Position = finalTriangle1[0];
+		EmitVertex();
+		gl_Position = finalTriangle1[1];
+		EmitVertex();
+		gl_Position = finalTriangle1[2];
+		EmitVertex();  
+		
+		EndPrimitive();
+		
+		if(numpolys > 1)
+		{
+			// emit second triangle
 			// Test triangles. To-do: create the real triangles.
-			gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, float(j), 0.0, 0.0);
+			gl_Position = finalTriangle2[0];
 			EmitVertex();
-			gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0 + float(j), 0.0, 0.0);
+			gl_Position = finalTriangle2[1];
 			EmitVertex();
-			gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0 + float(j), 0.0, 0.0);
+			gl_Position = finalTriangle2[2];
 			EmitVertex();  
 			
 			EndPrimitive();
+			
+			if(numpolys > 2)
+			{
+				// emit third triangle
+				// Test triangles. To-do: create the real triangles.
+				gl_Position = finalTriangle3[0];
+				EmitVertex();
+				gl_Position = finalTriangle3[1];
+				EmitVertex();
+				gl_Position = finalTriangle3[2];
+				EmitVertex();  
+				
+				EndPrimitive();
+				
+				if(numpolys > 3)
+				{
+					// emit fourth triangle
+					// Test triangles. To-do: create the real triangles.
+					gl_Position = finalTriangle4[0];
+					EmitVertex();
+					gl_Position = finalTriangle4[1];
+					EmitVertex();
+					gl_Position = finalTriangle4[2];
+					EmitVertex();  
+					
+					EndPrimitive();
+					
+					if(numpolys > 4)
+					{
+						// emit fourth triangle
+						// Test triangles. To-do: create the real triangles.
+						gl_Position = finalTriangle5[0];
+						EmitVertex();
+						gl_Position = finalTriangle5[1];
+						EmitVertex();
+						gl_Position = finalTriangle5[2];
+						EmitVertex();  
+						
+						EndPrimitive();
+					}
+				}
+			}
 		}
 	}
 	
