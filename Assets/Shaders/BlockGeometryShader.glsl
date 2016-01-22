@@ -54,10 +54,12 @@ void corners_to_point(in int point1, in int point2, out vec4 position)
 	float w1 = modvalue1 * sumInv;
 	float w2 = modvalue2 * sumInv;
 	
-	position = pPos[point1] * w1 + pPos[point2];	
+	//position = pPos[point2];
+	position = pPos[point1] * w2 + pPos[point2] * w1;	
+	//position = vec4((pPos[point1].x + pPos[point2].x)*0.5, (pPos[point1].y + pPos[point2].y)*0.5, (pPos[point1].z + pPos[point2].z)*0.5, 1.0);
 }
 
-void edge_to_point(in int edge, out vec4 position)
+void edge_to_point(in uint edge, out vec4 position)
 {	
 	position = vec4(0.0, 0.0, 0.0, 0.0);
 
@@ -91,7 +93,7 @@ void edge_to_point(in int edge, out vec4 position)
 	}
 	if(edge == 7)
 	{
-		corners_to_point(7,8, position);
+		corners_to_point(7,4, position);
 	}
 	if(edge == 8)
 	{
@@ -114,21 +116,32 @@ void edge_to_point(in int edge, out vec4 position)
 
 void main()
 {
-	//Calculate positions of the 8 corners of the voxel:
-	pPos[0] = gl_in[0].gl_Position;
-	pPos[1] = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0, 0.0, 0.0);
-	pPos[2] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 1.0/32.0, 0.0, 0.0);
-	pPos[3] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0, 0.0, 0.0);
+	// Calculate positions of the 8 corners of the voxel:
+	// pPos[0] = gl_in[0].gl_Position;
+	// pPos[1] = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0, 0.0, 0.0);
+	// pPos[2] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 1.0/32.0, 0.0, 0.0);
+	// pPos[3] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0, 0.0, 0.0);
 	
-	pPos[4] = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 0.0, 1.0/32.0, 0.0);
-	pPos[5] = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0, 1.0/32.0, 0.0);
-	pPos[6] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 1.0/32.0, 1.0/32.0, 0.0);
-	pPos[7] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0, 1.0/32.0, 0.0);
+	// pPos[4] = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 0.0, 1.0/32.0, 0.0);
+	// pPos[5] = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0, 1.0/32.0, 0.0);
+	// pPos[6] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 1.0/32.0, 1.0/32.0, 0.0);
+	// pPos[7] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0, 1.0/32.0, 0.0);
 	
+	// Calculate positions of the 8 corners of the voxel:
 	float separation = 1.0/32.0;
+	vec4 local = vec4(localPosition[0].x, localPosition[0].y, localPosition[0].z, 1.0);
+	pPos[0] = local;
+	pPos[1] = local + vec4(0.0, separation, 0.0, 0.0);
+	pPos[2] = local + vec4(separation, separation, 0.0, 0.0);
+	pPos[3] = local + vec4(separation, 0.0, 0.0, 0.0);
 	
-	// compute case:
+	pPos[4] = local + vec4(0.0, 0.0, separation, 0.0);
+	pPos[5] = local + vec4(0.0, separation, separation, 0.0);
+	pPos[6] = local + vec4(separation, separation, separation, 0.0);
+	pPos[7] = local + vec4(separation, 0.0, separation, 0.0);
 	
+	
+	// compute case: ---------------------------------------------------------------------------------------------------	
 	// check sign of each voxel vertex	
 	
 	// CAREFUL: x[0-1], y[0-1], z[0-31]
@@ -176,54 +189,56 @@ void main()
 	if(vertexValues[7] > 0.0){v7 = 128;};
 	
 	// concatenate bits
-	int voxelCase = v7|v6|v5|v4|v3|v2|v1|v0;
+	int voxelCase = v7|v6|v5|v4|v3|v2|v1|v0; // seems correct
 	int voxelcase2 = v7|v6|v5|v4|v3|v2|v1|v0;
 	
+	// End compute case: -----------------------------------------------------------------------------------------------
+	
 	// look up table to see number of polys needed
-	uint numpolys = case_to_numpolys[voxelCase];
+	uint numpolys = case_to_numpolys[voxelCase]; // Correct
 	
 	// which edges hold our vertices	
-	vec3 rawTriangles[5]; // careful, each component is the identifier of an edge
-	rawTriangles[0] = vec3( table[voxelcase2*5*3], table[voxelcase2*5*3 +1], table[voxelcase2*5*3 +2]);
-	rawTriangles[1] = vec3( table[voxelcase2*5*3 + 3], table[voxelcase2*5*3 + 3 + 1], table[voxelcase2*5*3 + 3 + 2]);
-	rawTriangles[2] = vec3( table[voxelcase2*5*3 + 6], table[voxelcase2*5*3 + 6 + 1], table[voxelcase2*5*3 + 6 + 2]);
-	rawTriangles[3] = vec3( table[voxelcase2*5*3 + 9], table[voxelcase2*5*3 + 9 + 1], table[voxelcase2*5*3 + 9 + 2]);
-	rawTriangles[4] = vec3( table[voxelcase2*5*3 + 12], table[voxelcase2*5*3 + 12 + 1], table[voxelcase2*5*3 + 12 + 2]);
+	uvec3 rawTriangles[5]; // careful, each component is the identifier of an edge
+	rawTriangles[0] = uvec3( table[voxelcase2*5*3], table[voxelcase2*5*3 +1], table[voxelcase2*5*3 +2]);
+	rawTriangles[1] = uvec3( table[voxelcase2*5*3 + 3], table[voxelcase2*5*3 + 3 + 1], table[voxelcase2*5*3 + 3 + 2]);
+	rawTriangles[2] = uvec3( table[voxelcase2*5*3 + 6], table[voxelcase2*5*3 + 6 + 1], table[voxelcase2*5*3 + 6 + 2]);
+	rawTriangles[3] = uvec3( table[voxelcase2*5*3 + 9], table[voxelcase2*5*3 + 9 + 1], table[voxelcase2*5*3 + 9 + 2]);
+	rawTriangles[4] = uvec3( table[voxelcase2*5*3 + 12], table[voxelcase2*5*3 + 12 + 1], table[voxelcase2*5*3 + 12 + 2]);
 	
 	//vec4 triPos;
 	//edge_to_point(0, triPos);
 	
 	// final triangles. Already in view space
 	vec4 finalTriangle1[3]; // first triangle
-	edge_to_point(int(rawTriangles[0].x), finalTriangle1[0]);
-	edge_to_point(int(rawTriangles[0].y), finalTriangle1[1]);
-	edge_to_point(int(rawTriangles[0].z), finalTriangle1[2]);	
+	edge_to_point(rawTriangles[0].x, finalTriangle1[0]);
+	edge_to_point(rawTriangles[0].y, finalTriangle1[1]);
+	edge_to_point(rawTriangles[0].z, finalTriangle1[2]);	
 	
 	vec4 finalTriangle2[3]; // second triangle
-	edge_to_point(int(rawTriangles[1].x), finalTriangle2[0]);
-	edge_to_point(int(rawTriangles[1].y), finalTriangle2[1]);
-	edge_to_point(int(rawTriangles[1].z), finalTriangle2[2]);	
+	edge_to_point(rawTriangles[1].x, finalTriangle2[0]);
+	edge_to_point(rawTriangles[1].y, finalTriangle2[1]);
+	edge_to_point(rawTriangles[1].z, finalTriangle2[2]);	
 	
 	vec4 finalTriangle3[3]; // third triangle
-	edge_to_point(int(rawTriangles[2].x), finalTriangle3[0]);
-	edge_to_point(int(rawTriangles[2].y), finalTriangle3[1]);
-	edge_to_point(int(rawTriangles[2].z), finalTriangle3[2]);
+	edge_to_point(rawTriangles[2].x, finalTriangle3[0]);
+	edge_to_point(rawTriangles[2].y, finalTriangle3[1]);
+	edge_to_point(rawTriangles[2].z, finalTriangle3[2]);
 	
 	vec4 finalTriangle4[3]; // fourth triangle
-	edge_to_point(int(rawTriangles[3].x), finalTriangle4[0]);
-	edge_to_point(int(rawTriangles[3].y), finalTriangle4[1]);
-	edge_to_point(int(rawTriangles[3].z), finalTriangle4[2]);
+	edge_to_point(rawTriangles[3].x, finalTriangle4[0]);
+	edge_to_point(rawTriangles[3].y, finalTriangle4[1]);
+	edge_to_point(rawTriangles[3].z, finalTriangle4[2]);
 	
 	vec4 finalTriangle5[3]; // fifth triangle
-	edge_to_point(int(rawTriangles[4].x), finalTriangle5[0]);
-	edge_to_point(int(rawTriangles[4].y), finalTriangle5[1]);
-	edge_to_point(int(rawTriangles[4].z), finalTriangle5[2]);
+	edge_to_point(rawTriangles[4].x, finalTriangle5[0]);
+	edge_to_point(rawTriangles[4].y, finalTriangle5[1]);
+	edge_to_point(rawTriangles[4].z, finalTriangle5[2]);
 	
 	
 	
-	// debug the case
-	// vec4 face_color = vec4(float(voxelCase)/255, float(numpolys * 45), 0.0, 1.0);
-	vec4 face_color = vec4(float(numpolys)/10, 0.0, 0.0, 1.0);
+	// debug numpolys
+	vec4 face_color = vec4(float(voxelCase)/255, 0.0, 0.0, 1.0);
+	//vec4 face_color = vec4(float(numpolys)/10, 0.0, 0.0, 1.0);
 	
 	//vec4 face_color = vec4(finalTriangle3[0].x, 0.0, 0.0, 1.0);
 	
@@ -248,17 +263,16 @@ void main()
 			// EmitVertex();  
 			
 			// EndPrimitive();
-		// }
-		
+		// }		
 				
 		
 		// emit first triangle
 		// Test triangles. To-do: create the real triangles.
-		gl_Position = finalTriangle1[0];
+		gl_Position = MVP[0]*finalTriangle1[0];
 		EmitVertex();
-		gl_Position = finalTriangle1[1];
+		gl_Position = MVP[0]*finalTriangle1[1];
 		EmitVertex();
-		gl_Position = finalTriangle1[2];
+		gl_Position = MVP[0]*finalTriangle1[2];
 		EmitVertex();  
 		
 		EndPrimitive();
@@ -266,12 +280,11 @@ void main()
 		if(numpolys > 1)
 		{
 			// emit second triangle
-			// Test triangles. To-do: create the real triangles.
-			gl_Position = finalTriangle2[0];
+			gl_Position = MVP[0]*finalTriangle2[0];
 			EmitVertex();
-			gl_Position = finalTriangle2[1];
+			gl_Position = MVP[0]*finalTriangle2[1];
 			EmitVertex();
-			gl_Position = finalTriangle2[2];
+			gl_Position = MVP[0]*finalTriangle2[2];
 			EmitVertex();  
 			
 			EndPrimitive();
@@ -279,12 +292,11 @@ void main()
 			if(numpolys > 2)
 			{
 				// emit third triangle
-				// Test triangles. To-do: create the real triangles.
-				gl_Position = finalTriangle3[0];
+				gl_Position = MVP[0]*finalTriangle3[0];
 				EmitVertex();
-				gl_Position = finalTriangle3[1];
+				gl_Position = MVP[0]*finalTriangle3[1];
 				EmitVertex();
-				gl_Position = finalTriangle3[2];
+				gl_Position = MVP[0]*finalTriangle3[2];
 				EmitVertex();  
 				
 				EndPrimitive();
@@ -292,12 +304,11 @@ void main()
 				if(numpolys > 3)
 				{
 					// emit fourth triangle
-					// Test triangles. To-do: create the real triangles.
-					gl_Position = finalTriangle4[0];
+					gl_Position = MVP[0]*finalTriangle4[0];
 					EmitVertex();
-					gl_Position = finalTriangle4[1];
+					gl_Position = MVP[0]*finalTriangle4[1];
 					EmitVertex();
-					gl_Position = finalTriangle4[2];
+					gl_Position = MVP[0]*finalTriangle4[2];
 					EmitVertex();  
 					
 					EndPrimitive();
@@ -305,12 +316,11 @@ void main()
 					if(numpolys > 4)
 					{
 						// emit fourth triangle
-						// Test triangles. To-do: create the real triangles.
-						gl_Position = finalTriangle5[0];
+						gl_Position = MVP[0]*finalTriangle5[0];
 						EmitVertex();
-						gl_Position = finalTriangle5[1];
+						gl_Position = MVP[0]*finalTriangle5[1];
 						EmitVertex();
-						gl_Position = finalTriangle5[2];
+						gl_Position = MVP[0]*finalTriangle5[2];
 						EmitVertex();  
 						
 						EndPrimitive();
