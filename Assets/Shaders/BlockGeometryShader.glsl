@@ -168,7 +168,7 @@ void main()
 	if(vertexValues[3] > 0.0){v3 = 8;};
 	
 	
-	vec4 vertex4Value = texture(uTextureArray, vec3(scaledLocalPosition.x, scaledLocalPosition.y, scaledLocalPosition.z + separation));	
+	vec4 vertex4Value = texture(uTextureArray, vec3(scaledLocalPosition.x, scaledLocalPosition.y, scaledLocalPosition.z + 1));	
 	int v4 = 0;
 	vertexValues[4] = vertex4Value.r;
 	if(vertexValues[4] > 0.0){v4 = 16;};
@@ -189,8 +189,12 @@ void main()
 	if(vertexValues[7] > 0.0){v7 = 128;};
 	
 	// concatenate bits
-	int voxelCase = v7|v6|v5|v4|v3|v2|v1|v0; // seems correct
-	int voxelcase2 = v7|v6|v5|v4|v3|v2|v1|v0;
+	//int voxelCase = v7|v6|v5|v4|v3|v2|v1|v0; // seems correct
+	//int voxelcase2 = v7|v6|v5|v4|v3|v2|v1|v0;
+	int voxelCase = v7+v6+v5+v4+v3+v2+v1+v0; // seems correct	
+	int voxelcase2 = v7+v6+v5+v4+v3+v2+v1+v0;
+	//int voxelCase = 15;
+	//int voxelcase2 = 15;
 	
 	// End compute case: -----------------------------------------------------------------------------------------------
 	
