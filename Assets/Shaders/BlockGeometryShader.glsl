@@ -1,7 +1,7 @@
 #version 430
  
 layout(points) in;
-layout (triangle_strip, max_vertices=3) out;
+layout (triangle_strip, max_vertices=15) out;
 
 out vec4 vColor;
 
@@ -97,20 +97,20 @@ void main()
 	//if(voxelCase != 0 && voxelCase != 255)
 	if(numpolys != 0)
 	{	
-		// for(uint j = 0; j < numpolys; j++)
-		// {
+		for(uint j = 0; j < numpolys; j++)
+		{
 			vColor = face_color;
 			
 			// emit one triangle per point
-			gl_Position = gl_in[0].gl_Position;
+			gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, float(j), 0.0, 0.0);
 			EmitVertex();
-			gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0, 0.0, 0.0);
+			gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0 + float(j), 0.0, 0.0);
 			EmitVertex();
-			gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0, 0.0, 0.0);
+			gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0 + float(j), 0.0, 0.0);
 			EmitVertex();  
 			
 			EndPrimitive();
-		// }
+		}
 	}
 	
 }
