@@ -28,9 +28,9 @@ in mat4 MVP[];
 
 
 // density values at the corners of the voxel
-float v[8];
+float vertexValues[8];
 
-// voxel corners global positions
+// voxel corners view positions
 vec4 pPos[8];
 // vec4 p1Pos;
 // vec4 p2Pos;
@@ -44,9 +44,17 @@ void corners_to_point(in int point1, in int point2, out vec4 position)
 {
 	position = vec4(1.0, 1.0, 1.0, 0.0);
 	
-	// float w1 =
-	// float w2 =
+	float value1 = vertexValues[point1];
+	float value2 = vertexValues[point2];
 	
+	float modvalue1 = abs(value1);
+	float modvalue2 = abs(value2);
+	
+	float sumInv = 1/(modvalue1 + modvalue2);
+	float w1 = modvalue1 * sumInv;
+	float w2 = modvalue2 * sumInv;
+	
+	position = pPos[point1] * w1 + pPos[point2];	
 }
 
 void edge_to_point(in int edge, out vec4 position)
@@ -128,36 +136,44 @@ void main()
 	
 	vec4 vertex0Value = texture(uTextureArray, vec3(scaledLocalPosition.x, scaledLocalPosition.y, scaledLocalPosition.z));	
 	int v0 = 0;
-	if(vertex0Value.r > 0.0){v0 = 1;};
+	vertexValues[0] = vertex0Value.r;
+	if(vertexValues[0] > 0.0){v0 = 1;};
 	
 	vec4 vertex1Value = texture(uTextureArray, vec3(scaledLocalPosition.x, scaledLocalPosition.y + separation, scaledLocalPosition.z));
 	int v1 = 0;
-	if(vertex1Value.r > 0.0){v1 = 2;};
+	vertexValues[1] = vertex1Value.r;
+	if(vertexValues[1] > 0.0){v1 = 2;};
 	
 	vec4 vertex2Value = texture(uTextureArray, vec3(scaledLocalPosition.x + separation, scaledLocalPosition.y + separation, scaledLocalPosition.z));
 	int v2 = 0;
-	if(vertex2Value.r > 0.0){v2 = 4;};
+	vertexValues[2] = vertex2Value.r;
+	if(vertexValues[2] > 0.0){v2 = 4;};
 	
 	vec4 vertex3Value = texture(uTextureArray, vec3(scaledLocalPosition.x + separation, scaledLocalPosition.y, scaledLocalPosition.z));
 	int v3 = 0;
-	if(vertex3Value.r > 0.0){v3 = 8;};
+	vertexValues[3] = vertex3Value.r;
+	if(vertexValues[3] > 0.0){v3 = 8;};
 	
 	
 	vec4 vertex4Value = texture(uTextureArray, vec3(scaledLocalPosition.x, scaledLocalPosition.y, scaledLocalPosition.z + separation));	
 	int v4 = 0;
-	if(vertex4Value.r > 0.0){v4 = 16;};
+	vertexValues[4] = vertex4Value.r;
+	if(vertexValues[4] > 0.0){v4 = 16;};
 	
 	vec4 vertex5Value = texture(uTextureArray, vec3(scaledLocalPosition.x, scaledLocalPosition.y + separation, scaledLocalPosition.z + 1));
 	int v5 = 0;
-	if(vertex5Value.r > 0.0){v5 = 32;};
+	vertexValues[5] = vertex5Value.r;
+	if(vertexValues[5] > 0.0){v5 = 32;};
 	
 	vec4 vertex6Value = texture(uTextureArray, vec3(scaledLocalPosition.x + separation, scaledLocalPosition.y + (separation), scaledLocalPosition.z + 1));
 	int v6 = 0;
-	if(vertex6Value.r > 0.0){v6 = 64;};
+	vertexValues[6] = vertex6Value.r;
+	if(vertexValues[6] > 0.0){v6 = 64;};
 	
 	vec4 vertex7Value = texture(uTextureArray, vec3(scaledLocalPosition.x + separation, scaledLocalPosition.y, scaledLocalPosition.z + 1));
 	int v7 = 0;
-	if(vertex7Value.r > 0.0){v7 = 128;};
+	vertexValues[7] = vertex7Value.r;
+	if(vertexValues[7] > 0.0){v7 = 128;};
 	
 	// concatenate bits
 	int voxelCase = v7|v6|v5|v4|v3|v2|v1|v0;
