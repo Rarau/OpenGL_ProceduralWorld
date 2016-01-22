@@ -26,20 +26,32 @@ in vec3 localPosition[];
 
 in mat4 MVP[];
 
-void test(out float outputValue)
+
+// density values at the corners of the voxel
+float v[8];
+
+// voxel corners global positions
+vec4 pPos[8];
+// vec4 p1Pos;
+// vec4 p2Pos;
+// vec4 p3Pos;
+// vec4 p4Pos;
+// vec4 p5Pos;
+// vec4 p6Pos;
+// vec4 p7Pos;
+
+void corners_to_point(in int point1, in int point2, out vec4 position)
 {
-	outputValue = 1.0;
+	position = vec4(1.0, 1.0, 1.0, 0.0);
+	
+	// float w1 =
+	// float w2 =
+	
 }
 
-
-void corners_to_point(in int point1, in int point2, out vec3 position)
-{
-	position = vec3(1.0,1.0,1.0);
-}
-
-void edge_to_point(in int edge, out vec3 position)
+void edge_to_point(in int edge, out vec4 position)
 {	
-	position = vec3(0.0, 0.0, 0.0);
+	position = vec4(0.0, 0.0, 0.0, 0.0);
 
 	if(edge == 0)
 	{
@@ -94,6 +106,16 @@ void edge_to_point(in int edge, out vec3 position)
 
 void main()
 {
+	//Calculate positions of the 8 corners of the voxel:
+	pPos[0] = gl_in[0].gl_Position;
+	pPos[1] = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0, 0.0, 0.0);
+	pPos[2] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 1.0/32.0, 0.0, 0.0);
+	pPos[3] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0, 0.0, 0.0);
+	
+	pPos[4] = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 0.0, 1.0/32.0, 0.0);
+	pPos[5] = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0, 1.0/32.0, 0.0);
+	pPos[6] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 1.0/32.0, 1.0/32.0, 0.0);
+	pPos[7] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0, 1.0/32.0, 0.0);
 	
 	float separation = 1.0/32.0;
 	
@@ -152,12 +174,15 @@ void main()
 	rawTriangles[3] = vec3( table[voxelcase2*5*3 + 9], table[voxelcase2*5*3 + 9 + 1], table[voxelcase2*5*3 + 9 + 2]);
 	rawTriangles[4] = vec3( table[voxelcase2*5*3 + 12], table[voxelcase2*5*3 + 12 + 1], table[voxelcase2*5*3 + 12 + 2]);
 	
+	vec4 triPos;
+	edge_to_point(0, triPos);
+	
+	
 	// debug the case
 	// vec4 face_color = vec4(float(voxelCase)/255, float(numpolys * 45), 0.0, 1.0);
 	//vec4 face_color = vec4(float(numpolys)/10, 0.0, test(), 1.0);
-	float c = 0.0;
-	test(c);
-	vec4 face_color = vec4(c, 0.0, 0.0, 1.0);
+	
+	vec4 face_color = vec4(triPos.x, 0.0, 0.0, 1.0);
 	
 	//if(scaledLocalPosition.y + 1.0/32.0 >= 0.97f)
 	//if(true)
