@@ -26,6 +26,71 @@ in vec3 localPosition[];
 
 in mat4 MVP[];
 
+void test(out float outputValue)
+{
+	outputValue = 1.0;
+}
+
+
+void corners_to_point(in int point1, in int point2, out vec3 position)
+{
+	position = vec3(1.0,1.0,1.0);
+}
+
+void edge_to_point(in int edge, out vec3 position)
+{	
+	position = vec3(0.0, 0.0, 0.0);
+
+	if(edge == 0)
+	{
+		corners_to_point(0,1, position);
+	}
+	if(edge == 1)
+	{
+		corners_to_point(1,2, position);
+	}
+	if(edge == 2)
+	{
+		corners_to_point(2,3, position);
+	}	
+	if(edge == 3)
+	{		
+		corners_to_point(3,0, position);
+	}
+	if(edge == 4)
+	{
+		corners_to_point(4,5, position);
+	}
+	if(edge == 5)
+	{
+		corners_to_point(5,6, position);
+	}
+	if(edge == 6)
+	{
+		corners_to_point(6,7, position);
+	}
+	if(edge == 7)
+	{
+		corners_to_point(7,8, position);
+	}
+	if(edge == 8)
+	{
+		corners_to_point(4,0, position);	
+	}
+	if(edge == 9)
+	{
+		corners_to_point(1,5, position);
+	}	
+	if(edge == 10)
+	{		
+		corners_to_point(2,6, position);
+	}
+	if(edge == 11)
+	{
+		corners_to_point(3,7, position);
+	}
+}
+
 
 void main()
 {
@@ -80,16 +145,19 @@ void main()
 	uint numpolys = case_to_numpolys[voxelCase];
 	
 	// which edges hold our vertices	
-	vec3 triangles[5]; // careful, each component is the identifier of an edge
-	triangles[0] = vec3( table[voxelcase2*5*3], table[voxelcase2*5*3 +1], table[voxelcase2*5*3 +2]);
-	triangles[1] = vec3( table[voxelcase2*5*3 + 3], table[voxelcase2*5*3 + 3 + 1], table[voxelcase2*5*3 + 3 + 2]);
-	triangles[2] = vec3( table[voxelcase2*5*3 + 6], table[voxelcase2*5*3 + 6 + 1], table[voxelcase2*5*3 + 6 + 2]);
-	triangles[3] = vec3( table[voxelcase2*5*3 + 9], table[voxelcase2*5*3 + 9 + 1], table[voxelcase2*5*3 + 9 + 2]);
-	triangles[4] = vec3( table[voxelcase2*5*3 + 12], table[voxelcase2*5*3 + 12 + 1], table[voxelcase2*5*3 + 12 + 2]);
+	vec3 rawTriangles[5]; // careful, each component is the identifier of an edge
+	rawTriangles[0] = vec3( table[voxelcase2*5*3], table[voxelcase2*5*3 +1], table[voxelcase2*5*3 +2]);
+	rawTriangles[1] = vec3( table[voxelcase2*5*3 + 3], table[voxelcase2*5*3 + 3 + 1], table[voxelcase2*5*3 + 3 + 2]);
+	rawTriangles[2] = vec3( table[voxelcase2*5*3 + 6], table[voxelcase2*5*3 + 6 + 1], table[voxelcase2*5*3 + 6 + 2]);
+	rawTriangles[3] = vec3( table[voxelcase2*5*3 + 9], table[voxelcase2*5*3 + 9 + 1], table[voxelcase2*5*3 + 9 + 2]);
+	rawTriangles[4] = vec3( table[voxelcase2*5*3 + 12], table[voxelcase2*5*3 + 12 + 1], table[voxelcase2*5*3 + 12 + 2]);
 	
 	// debug the case
 	// vec4 face_color = vec4(float(voxelCase)/255, float(numpolys * 45), 0.0, 1.0);
-	vec4 face_color = vec4(float(numpolys)/10, 0.0, 0.0, 1.0);	
+	//vec4 face_color = vec4(float(numpolys)/10, 0.0, test(), 1.0);
+	float c = 0.0;
+	test(c);
+	vec4 face_color = vec4(c, 0.0, 0.0, 1.0);
 	
 	//if(scaledLocalPosition.y + 1.0/32.0 >= 0.97f)
 	//if(true)
@@ -101,7 +169,9 @@ void main()
 		{
 			vColor = face_color;
 			
+			
 			// emit one triangle per point
+			// Test triangles. To-do: create the real triangles.
 			gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, float(j), 0.0, 0.0);
 			EmitVertex();
 			gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0 + float(j), 0.0, 0.0);
