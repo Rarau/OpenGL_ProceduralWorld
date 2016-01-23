@@ -16,6 +16,14 @@ namespace engine
 		return newVector;
 	}
 
+	Vector3 MakeVector3(GLfloat n)
+	{
+		Vector3 newVector;
+		newVector.x = newVector.y = newVector.z = n;
+		
+		return newVector;
+	}
+
 	Vector3 NormalizeVector3(Vector3 vector)
 	{
 		GLdouble magnitude = sqrt(vector.x* vector.x + vector.y*vector.y + vector.z*vector.z);

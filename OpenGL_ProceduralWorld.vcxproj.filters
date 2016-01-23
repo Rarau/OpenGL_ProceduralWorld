@@ -81,6 +81,15 @@
     <ClInclude Include="src\Tables.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Matrix4x4.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vector4_.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vector3_.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">

@@ -16,6 +16,7 @@
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\GameManager.h" />
+    <ClInclude Include="src\Matrix4x4.h" />
     <ClInclude Include="src\MovementSystem.h" />
     <ClInclude Include="src\PlayerInputSystem.h" />
     <ClInclude Include="src\Renderer.h" />
@@ -30,7 +31,9 @@
     <ClInclude Include="src\Tables.h" />
     <ClInclude Include="src\Terrain.h" />
     <ClInclude Include="src\Vector3.h" />
+    <ClInclude Include="src\Vector3_.h" />
     <ClInclude Include="src\Vector4.h" />
+    <ClInclude Include="src\Vector4_.h" />
     <ClInclude Include="src\VertexBuffer.h" />
     <ClInclude Include="src\VertexData.h" />
   </ItemGroup>

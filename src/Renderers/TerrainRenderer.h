@@ -151,14 +151,17 @@
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			// configure our camera and viewport to render properly to the 3d texture
+			/*
 			float m[] = {
 				2.0f, 0.0f, 0.0f, 0.0f,
 				0.0f, 2.0f, 0.0f, 0.0f,
 				0.0f, 0.0f, 2.0f, 0.0f,
 				-1.0f, -1.0f, -1.0f, 1.0f,
-			};			
+			};		
+			*/
+			Matrix4x4 m = Matrix4x4(Vector3_(-1.0f), 2.0f);
 			glLoadIdentity();			
-			glLoadMatrixf(m);
+			glLoadMatrixf(m.data());
 			glViewport(0, 0, 33, 33);
 
 			// enable quad vertex buffer
@@ -188,8 +191,11 @@
 			glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
+
+
 			// resets all the transformations
 			glLoadIdentity();
+
 			// set the camera transform	
 			Entity *_currentCamera = RenderSystem::GetRenderSystem().GetCurrentCamera();
 			gluLookAt(
@@ -204,11 +210,21 @@
 				_currentCamera->GetUpVector().z
 				);
 
-			//transform the entity			
+			//transform the entity		
+			Matrix4x4 m2;
+			m2.LoadIdentity();
+			m2.Translate(entity->GetPosition().x, entity->GetPosition().y, entity->GetPosition().z);
+			m2.Rotate(entity->GetRotation().x, 0.0f, 0.0f, 1.0f);
+			m2.Rotate(entity->GetRotation().y, 0.0f, 1.0f, 0.0f);
+			m2.Rotate(entity->GetRotation().z, 1.0f, 0.0f, 0.0f);
+
+			glMultMatrixf(m2.data());
+			/*
 			glTranslatef(entity->GetPosition().x, entity->GetPosition().y, entity->GetPosition().z);
 			glRotatef(entity->GetRotation().x, 0.0f, 0.0f, 1.0f);
 			glRotatef(entity->GetRotation().y, 0.0f, 1.0f, 0.0f);
 			glRotatef(entity->GetRotation().z, 1.0f, 0.0f, 0.0f);
+			*/
 			//glScalef(entity->GetScale().x, entity->GetScale().y, entity->GetScale().z);			
 
 			// enable block vertex buffer
@@ -218,7 +234,7 @@
 			
 			// Pass the lookup tables to the shader
 			glUniform1uiv(_blockShader->get_uCaseToNumpolys(), 256, case_to_numpolys);
-			glUniform1iv(_blockShader->get_uEdgeConnectList(), 3840, edge_connect_list);
+			//glUniform1iv(_blockShader->get_uEdgeConnectList(), 3840, edge_connect_list);
 
 			/*glBindBuffer(GL_UNIFORM_BUFFER, ubo);
 			glBufferData(GL_UNIFORM_BUFFER, sizeof(edge_table), &(edge_table), GL_DYNAMIC_DRAW);	*/		

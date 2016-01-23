@@ -1,6 +1,6 @@
 attribute vec3 aPositionVertex;
 
-
+uniform mat4 _ModelToWorld;
 out vec3 localPosition;
 out mat4 MVP;
 

@@ -17,8 +17,11 @@ namespace engine
 #include <vector>
 #include <math.h>
 
+#include "Vector3_.h"
 #include "Vector3.h"
 #include "Vector4.h"
+#include "Vector4_.h"
+#include "Matrix4x4.h"
 #include "VertexData.h"
 #include "ShaderData.h"
 
