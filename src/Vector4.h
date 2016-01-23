@@ -122,6 +122,11 @@ namespace engine
 			return Vector4(v[0] * number, v[1] * number, v[2] * number, v[3] * number);
 		}
 
+		Vector4 componentMultiplication(const Vector4 &r) const
+		{
+			return Vector4(v[0] * r.v[0], v[1] * r.v[1], v[2] * r.v[2], v[3] * r.v[3]);
+		}
+
 		Vector4 operator/(const float number) const
 		{
 			return operator*(1 / number);

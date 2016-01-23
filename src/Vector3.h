@@ -90,6 +90,11 @@ namespace engine
 			return Vector3(v[0] * number, v[1] * number, v[2] * number);
 		}
 
+		Vector3 componentMultiplication(const Vector3 &r) const
+		{
+			return Vector3(v[0] * r.v[0], v[1] * r.v[1], v[2] * r.v[2]);
+		}
+
 		Vector3 operator/(const float number) const
 		{
 			return operator*(1/number);
