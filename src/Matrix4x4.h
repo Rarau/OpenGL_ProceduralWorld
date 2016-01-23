@@ -80,6 +80,13 @@ namespace engine {
 			m[3][2] += z;
 		}
 
+		void Scale(float x, float y, float z)
+		{
+			m[0].x *= x;
+			m[1].y *= y;
+			m[2].z *= z;
+		}
+
 		// Return the matrix values as a 16 element float array
 		float *data()
 		{

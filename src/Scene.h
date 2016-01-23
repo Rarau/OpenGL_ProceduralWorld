@@ -25,30 +25,32 @@ namespace engine
 			_cameraSystem = &CameraSystem::GetCameraSystem();
 			_resourceManager = &ResourceManager::GetResourceManager();
 			_playerInputSystem = &PlayerInputSystem::GetPlayerInputSystem();
-
 			_children = new std::vector<Entity*>();
 
 			//TO-DO: this is hardcoded, can't be here -----------------------------------------------------------------------------
-			Entity *camera = new Entity(nullptr, MakeVector3(0.0f, 0.0f, 0.0f));
-			camera->SetEyeVector(NormalizeVector3(MakeVector3(0.0f, 0.0f, 1.0f)));
+			Entity *camera = new Entity(nullptr, Matrix4x4());			
 			_children->push_back(camera);
 
+			// set the camera entity
 			_cameraSystem->SetCurrentCamera(camera);
+
+			// set the "player" entity
 			_playerInputSystem->SetCurrentPlayer(camera);			
 
 			// Terrain entity
-			Entity *entity = new Entity(nullptr, MakeVector3(0.0f, 0.0f, 0.0f));
+			Entity *entity = new Entity(nullptr, Matrix4x4());
 			// Add terrain renderer.
-			entity->SetRenderer(new TerrainRenderer());		
-			entity->SetRotationVelocity(MakeVector3(0.3f, 0.0f, 0.0f));
+			entity->SetRenderer(_resourceManager->GetRendererArray()->at(0));		
+			
 			_children->push_back(entity);
 
 			// rotating Sphere
-			Entity *entity2 = new Entity(_resourceManager->GetVertexBufferArray()->at(0), MakeVector3(0.0f, 0.0f, 5.0f));
-			entity2->SetRotation(MakeVector3(30.0f, 0.0f, 0.0f));
-			entity2->SetScale(MakeVector3(2.0f, 2.0f, 2.0f));
-			entity2->SetRotationVelocity(MakeVector3(0.3f, 0.0f, 0.0f));
-			entity2->SetRenderer(new GeometryRenderer());
+			Entity *entity2 = new Entity(_resourceManager->GetVertexBufferArray()->at(0), Matrix4x4());
+			entity2->transform.Translate(0.0f, 0.0f, 5.0f);
+			entity2->transform.Scale(2.0f, 2.0f, 2.0f);
+			
+			entity2->SetRotationVelocity(Vector3(0.3f, 0.0f, 0.0f));
+			entity->SetRenderer(_resourceManager->GetRendererArray()->at(1));
 			_children->push_back(entity2);			
 
 			//TO-DO: this is hardcoded, can't be here -----------------------------------------------------------------------------

@@ -30,11 +30,18 @@ namespace engine
 			ShaderInterface *lightShader = new ShaderInterface("Assets/Shaders/SimpleLightVertexShader.glsl",
 															   "Assets/Shaders/SimpleLightFragmentShader.glsl");
 			_shaderData = new ShaderData(Vector4(0.30f, 0.10f, 0.80f, 1.0f), Vector3(-1.0f, 1.0f, 1.0f));
-			_shaderArray->push_back(lightShader);			
+			_shaderArray->push_back(lightShader);	
+
+			// add renderers:
+			TerrainRenderer* terrainRenderer = new TerrainRenderer();
+			_rendererArray->push_back(terrainRenderer);
+
+			GeometryRenderer* geometryRenderer = new GeometryRenderer();
+			_rendererArray->push_back(geometryRenderer);
 
 			// add geometry:
 			// cube with simple light shader
-			engine::VertexBuffer *cubeVertexBuffer = new engine::VertexBuffer(
+			engine::VertexBuffer *sphereVertexBuffer = new engine::VertexBuffer(
 				engine::sphereVertices, 
 				sizeof(engine::sphereVertices), 
 				GL_TRIANGLES, 
@@ -45,7 +52,7 @@ namespace engine
 				(GLvoid*)(offsetof(VertexDataPN, positionCoordinates)), 
 				(GLvoid*)(offsetof(VertexDataPN, normalCoordinates))
 			);			
-			_vertexBufferArray->push_back(cubeVertexBuffer);
+			_vertexBufferArray->push_back(sphereVertexBuffer);
 
 			
 
@@ -86,6 +93,11 @@ namespace engine
 		std::vector<VertexBuffer*>* GetVertexBufferArray()
 		{
 			return _vertexBufferArray;
+		}
+
+		std::vector<Renderer*>* GetRendererArray()
+		{
+			return _rendererArray;
 		}
 
 		static ResourceManager& GetResourceManager()

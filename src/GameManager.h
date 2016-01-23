@@ -76,7 +76,7 @@ namespace engine
 			{
 				double currentTime = glfwGetTime();
 
-				// run the game logic at a defined frequency				
+				// run the game logic			
 				deltaTime += (currentTime - lastTime) * Updates_Per_Second;
 				if (deltaTime >= 1.0f)
 				{					
@@ -89,7 +89,7 @@ namespace engine
 					deltaTime = 0.0f;
 				}		
 
-				// run the physics calculus at a defined frequency
+				// run the physics calculus
 				p_deltaTime += (currentTime - p_lastTime) * Physics_Updates_Per_Second;
 				if (p_deltaTime >= 1.0f)
 				{					
@@ -99,7 +99,7 @@ namespace engine
 					p_deltaTime = 0.0f;
 				}
 
-				// render the scenes as many times as possible
+				// render the scene
 				_renderSystem->Render(_scene->GetChildren());
 			}
 		}
