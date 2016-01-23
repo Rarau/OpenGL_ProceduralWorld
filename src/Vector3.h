@@ -1,63 +1,124 @@
-namespace engine
+
+
+namespace engine 
 {
-	typedef struct
+
+	class Vector3 
 	{
-		GLfloat x, y, z;
+		float v[3];
 
-	}Vector3;
+	public:
+		Vector3() 
+		{
+			v[0] = v[1] = v[2] = 0.0f;
+		}
 
-	Vector3 MakeVector3(GLfloat x, GLfloat y, GLfloat z)
-	{
-		Vector3 newVector;
-		newVector.x = x;
-		newVector.y = y;
-		newVector.z = z;
+		Vector3(float num) 
+		{
+			v[0] = v[1] = v[2] = num;
+		}
 
-		return newVector;
-	}
+		Vector3(float x, float y, float z) 
+		{
+			v[0] = x;
+			v[1] = y;
+			v[2] = z;
+		}
 
-	Vector3 MakeVector3(GLfloat n)
-	{
-		Vector3 newVector;
-		newVector.x = newVector.y = newVector.z = n;
-		
-		return newVector;
-	}
+		// set x
+		float &x() 
+		{
+			return v[0];
+		}
 
-	Vector3 NormalizeVector3(Vector3 vector)
-	{
-		GLdouble magnitude = sqrt(vector.x* vector.x + vector.y*vector.y + vector.z*vector.z);
+		// get x
+		float x() const 
+		{
+			return v[0];
+		}
 
-		Vector3 unitVector;
-		unitVector.x = vector.x / magnitude;
-		unitVector.y = vector.y / magnitude;
-		unitVector.z = vector.z / magnitude;
+		// set y
+		float &y() 
+		{
+			return v[1];
+		}
 
-		return unitVector;
-	}
+		// get y
+		float y() const 
+		{
+			return v[1];
+		}
 
-	Vector3 AddVector3(Vector3 a, Vector3 b)
-	{
-		Vector3 newVector;
-		newVector.x = a.x + b.x;
-		newVector.y = a.y +b.y;
-		newVector.z = a.z + b.z;
+		// set z
+		float &z() 
+		{
+			return v[2];
+		}
 
-		return newVector;
-	}
+		// get z
+		float z() const 
+		{
+			return v[2];
+		}
 
-	Vector3 scalarMultiplyVector3(Vector3 vectorToMultiply, GLfloat scalar)
-	{
-		return MakeVector3(vectorToMultiply.x * scalar, vectorToMultiply.y * scalar, vectorToMultiply.z * scalar);
-	}
+		/*const float& operator[](int index) const 
+		{
+			return v[index];
+		}*/
+		float& operator[](int index) 
+		{
+			return v[index];
+		}
 
-	Vector3 SubstractVector3(Vector3 a, Vector3 b)
-	{
-		Vector3 newVector;
-		newVector.x = a.x - b.x;
-		newVector.y = a.y - b.y;
-		newVector.z = a.z - b.z;
+		Vector3 operator+(const Vector3 &r) const 
+		{
+			return Vector3(v[0] + r.v[0], v[1] + r.v[1], v[2] + r.v[2]);
+		}
 
-		return newVector;
-	}
+		Vector3 operator-(const Vector3 &r) const 
+		{
+			return Vector3(v[0] - r.v[0], v[1] - r.v[1], v[2] - r.v[2]);
+		}	
+
+		float operator*(const Vector3 &r) const
+		{
+			return v[0] * r.x() + v[1] * r.y() + v[2] * r.z();
+		}
+
+		Vector3 operator*(const float number) const
+		{
+			return Vector3(v[0] * number, v[1] * number, v[2] * number);
+		}
+
+		Vector3 operator/(const float number) const
+		{
+			return operator*(1/number);
+		}
+
+		float lengthSquared() const
+		{
+			return (v[0] * v[0]) + (v[1] * v[1]) + (v[2] * v[2]);
+		}
+
+		float length() const
+		{
+			return sqrt(lengthSquared());
+		}
+
+		Vector3 normalized() const
+		{
+			return operator*(1/length());
+		}
+
+		Vector3 normalize() 
+		{
+			*this = operator*(1 / length());
+		}
+
+		/*explicit operator Vector4()
+		{
+			return Vector4(v[0], v[1], v[2], 1.0f);
+		}*/
+
+	};
 }

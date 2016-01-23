@@ -30,10 +30,10 @@
     <ClInclude Include="src\ShaderLoader.h" />
     <ClInclude Include="src\Tables.h" />
     <ClInclude Include="src\Terrain.h" />
+    <ClInclude Include="src\Vector3Old.h" />
     <ClInclude Include="src\Vector3.h" />
-    <ClInclude Include="src\Vector3_.h" />
+    <ClInclude Include="src\Vector4Old.h" />
     <ClInclude Include="src\Vector4.h" />
-    <ClInclude Include="src\Vector4_.h" />
     <ClInclude Include="src\VertexBuffer.h" />
     <ClInclude Include="src\VertexData.h" />
   </ItemGroup>

@@ -30,9 +30,6 @@
     <ClInclude Include="src\ShaderInterface.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vector3.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\VertexData.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
@@ -40,9 +37,6 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="src\CubeVertices.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Vector4.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ShaderData.h">
@@ -84,10 +78,16 @@
     <ClInclude Include="src\Matrix4x4.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vector4_.h">
+    <ClInclude Include="src\Vector3Old.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vector3_.h">
+    <ClInclude Include="src\Vector3.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vector4Old.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vector4.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
