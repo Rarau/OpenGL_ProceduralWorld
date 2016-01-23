@@ -1,6 +1,6 @@
 namespace engine {
-	class Matrix4x4 {
-		//float m[16];
+
+	class Matrix4x4 {		
 
 	public:		
 		Vector4 m[4];
@@ -47,7 +47,8 @@ namespace engine {
 		Matrix4x4 operator*(const Matrix4x4 &r)
 		{
 			Matrix4x4 res;
-			for (int i = 0; i != 4; ++i) {
+			for (int i = 0; i != 4; ++i) 
+			{
 				res[i] = 
 					r[0].componentMultiplication(m[i].xxxx()) + 
 					r[1].componentMultiplication(m[i].yyyy()) + 
@@ -57,7 +58,8 @@ namespace engine {
 			return res;
 		}
 
-		void Rotate(float angle, float x, float y, float z) {
+		void Rotate(float angle, float x, float y, float z) 
+		{
 			float c = cosf(angle * (3.14159265f / 180.0f));
 			float s = sinf(angle * (3.14159265f / 180.0f));
 
@@ -71,7 +73,8 @@ namespace engine {
 		}
 
 
-		void Translate(float x, float y, float z) {
+		void Translate(float x, float y, float z) 
+		{
 			m[3][0] += x;
 			m[3][1] += y;
 			m[3][2] += z;

@@ -8,6 +8,7 @@ namespace engine
 
 		std::vector<engine::ShaderInterface*> *_shaderArray;
 		std::vector<engine::VertexBuffer*> *_vertexBufferArray;
+		std::vector<engine::Renderer*> *_rendererArray;
 
 		ShaderData *_shaderData;
 
@@ -15,23 +16,23 @@ namespace engine
 		{
 			_shaderArray = new std::vector<engine::ShaderInterface*>();
 			_vertexBufferArray = new std::vector<engine::VertexBuffer*>();
+			_rendererArray = new std::vector<engine::Renderer*>();
 
 
 			// temporal --------------- 
 			// TO-DO: delete this part as it is hardcoded -> createShader(), createGeometry()
+
 			// add shaders:			
 			ShaderInterface *shader = new ShaderInterface("Assets/Shaders/ColorVertexShader.glsl", 
-															"Assets/Shaders/ColorFragmentShader.glsl");
+														  "Assets/Shaders/ColorFragmentShader.glsl");
 			_shaderArray->push_back(shader);
-			/*ShaderInterface *lightShader = new ShaderInterface("Assets/Shaders/SimpleLightVertexShader.glsl", 
-															"Assets/Shaders/SimpleLightFragmentShader.glsl",
-															"Assets/Shaders/PassThroughGeometryShader.glsl");*/
+			
 			ShaderInterface *lightShader = new ShaderInterface("Assets/Shaders/SimpleLightVertexShader.glsl",
-				"Assets/Shaders/SimpleLightFragmentShader.glsl");
-			_shaderData = new ShaderData(makeVector4(0.30f, 0.10f, 0.80f, 1.0f), MakeVector3(-1.0f, 1.0f, 1.0f));
+															   "Assets/Shaders/SimpleLightFragmentShader.glsl");
+			_shaderData = new ShaderData(Vector4(0.30f, 0.10f, 0.80f, 1.0f), Vector3(-1.0f, 1.0f, 1.0f));
 			_shaderArray->push_back(lightShader);			
 
-			// add geometry
+			// add geometry:
 			// cube with simple light shader
 			engine::VertexBuffer *cubeVertexBuffer = new engine::VertexBuffer(
 				engine::sphereVertices, 
@@ -43,8 +44,7 @@ namespace engine
 				_shaderData,
 				(GLvoid*)(offsetof(VertexDataPN, positionCoordinates)), 
 				(GLvoid*)(offsetof(VertexDataPN, normalCoordinates))
-			);
-			
+			);			
 			_vertexBufferArray->push_back(cubeVertexBuffer);
 
 			
@@ -67,6 +67,13 @@ namespace engine
 				delete *vertexIterator;
 			}
 			delete _vertexBufferArray;
+
+			for (std::vector<engine::Renderer*>::iterator rendererIterator = _rendererArray->begin();
+				rendererIterator != _rendererArray->end(); rendererIterator++)
+			{
+				delete *rendererIterator;
+			}
+			delete _rendererArray;
 		}
 
 	public:

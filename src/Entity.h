@@ -2,41 +2,32 @@ namespace engine
 {
 	class Entity
 	{
-	private:
-		engine::VertexBuffer *_vertexBuffer;
+		Matrix4x4 _transform;
 
-		//TO-DO: change this for a 4x4 transformation matrix
-		Vector3 _position;
-		Vector3 _scale;
-		Vector3 _rotation; //euler angles
-
-		Vector3 _velocity;
-		Vector3 _scaleVelocity;
-		Vector3 _rotationVelocity;
-
-		//for implementing lookAt method
-		Vector3 _eyeVector;
-		Vector3 _upVector;
-		Vector3 _rightVector;		
+		// Physics properties
+		Vector3 _velocity;		
+		Vector3 _rotationVelocity;			
 
 		// Possible components
+		VertexBuffer *_vertexBuffer;
 		Renderer *_renderer;
 
-	public:		
+	public:				
 
-		
-
-		Entity(VertexBuffer *vertexBuffer, Vector3 position) :
-			_vertexBuffer(vertexBuffer), _position(position), _scale(MakeVector3(1.0f, 1.0f, 1.0f)), _rotation(MakeVector3(0.0f, 0.0f, 0.0f)),
-			_velocity(MakeVector3(0.0f, 0.0f, 0.0f)), _scaleVelocity(MakeVector3(0.0f, 0.0f, 0.0f)), _rotationVelocity(MakeVector3(0.0f, 0.0f, 0.0f)),
-			_eyeVector(MakeVector3(0.0f, 0.0f, 0.0f)), _upVector(MakeVector3(0.0f, 1.0f, 0.0f)), _rightVector(MakeVector3(1.0f, 0.0f, 0.0f)), _renderer(nullptr)
+		Entity(VertexBuffer *vertexBuffer, Matrix4x4 transform) :
+			_vertexBuffer(vertexBuffer), _transform(transform), _renderer(nullptr)
 		{
 
 		}
 
 		~Entity()
 		{
-			delete _renderer;
+			
+		}		
+
+		Renderer* GetRenderer()
+		{
+			return _renderer;
 		}
 
 		void SetRenderer(Renderer *newRenderer)
@@ -44,7 +35,7 @@ namespace engine
 			_renderer = newRenderer;
 		}
 
-		VertexBuffer *GetVertexBuffer()
+		VertexBuffer* GetVertexBuffer()
 		{
 			return _vertexBuffer;
 		}
@@ -54,35 +45,16 @@ namespace engine
 			_vertexBuffer = newVertexBuffer;
 		}
 
-		Vector3 GetPosition()
+		// set transform
+		Matrix4x4& transform()
 		{
-			return _position;
+			return _transform;
 		}
 
-		void SetPosition(Vector3 newPosition)
+		Matrix4x4 transform() const
 		{
-			_position = newPosition;
+			return _transform;
 		}		
-
-		Vector3 GetScale()
-		{
-			return _scale;
-		}
-
-		void SetScale(Vector3 newScale)
-		{
-			_scale = newScale;
-		}
-
-		Vector3 GetRotation()
-		{
-			return _rotation;
-		}
-
-		void SetRotation(Vector3 newRotation)
-		{
-			_rotation = newRotation;
-		}
 
 		Vector3 GetVelocity()
 		{
@@ -92,17 +64,7 @@ namespace engine
 		void SetVelocity(Vector3 newVelocity)
 		{
 			_velocity = newVelocity;
-		}
-
-		Vector3 GetScaleVelocity()
-		{
-			return _scaleVelocity;
-		}
-
-		void SetScaleVelocity(Vector3 newVelocity)
-		{
-			_scaleVelocity = newVelocity;
-		}
+		}		
 
 		Vector3 GetRotationVelocity()
 		{
@@ -112,37 +74,7 @@ namespace engine
 		void SetRotationVelocity(Vector3 newVelocity)
 		{
 			_rotationVelocity = newVelocity;
-		}
-
-		Vector3 GetEyeVector()
-		{
-			return _eyeVector;
-		}
-
-		void SetEyeVector(Vector3 newVector)
-		{
-			_eyeVector = newVector;
-		}
-
-		Vector3 GetUpVector()
-		{
-			return _upVector;
-		}
-
-		void SetUpVector(Vector3 newVector)
-		{
-			_upVector = newVector;
-		}
-
-		Vector3 GetRightVector()
-		{
-			return _rightVector;
-		}
-
-		void SetRightVector(Vector3 newVector)
-		{
-			_rightVector = newVector;
-		}
+		}		
 
 		void Render()
 		{
