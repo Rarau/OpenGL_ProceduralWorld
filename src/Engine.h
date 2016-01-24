@@ -43,6 +43,7 @@ namespace engine
 #include "ResourceManager.h"
 #include "RenderSystem.h"
 #include "CameraSystem.h"
+#include "RendererAux.h"
 
 #include "Scene.h"
 #include "Terrain.h"

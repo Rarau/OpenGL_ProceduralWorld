@@ -21,6 +21,7 @@
     <ClInclude Include="src\MovementSystem.h" />
     <ClInclude Include="src\PlayerInputSystem.h" />
     <ClInclude Include="src\Renderer.h" />
+    <ClInclude Include="src\RendererAux.h" />
     <ClInclude Include="src\Renderers\GeometryRenderer.h" />
     <ClInclude Include="src\Renderers\TerrainRenderer.h" />
     <ClInclude Include="src\RenderSystem.h" />

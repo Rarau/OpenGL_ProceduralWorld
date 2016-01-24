@@ -23,5 +23,7 @@ namespace engine
 		{
 
 		}
+
+		Matrix4x4 GetProjectionMatrix();
 	};
 }

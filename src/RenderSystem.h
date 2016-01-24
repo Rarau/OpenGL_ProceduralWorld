@@ -3,6 +3,14 @@
 
 namespace engine
 {	
+	struct ViewParameters
+	{
+		float FOV;
+		float aspectRatio;
+		float zNear;
+		float zFar;
+	};
+
 	class RenderSystem
 	{
 
@@ -10,6 +18,7 @@ namespace engine
 
 		GLFWwindow *_window;
 		Entity *_currentCamera;
+		ViewParameters *_viewParameters;
 
 		RenderSystem()
 		{
@@ -49,7 +58,13 @@ namespace engine
 			*/
 			//glEnable(GL_NONE);
 			glViewport(0.0f, 0.0f, 1280.0f, 720.0f);
-			CameraSystem::GetCameraSystem().InitViewport(45.0f, 1280.0f / 720.0f, 0.1f, 1000.0f);
+
+			//CameraSystem::GetCameraSystem().InitViewport(45.0f, 1280.0f / 720.0f, 0.1f, 1000.0f);
+			_viewParameters = new ViewParameters();
+			_viewParameters->FOV = 45.0;
+			_viewParameters->aspectRatio = 1280.0f / 720.0f;
+			_viewParameters->zNear = 0.1f;
+			_viewParameters->zFar = 1000.0f;
 			
 			glEnable(GL_DEPTH_TEST);
 			
@@ -63,6 +78,11 @@ namespace engine
 		}
 
 	public:
+
+		ViewParameters* GetViewParameters() const
+		{
+			return _viewParameters;
+		}
 
 		GLFWwindow* GetWindow()
 		{

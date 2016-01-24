@@ -12,14 +12,14 @@ namespace engine
 		CameraSystem()
 		{
 
-		}
+		}		
+
+	public:
 
 		~CameraSystem()
 		{
 
 		}
-
-	public:
 
 		Entity* GetCurrentCamera()
 		{
@@ -31,6 +31,9 @@ namespace engine
 			_currentCamera = newCamera;
 			RenderSystem *renderSystem = &RenderSystem::GetRenderSystem();
 			renderSystem->SetCurrentCamera(_currentCamera);
+
+			ViewParameters* _parameters = renderSystem->GetViewParameters();
+			InitViewport(_parameters->FOV, _parameters->aspectRatio, _parameters->zNear, _parameters->zFar);
 		}
 
 		void InitViewport(float fov, float aspectRatio, float zNear, float zFar) {

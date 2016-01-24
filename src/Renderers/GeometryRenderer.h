@@ -1,5 +1,6 @@
 namespace engine
 {	
+	
 
 	class GeometryRenderer : public Renderer
 	{
@@ -43,9 +44,11 @@ namespace engine
 			viewMat.LookAt(target, up);
 
 			
-			CameraSystem cs = CameraSystem::GetCameraSystem();
+			//CameraSystem cs = CameraSystem::GetCameraSystem();
 			// Build the model-view-projection matrix
-			Matrix4x4 modelViewProj = entity->transform() * viewMat * cs.GetProjectionMatrix();
+			//Matrix4x4 modelViewProj = entity->transform() * viewMat * cs.GetProjectionMatrix();
+
+			Matrix4x4 modelViewProj = entity->transform() * viewMat * GetProjectionMatrix();
 
 
 			// set the color uniform
@@ -69,5 +72,6 @@ namespace engine
 			entity->GetVertexBuffer()->ConfigureVertexAttributes();
 			entity->GetVertexBuffer()->RenderVertexBuffer();
 		}
+		
 	};
 }
