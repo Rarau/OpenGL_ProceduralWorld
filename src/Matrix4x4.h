@@ -1,3 +1,5 @@
+
+
 namespace engine {
 
 	class Matrix4x4 {		
@@ -28,6 +30,11 @@ namespace engine {
 			m[2] = Vector4(0.0f, 0.0f, scale, 0.0f);
 			m[3] = Vector4(pos.x(), pos.y(), pos.z(), 1.0f);
 		}
+
+		Vector3 getPosition() const
+		{
+			return Vector3(m[3].x(), m[3].y(), m[3].z());
+		}	
 
 		void LoadIdentity()
 		{
@@ -72,6 +79,15 @@ namespace engine {
 			*this = r * *this;
 		}
 
+		void Rotate(Vector3 eulerAngles)
+		{
+			//TO-DO: convert to angle-axis
+
+			Rotate(eulerAngles.x(), 1.0f, 0.0f, 0.0f);
+			Rotate(eulerAngles.y(), 0.0f, 1.0f, 0.0f);
+			Rotate(eulerAngles.z(), 0.0f, 0.0f, 1.0f);
+		}
+
 
 		void Translate(float x, float y, float z) 
 		{
@@ -80,11 +96,18 @@ namespace engine {
 			m[3][2] += z;
 		}
 
+		void Translate(Vector3 dir)
+		{
+			m[3][0] += dir.x();
+			m[3][1] += dir.y();
+			m[3][2] += dir.z();
+		}
+
 		void Scale(float x, float y, float z)
 		{
-			m[0].x *= x;
-			m[1].y *= y;
-			m[2].z *= z;
+			m[0].x() *= x;
+			m[1].y() *= y;
+			m[2].z() *= z;
 		}
 
 		// Return the matrix values as a 16 element float array
@@ -98,5 +121,17 @@ namespace engine {
 
 			return res;
 		}
+
+		// Don't define them here to avoid cross references
+		Vector3 forward();
+		Vector3 right();
+		Vector3 up();
+		
+
+		Vector4 col(int i) const
+		{
+			return Vector4(m[0][i], m[1][i], m[2][i], m[3][i]);
+		}	
+		
 	};
 }

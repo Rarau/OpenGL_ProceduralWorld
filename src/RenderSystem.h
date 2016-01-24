@@ -1,4 +1,5 @@
 #pragma once
+#include "Renderers/TerrainRenderer.h"
 
 namespace engine
 {	

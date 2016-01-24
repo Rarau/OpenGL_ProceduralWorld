@@ -25,6 +25,13 @@ namespace engine
 			v[2] = z;
 		}
 
+		Vector3(double x, double y, double z)
+		{
+			v[0] = (float)x;
+			v[1] = (float)y;
+			v[2] = (float)z;
+		}
+
 		// set x
 		float &x() 
 		{
@@ -61,10 +68,10 @@ namespace engine
 			return v[2];
 		}
 
-		/*const float& operator[](int index) const 
+		const float& operator[](int index) const 
 		{
 			return v[index];
-		}*/
+		}
 		float& operator[](int index) 
 		{
 			return v[index];
@@ -120,9 +127,11 @@ namespace engine
 			*this = operator*(1 / length());
 		}
 
-		/*explicit operator Vector4()
+		// We dont want to have an implicit operator because we wouldn't
+		// know if put a 0 or 1 (free vector or point)
+		/*operator engine::Vector4() const
 		{
-			return Vector4(v[0], v[1], v[2], 1.0f);
+			return Vector4(v[0], v[1], v[2]);
 		}*/
 
 	};

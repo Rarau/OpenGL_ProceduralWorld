@@ -3,12 +3,11 @@ namespace engine
 	typedef struct
 	{
 		Vector3 positionCoordinates;
-	}VertexDataP;
+	}VertexDataP; // Just position
 
 	typedef struct
 	{
 		Vector3 positionCoordinates;
 		Vector3 normalCoordinates;
-
-	}VertexDataPN; //Position and Normals
+	}VertexDataPN; // Position and Normals
 }

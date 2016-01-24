@@ -17,6 +17,7 @@
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\GameManager.h" />
     <ClInclude Include="src\Matrix4x4.h" />
+    <ClInclude Include="src\MatrixVector4Glue.h" />
     <ClInclude Include="src\MovementSystem.h" />
     <ClInclude Include="src\PlayerInputSystem.h" />
     <ClInclude Include="src\Renderer.h" />

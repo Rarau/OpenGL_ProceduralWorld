@@ -1,28 +1,31 @@
-﻿namespace engine
+﻿#pragma once
+
+namespace engine
 {
+	
 	// Vertices for the evaluator quads
 	// TO-DO: this quad should apply the block's transformations
-	VertexDataP quadEvaluatorVertices[] = {
-		{ 0.0f, 0.0f, 0.0f },
-		{ 0.0f, 1.0f, 0.0f },
-		{ 1.0f, 0.0f, 0.0f },
+	Vector3 quadEvaluatorVertices[] = {
+		Vector3( 0.0f, 0.0f, 0.0f ),
+		Vector3( 0.0f, 1.0f, 0.0f ),
+		Vector3( 1.0f, 0.0f, 0.0f ),
 
-		{ 0.0f, 1.0f, 0.0f },
-		{ 1.0f, 1.0f, 0.0f },
-		{ 1.0f, 0.0f, 0.0f }
+		Vector3( 0.0f, 1.0f, 0.0f ),
+		Vector3( 1.0f, 1.0f, 0.0f ),
+		Vector3( 1.0f, 0.0f, 0.0f )
 	};
 
 	// Auxiliar function to generate the block sampling vertices
-	VertexDataP* GenerateSamplingVertices()
+	Vector3* GenerateSamplingVertices()
 	{
-		VertexDataP verts[32 * 32 * 33];
+		Vector3 verts[32 * 32 * 33];
 		for (int x = 0; x < 32; x++)
 		{
 			for (int y = 0; y < 32; y++)
 			{
 				for (int z = 0; z < 33; z++)
 				{
-					verts[32 * 32 * z + 32 * y + x] = { (float)x / 32.0f, (float)y / 32.0f, (float)z / 32.0f };
+					verts[32 * 32 * z + 32 * y + x] = Vector3( (float)x / 32.0f, (float)y / 32.0f, (float)z / 32.0f );
 				}
 			}
 		}
@@ -49,17 +52,21 @@
 		GLuint frameBufferObjectId;
 
 		GLuint _blockVertexBufferID;
-		VertexDataP *_blockVertices;
+		Vector3*_blockVertices;
 
 		ShaderInterface *_blockShader;	
 
 		GLuint ubo = 0;		
 		shader_edge_table edge_table;
 
+		Entity* _currentCamera;
+
 	public:
 
-		TerrainRenderer()
+		TerrainRenderer(Entity* camera)
 		{
+			_currentCamera = camera;
+
 			// Create hard-coded the quad vertex buffer
 			glGenBuffers(1, &_quadVertexBufferID);
 			glBindBuffer(GL_ARRAY_BUFFER, _quadVertexBufferID);
@@ -159,7 +166,7 @@
 				-1.0f, -1.0f, -1.0f, 1.0f,
 			};		
 			*/
-			Matrix4x4 m = Matrix4x4(Vector3_(-1.0f), 2.0f);
+			Matrix4x4 m = Matrix4x4(Vector3(-1.0f), 2.0f);
 			glLoadIdentity();			
 			glLoadMatrixf(m.data());
 			glViewport(0, 0, 33, 33);
@@ -196,27 +203,31 @@
 			// resets all the transformations
 			glLoadIdentity();
 
-			// set the camera transform	
-			Entity *_currentCamera = RenderSystem::GetRenderSystem().GetCurrentCamera();
+			// set the camera transform			
+			Matrix4x4 transform = _currentCamera->transform();
+			Vector3 position = transform.getPosition();
+			Vector3 forward = transform.forward();
+			Vector3 up = transform.up();
 			gluLookAt(
-				_currentCamera->GetPosition().x,
-				_currentCamera->GetPosition().y,
-				_currentCamera->GetPosition().z,
-				_currentCamera->GetEyeVector().x,
-				_currentCamera->GetEyeVector().y,
-				_currentCamera->GetEyeVector().z,
-				_currentCamera->GetUpVector().x,
-				_currentCamera->GetUpVector().y,
-				_currentCamera->GetUpVector().z
+				position.x(),
+				position.y(),
+				position.z(),
+				forward.x(),
+				forward.y(),
+				forward.z(),
+				up.x(),
+				up.y(),
+				up.z()
 				);
 
 			//transform the entity		
 			Matrix4x4 m2;
 			m2.LoadIdentity();
-			m2.Translate(entity->GetPosition().x, entity->GetPosition().y, entity->GetPosition().z);
+			m2 = entity->transform();
+			/*m2.Translate(entity->GetPosition().x, entity->GetPosition().y, entity->GetPosition().z);
 			m2.Rotate(entity->GetRotation().x, 0.0f, 0.0f, 1.0f);
 			m2.Rotate(entity->GetRotation().y, 0.0f, 1.0f, 0.0f);
-			m2.Rotate(entity->GetRotation().z, 1.0f, 0.0f, 0.0f);
+			m2.Rotate(entity->GetRotation().z, 1.0f, 0.0f, 0.0f);*/
 
 			glMultMatrixf(m2.data());
 			/*
@@ -230,7 +241,7 @@
 			// enable block vertex buffer
 			glBindBuffer(GL_ARRAY_BUFFER, _blockVertexBufferID);			
 			glEnableVertexAttribArray(_blockShader->Get_aPositionVertex());
-			glVertexAttribPointer(_blockShader->Get_aPositionVertex(), 3, GL_FLOAT, GL_FALSE, sizeof(VertexDataP), 0);
+			glVertexAttribPointer(_blockShader->Get_aPositionVertex(), 3, GL_FLOAT, GL_FALSE, sizeof(Vector3), 0);
 			
 			// Pass the lookup tables to the shader
 			glUniform1uiv(_blockShader->get_uCaseToNumpolys(), 256, case_to_numpolys);

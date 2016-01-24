@@ -1,5 +1,6 @@
 namespace engine
-{
+{	
+
 	//This class is responsible of tracking all our resources
 	class ResourceManager
 	{
@@ -32,12 +33,7 @@ namespace engine
 			_shaderData = new ShaderData(Vector4(0.30f, 0.10f, 0.80f, 1.0f), Vector3(-1.0f, 1.0f, 1.0f));
 			_shaderArray->push_back(lightShader);	
 
-			// add renderers:
-			TerrainRenderer* terrainRenderer = new TerrainRenderer();
-			_rendererArray->push_back(terrainRenderer);
-
-			GeometryRenderer* geometryRenderer = new GeometryRenderer();
-			_rendererArray->push_back(geometryRenderer);
+			
 
 			// add geometry:
 			// cube with simple light shader
@@ -102,7 +98,7 @@ namespace engine
 
 		static ResourceManager& GetResourceManager()
 		{
-			static ResourceManager *resourceManager = nullptr;
+			static ResourceManager* resourceManager = nullptr;
 
 			if (resourceManager == nullptr)
 			{

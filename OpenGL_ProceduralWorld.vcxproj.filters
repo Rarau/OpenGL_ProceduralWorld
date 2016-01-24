@@ -90,6 +90,9 @@
     <ClInclude Include="src\Vector4.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\MatrixVector4Glue.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">

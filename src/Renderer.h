@@ -4,6 +4,8 @@ namespace engine
 
 	class Renderer
 	{
+		
+
 	protected:
 		Renderer()
 		{

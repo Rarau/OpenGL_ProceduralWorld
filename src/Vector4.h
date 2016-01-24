@@ -1,7 +1,9 @@
-
+#pragma once
 
 namespace engine 
 {
+
+	class Matrix4x4; //forward referencing
 
 	class Vector4 
 	{
@@ -93,10 +95,10 @@ namespace engine
 			return Vector4(v[3], v[3], v[3], v[3]);
 		}
 		
-		/*const float& operator[](int index) const 
+		const float& operator[](int index) const 
 		{
 			return v[index];
-		}*/
+		}
 		float& operator[](int index) 
 		{
 			return v[index];
@@ -121,6 +123,8 @@ namespace engine
 		{
 			return Vector4(v[0] * number, v[1] * number, v[2] * number, v[3] * number);
 		}
+
+		Vector4 Vector4::operator*(const Matrix4x4 mat) const; //we'll define it in the glue file to avoid cross references
 
 		Vector4 componentMultiplication(const Vector4 &r) const
 		{
@@ -152,10 +156,10 @@ namespace engine
 			*this = operator*(1 / length());
 		}
 
-		/*explicit operator engine::Vector3()
+		operator Vector3() const
 		{
 			return Vector3(v[0], v[1], v[2]);
-		}*/
+		}
 
 	};
 }

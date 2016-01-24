@@ -21,6 +21,8 @@ namespace engine
 #include "Vector4.h"
 #include "Matrix4x4.h"
 
+#include "MatrixVector4Glue.h"
+
 #include "VertexData.h"
 #include "ShaderData.h"
 
@@ -33,13 +35,15 @@ namespace engine
 #include "VertexBuffer.h"
 #include "Entity.h"
 
+
 #include "PlayerInputSystem.h"
 #include "MovementSystem.h"
+#include "Renderers/TerrainRenderer.h"
+#include "Renderers/GeometryRenderer.h"
 #include "ResourceManager.h"
 #include "RenderSystem.h"
 #include "CameraSystem.h"
-#include "Renderers/TerrainRenderer.h"
-#include "Renderers/GeometryRenderer.h"
+
 #include "Scene.h"
 #include "Terrain.h"
 #include "GameManager.h"

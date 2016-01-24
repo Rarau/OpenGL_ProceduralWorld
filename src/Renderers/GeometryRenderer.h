@@ -5,12 +5,12 @@ namespace engine
 	{
 
 	private:
-
+		Entity* _currentCamera;
 	public:
 
-		GeometryRenderer()
+		GeometryRenderer(Entity* camera)
 		{
-			
+			_currentCamera = camera;
 		}
 		~GeometryRenderer()
 		{
@@ -24,53 +24,53 @@ namespace engine
 
 			GLuint textArrayIndex = entity->GetVertexBuffer()->GetShader()->get_uTextureArray();
 
-			glUseProgram(entity->GetVertexBuffer()->GetShader()->GetProgramHandle());
-
-			//TO-DO: this is part of the terrain renderer, get it out of here! -----------------------------
-			glUniform1i(textArrayIndex, 0);
-			glActiveTexture(GL_TEXTURE0);
-			//glBindTexture(GL_TEXTURE_2D_ARRAY, tex);
-			glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			//-----------------------------------------------------------------------------------------------
+			glUseProgram(entity->GetVertexBuffer()->GetShader()->GetProgramHandle());			
 			
+
+
 			// resets all the transformations
 			glLoadIdentity();
-			// set the camera transform	
-			Entity *_currentCamera = RenderSystem::GetRenderSystem().GetCurrentCamera();
+			// set the camera transform			
+			Matrix4x4 transform = _currentCamera->transform();
+			Vector3 position = transform.getPosition();
+			Vector3 forward = transform.forward();
+			Vector3 up = transform.up();
 			gluLookAt(
-				_currentCamera->GetPosition().x,
-				_currentCamera->GetPosition().y,
-				_currentCamera->GetPosition().z,
-				_currentCamera->GetEyeVector().x,
-				_currentCamera->GetEyeVector().y,
-				_currentCamera->GetEyeVector().z,
-				_currentCamera->GetUpVector().x,
-				_currentCamera->GetUpVector().y,
-				_currentCamera->GetUpVector().z
-				);			
+				position.x(),
+				position.y(),
+				position.z(),
+				forward.x(),
+				forward.y(),
+				forward.z(),
+				up.x(),
+				up.y(),
+				up.z()
+				);
 
-			//transform the entity			
-			glTranslatef(entity->GetPosition().x, entity->GetPosition().y, entity->GetPosition().z);
+			//transform the entity		
+			Matrix4x4 m2;
+			m2.LoadIdentity();
+			m2 = entity->transform();
+			/*m2.Translate(entity->GetPosition().x, entity->GetPosition().y, entity->GetPosition().z);
+			m2.Rotate(entity->GetRotation().x, 0.0f, 0.0f, 1.0f);
+			m2.Rotate(entity->GetRotation().y, 0.0f, 1.0f, 0.0f);
+			m2.Rotate(entity->GetRotation().z, 1.0f, 0.0f, 0.0f);*/
 
-			glRotatef(entity->GetRotation().x, 0.0f, 0.0f, 1.0f);
-			glRotatef(entity->GetRotation().y, 0.0f, 1.0f, 0.0f);
-			glRotatef(entity->GetRotation().z, 1.0f, 0.0f, 0.0f);
-
-			//glScalef(entity->GetScale().x, entity->GetScale().y, entity->GetScale().z);
+			glMultMatrixf(m2.data());
 
 
 			// set the color uniform
 			glUniform4f((entity->GetVertexBuffer()->GetShader())->get_uColor(),
-				entity->GetVertexBuffer()->GetShaderData()->Get_uColorValue().x,
-				entity->GetVertexBuffer()->GetShaderData()->Get_uColorValue().y,
-				entity->GetVertexBuffer()->GetShaderData()->Get_uColorValue().z,
-				entity->GetVertexBuffer()->GetShaderData()->Get_uColorValue().w
+				entity->GetVertexBuffer()->GetShaderData()->Get_uColorValue().x(),
+				entity->GetVertexBuffer()->GetShaderData()->Get_uColorValue().y(),
+				entity->GetVertexBuffer()->GetShaderData()->Get_uColorValue().z(),
+				entity->GetVertexBuffer()->GetShaderData()->Get_uColorValue().w()
 				);
 
 			glUniform3f((entity->GetVertexBuffer()->GetShader())->get_uLightPosition(),
-				entity->GetVertexBuffer()->GetShaderData()->Get_uLightPosition().x,
-				entity->GetVertexBuffer()->GetShaderData()->Get_uLightPosition().y,
-				entity->GetVertexBuffer()->GetShaderData()->Get_uLightPosition().z
+				entity->GetVertexBuffer()->GetShaderData()->Get_uLightPosition().x(),
+				entity->GetVertexBuffer()->GetShaderData()->Get_uLightPosition().y(),
+				entity->GetVertexBuffer()->GetShaderData()->Get_uLightPosition().z()
 				);
 
 			entity->GetVertexBuffer()->ConfigureVertexAttributes();
