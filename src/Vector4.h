@@ -27,6 +27,13 @@ namespace engine
 			v[3] = w;
 		}
 
+		Vector4(Vector3 xyz, float w) {
+			v[0] = xyz.x();
+			v[1] = xyz.y();
+			v[2] = xyz.z();
+			v[3] = w;
+		}
+
 		// set x
 		float &x() 
 		{
@@ -75,22 +82,22 @@ namespace engine
 			return v[3];
 		}
 
-		Vector4 xxxx() 
+		Vector4 xxxx() const
 		{
 			return Vector4(v[0], v[0], v[0], v[0]);
 		}
 
-		Vector4 yyyy() 
+		Vector4 yyyy() const
 		{
 			return Vector4(v[1], v[1], v[1], v[1]);
 		}
 
-		Vector4 zzzz() 
+		Vector4 zzzz() const
 		{
 			return Vector4(v[2], v[2], v[2], v[2]);
 		}
 
-		Vector4 wwww() 
+		Vector4 wwww() const
 		{
 			return Vector4(v[3], v[3], v[3], v[3]);
 		}

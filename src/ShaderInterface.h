@@ -16,6 +16,8 @@ namespace engine
 		GLuint _uCaseToNumpolys;
 		GLuint _uEdgeConnectList;
 
+		GLuint _uModelToProjection;
+
 		char* LoadTextFromFile(const char *file)
 		{
 			FILE *currentFile;
@@ -87,6 +89,11 @@ namespace engine
 			return _uEdgeConnectList;
 		}
 
+		GLuint get_uModelToProjection()
+		{
+			return _uModelToProjection;
+		}
+
 		ShaderInterface(const char *VS, const char *FS)
 		{
 			// read shaders from strings
@@ -100,6 +107,8 @@ namespace engine
 			_aPositionVertex = glGetAttribLocation(shader->GetProgramHandle(), "aPositionVertex");
 			_aNormalVertex = glGetAttribLocation(shader->GetProgramHandle(), "aPositionNormal");
 
+			_uModelToProjection = glGetUniformLocation(shader->GetProgramHandle(), "uModelToProjection");
+
 			_uColor = glGetUniformLocation(shader->GetProgramHandle(), "uColor");
 			_uLightPosition = glGetUniformLocation(shader->GetProgramHandle(), "uLightPosition");
 			_uInstanceSeparation = glGetUniformLocation(shader->GetProgramHandle(), "uInstanceSeparation");
@@ -107,6 +116,7 @@ namespace engine
 
 			_uCaseToNumpolys = glGetUniformBlockIndex(shader->GetProgramHandle(), "case_to_numpolys");
 			
+
 		}
 
 		ShaderInterface(const char *VS, const char *FS, const char *GS)

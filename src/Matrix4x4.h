@@ -110,9 +110,48 @@ namespace engine {
 			m[2].z() *= z;
 		}
 
-		// Return the matrix values as a 16 element float array
-		float *data()
+		void LookAt(Vector3 point, Vector3 up)
 		{
+			Vector3 pos = getPosition();
+			Vector3 z = (pos - point).normalized();
+			Vector3 x = z.Cross(up).normalized();
+			Vector3 y = z.Cross(x);
+
+			Matrix4x4 res;
+			//res.LoadIdentity();
+			res[0] = Vector4(x, 0.0f);
+			res[1] = Vector4(y, 0.0f);
+			res[2] = Vector4(z, 0.0f);
+			res[3] = Vector4(pos, 1.0f);
+
+			LoadIdentity();
+			*this = *this * res;
+		}
+
+		/// Like glPerspective
+		void Perspective(float fov, float aspect, float zNear, float zFar) {
+			float fW, fH;
+			fH = tan(fov / 360.0f * 3.14159f) * zNear;
+			fW = fH * aspect;
+			Frustum(-fW, fW, -fH, fH, zNear, zFar);
+		}
+
+		/// Like glFrustum 
+		void Frustum(float left, float right, float bottom, float top, float zNear, float zFar) {
+			Matrix4x4 mul (
+				Vector4(2 * zNear / (right - left), 0.0f, 0.0f, 0.0f),
+				Vector4(0.0f, 2 * zNear / (top - bottom), 0.0f, 0.0f),
+				Vector4((right + left) / (right - left), (top + bottom) / (top - bottom), -(zFar + zNear) / (zFar - zNear), -1.0f),
+				Vector4(0.0f, 0.0f, -2 * zFar*zNear / (zFar - zNear), 0.0f)
+			);
+
+			*this = mul * *this;
+		}
+
+		// Return the matrix values as a 16 element float array
+		const float *data() const
+		{
+			/*
 			float res[16];
 
 			for (int j = 0; j != 4; ++j)
@@ -120,6 +159,8 @@ namespace engine {
 					res[(j << 2) + i] = m[j][i];
 
 			return res;
+			*/
+			return &m[0][0];
 		}
 
 		// Don't define them here to avoid cross references

@@ -3,7 +3,6 @@
 
 namespace engine
 {	
-
 	class RenderSystem
 	{
 
@@ -41,13 +40,17 @@ namespace engine
 			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 			// set the camera projection
+			
+			/*
 			glMatrixMode(GL_PROJECTION);
 			// FOV, aspect ratio, near clipping plane, far clipping plane
 			gluPerspective(45.0f, 1280.0f / 720.0f, 0.01f, 1000);
-			glViewport(0.0f, 0.0f, 1280.0f, 720.0f);
 			glMatrixMode(GL_MODELVIEW);
-
+			*/
 			//glEnable(GL_NONE);
+			glViewport(0.0f, 0.0f, 1280.0f, 720.0f);
+			CameraSystem::GetCameraSystem().InitViewport(45.0f, 1280.0f / 720.0f, 0.1f, 1000.0f);
+			
 			glEnable(GL_DEPTH_TEST);
 			
 		}

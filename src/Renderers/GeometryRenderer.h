@@ -26,43 +26,26 @@ namespace engine
 
 			glUseProgram(entity->GetVertexBuffer()->GetShader()->GetProgramHandle());			
 			
+			/*
 
+				This can be set somewhere else, it's camera specific stuff, not renderer stuff
 
-			// resets all the transformations
-			glLoadIdentity();
+			*/
 			// set the camera transform			
 			Matrix4x4 transform = _currentCamera->transform();
 			Vector3 position = transform.getPosition();
 			Vector3 forward = transform.forward();
 			Vector3 up = transform.up();
 			Vector3 target = position + forward.normalized();
-			gluLookAt(
-				position.x(),
-				position.y(),
-				position.z(),
-				target.x(),
-				target.y(),
-				target.z(),
-				up.x(),
-				up.y(),
-				up.z()
-				);
 
-			//transform the entity		
-			Matrix4x4 m2;
-			m2.LoadIdentity();
-			m2 = entity->transform();
-			/*m2.Translate(entity->GetPosition().x, entity->GetPosition().y, entity->GetPosition().z);
-			m2.Rotate(entity->GetRotation().x, 0.0f, 0.0f, 1.0f);
-			m2.Rotate(entity->GetRotation().y, 0.0f, 1.0f, 0.0f);
-			m2.Rotate(entity->GetRotation().z, 1.0f, 0.0f, 0.0f);*/
-
-			//glMultMatrixf(m2.data());
-
-			//transform the entity			
-			glTranslatef(0.0f, 0.0f, 5.0f);
+			Matrix4x4 viewMat;
+			viewMat.Translate(position);
+			viewMat.LookAt(target, up);
 
 			
+			CameraSystem cs = CameraSystem::GetCameraSystem();
+			// Build the model-view-projection matrix
+			Matrix4x4 modelViewProj = entity->transform() * viewMat * cs.GetProjectionMatrix();
 
 
 			// set the color uniform
@@ -78,6 +61,10 @@ namespace engine
 				entity->GetVertexBuffer()->GetShaderData()->Get_uLightPosition().y(),
 				entity->GetVertexBuffer()->GetShaderData()->Get_uLightPosition().z()
 				);
+
+			// send the model-view-projection matrix to the shader
+			glUniformMatrix4fv((entity->GetVertexBuffer()->GetShader())->get_uModelToProjection(), 1, GL_FALSE, modelViewProj.data());
+
 
 			entity->GetVertexBuffer()->ConfigureVertexAttributes();
 			entity->GetVertexBuffer()->RenderVertexBuffer();

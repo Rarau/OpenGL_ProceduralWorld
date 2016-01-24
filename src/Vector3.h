@@ -106,6 +106,15 @@ namespace engine
 		{
 			return operator*(1/number);
 		}
+		
+		Vector3 operator-() const
+		{
+			return *this * -1.0f;
+		}
+
+		Vector3 Cross(const Vector3 &r) const {
+			return Vector3(v[1] * r[2] - v[2] * r[1], v[2] * r[0] - v[0] * r[2], v[0] * r[1] - v[1] * r[0]);
+		}
 
 		float lengthSquared() const
 		{
@@ -122,7 +131,7 @@ namespace engine
 			return operator*(1/length());
 		}
 
-		Vector3 normalize() 
+		void normalize() 
 		{
 			*this = operator*(1 / length());
 		}

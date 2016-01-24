@@ -7,7 +7,8 @@ namespace engine
 	{
 	private:
 		Entity *_currentCamera;
-		
+		Matrix4x4 projectionMatrix;
+
 		CameraSystem()
 		{
 
@@ -30,6 +31,14 @@ namespace engine
 			_currentCamera = newCamera;
 			RenderSystem *renderSystem = &RenderSystem::GetRenderSystem();
 			renderSystem->SetCurrentCamera(_currentCamera);
+		}
+
+		void InitViewport(float fov, float aspectRatio, float zNear, float zFar) {
+			projectionMatrix.Perspective(aspectRatio, aspectRatio, zNear, zFar);
+		}
+
+		const Matrix4x4& GetProjectionMatrix() {
+			return projectionMatrix;
 		}
 
 		static CameraSystem& GetCameraSystem()

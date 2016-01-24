@@ -4,6 +4,8 @@ attribute vec3 aPositionNormal;
 uniform vec4 uColor;
 uniform vec3 uLightPosition;
 
+uniform mat4 uModelToProjection;
+
 varying vec4 vFinalVertexColor;
 
 void main()
@@ -16,5 +18,5 @@ void main()
 
 	vFinalVertexColor = dotProduct * uColor;
 
-	gl_Position = gl_ModelViewProjectionMatrix * vec4(aPositionVertex, 1.0);
+	gl_Position = uModelToProjection * vec4(aPositionVertex, 1.0);
 }
