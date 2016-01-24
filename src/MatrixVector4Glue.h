@@ -16,6 +16,6 @@ namespace engine
 	}
 	Vector3 Matrix4x4::up()
 	{
-		return (Vector4(0.0f, 0.0f, 1.0f, 0.0f) * (*this));
+		return (Vector4(0.0f, 1.0f, 0.0f, 0.0f) * (*this));
 	}
 }
