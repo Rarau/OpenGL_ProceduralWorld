@@ -157,6 +157,18 @@ namespace engine
 			// clear the texture buffer
 			glClear(GL_COLOR_BUFFER_BIT);
 
+			Matrix4x4 m = Matrix4x4(Vector3(-1.0f), 2.0f);
+			glLoadIdentity();
+			glLoadMatrixf(m.data());
+			glViewport(0, 0, 33, 33);
+
+			// Build the model-view-projection matrix
+			//Matrix4x4 modelViewM = entity->transform() * m.Inverse();
+
+			// send the model-world matrix to the shader
+			glUniformMatrix4fv(_functionEvaluatorShader->get_uModelToWorld(), 1, GL_FALSE, entity->transform().data());
+			//glUniformMatrix4fv(_functionEvaluatorShader->get_uModelToProjection(), 1, GL_FALSE, modelViewM.data());
+
 			// configure our camera and viewport to render properly to the 3d texture
 			/*
 			float m[] = {
@@ -166,10 +178,7 @@ namespace engine
 				-1.0f, -1.0f, -1.0f, 1.0f,
 			};		
 			*/
-			Matrix4x4 m = Matrix4x4(Vector3(-1.0f), 2.0f);
-			glLoadIdentity();			
-			glLoadMatrixf(m.data());
-			glViewport(0, 0, 33, 33);
+						
 
 			// enable quad vertex buffer
 			glBindBuffer(GL_ARRAY_BUFFER, _quadVertexBufferID);
@@ -203,41 +212,12 @@ namespace engine
 			// resets all the transformations
 			glLoadIdentity();
 
-			// set the camera transform			
-			Matrix4x4 transform = _currentCamera->transform();
-			Vector3 position = transform.getPosition();
-			Vector3 forward = transform.forward();
-			Vector3 up = transform.up();
-			gluLookAt(
-				position.x(),
-				position.y(),
-				position.z(),
-				forward.x(),
-				forward.y(),
-				forward.z(),
-				up.x(),
-				up.y(),
-				up.z()
-				);
-
-			//transform the entity		
-			Matrix4x4 m2;
-			m2.LoadIdentity();
-			m2 = entity->transform();
-			/*m2.Translate(entity->GetPosition().x, entity->GetPosition().y, entity->GetPosition().z);
-			m2.Rotate(entity->GetRotation().x, 0.0f, 0.0f, 1.0f);
-			m2.Rotate(entity->GetRotation().y, 0.0f, 1.0f, 0.0f);
-			m2.Rotate(entity->GetRotation().z, 1.0f, 0.0f, 0.0f);*/
-
-			glMultMatrixf(m2.data());
-			/*
-			glTranslatef(entity->GetPosition().x, entity->GetPosition().y, entity->GetPosition().z);
-			glRotatef(entity->GetRotation().x, 0.0f, 0.0f, 1.0f);
-			glRotatef(entity->GetRotation().y, 0.0f, 1.0f, 0.0f);
-			glRotatef(entity->GetRotation().z, 1.0f, 0.0f, 0.0f);
-			*/
-			//glScalef(entity->GetScale().x, entity->GetScale().y, entity->GetScale().z);			
-
+			// Build the model-view-projection matrix
+			Matrix4x4 modelViewProj = entity->transform() * _currentCamera->transform().Inverse() * GetProjectionMatrix();
+			
+			// send the model-view-projection matrix to the shader
+			glUniformMatrix4fv(_blockShader->get_uModelToProjection(), 1, GL_FALSE, modelViewProj.data());
+			
 			// enable block vertex buffer
 			glBindBuffer(GL_ARRAY_BUFFER, _blockVertexBufferID);			
 			glEnableVertexAttribArray(_blockShader->Get_aPositionVertex());

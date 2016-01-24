@@ -5,11 +5,15 @@ uniform vec4 uColor;
 uniform vec3 uLightPosition;
 uniform float uInstanceSeparation;
 
+uniform mat4 uModelToWorld;
+uniform mat4 uModelToProjection;
+
 
 // outputs
 varying vec4 vFinalVertexColor;
 out VS_OUT {
 	int instanceID;
+	vec4 globalPos;
 } vs_out;
 
 void main()
@@ -26,6 +30,6 @@ void main()
 	
 	vs_out.instanceID = gl_InstanceID;
 	
-	//gl_Position = vec4(instancePos, 1.0);
+	vs_out.globalPos = uModelToWorld * vec4(instancePos, 1.0);
 	gl_Position = gl_ModelViewMatrix * vec4(instancePos, 1.0);
 }

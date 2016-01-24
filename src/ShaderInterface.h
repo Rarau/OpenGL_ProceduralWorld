@@ -17,6 +17,7 @@ namespace engine
 		GLuint _uEdgeConnectList;
 
 		GLuint _uModelToProjection;
+		GLuint _uModelToWorld;
 
 		char* LoadTextFromFile(const char *file)
 		{
@@ -94,6 +95,11 @@ namespace engine
 			return _uModelToProjection;
 		}
 
+		GLuint get_uModelToWorld()
+		{
+			return _uModelToWorld;
+		}
+
 		ShaderInterface(const char *VS, const char *FS)
 		{
 			// read shaders from strings
@@ -108,6 +114,7 @@ namespace engine
 			_aNormalVertex = glGetAttribLocation(shader->GetProgramHandle(), "aPositionNormal");
 
 			_uModelToProjection = glGetUniformLocation(shader->GetProgramHandle(), "uModelToProjection");
+			_uModelToWorld = glGetUniformLocation(shader->GetProgramHandle(), "_uModelToWorld");
 
 			_uColor = glGetUniformLocation(shader->GetProgramHandle(), "uColor");
 			_uLightPosition = glGetUniformLocation(shader->GetProgramHandle(), "uLightPosition");

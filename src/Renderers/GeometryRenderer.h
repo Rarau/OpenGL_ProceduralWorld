@@ -26,30 +26,10 @@ namespace engine
 			GLuint textArrayIndex = entity->GetVertexBuffer()->GetShader()->get_uTextureArray();
 
 			glUseProgram(entity->GetVertexBuffer()->GetShader()->GetProgramHandle());			
-			
-			/*
-
-				This can be set somewhere else, it's camera specific stuff, not renderer stuff
-
-			*/
-			// set the camera transform			
-			Matrix4x4 transform = _currentCamera->transform();
-			Vector3 position = transform.getPosition();
-			Vector3 forward = transform.forward();
-			Vector3 up = transform.up();
-			Vector3 target = position + forward.normalized();
-
-			//Matrix4x4 viewMat;
-			//viewMat.Translate(position);
-			////_currentCamera->transform().LookAt(target, up);
-			//viewMat.LookAt(target, up);
-
-			
+					
 			
 			// Build the model-view-projection matrix
 			Matrix4x4 modelViewProj = entity->transform() * _currentCamera->transform().Inverse() * GetProjectionMatrix();
-			//Matrix4x4 modelViewProj = entity->transform() * viewMat * GetProjectionMatrix();
-
 
 			// set the color uniform
 			glUniform4f((entity->GetVertexBuffer()->GetShader())->get_uColor(),

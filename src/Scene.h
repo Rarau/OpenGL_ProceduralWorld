@@ -52,11 +52,11 @@ namespace engine
 						
 
 			//// Terrain entity
-			//Entity *entity = new Entity(nullptr, Matrix4x4());
-			//// Add terrain renderer.
-			//entity->SetRenderer(_resourceManager->GetRendererArray()->at(0));		
-			//
-			//_children->push_back(entity);
+			Entity *entity = new Entity(nullptr, Matrix4x4());
+			// Add terrain renderer.
+			entity->SetRenderer(_resourceManager->GetRendererArray()->at(0));		
+			
+			_children->push_back(entity);
 
 			// rotating Sphere
 			Entity *entity2 = new Entity(_resourceManager->GetVertexBufferArray()->at(0), Matrix4x4());

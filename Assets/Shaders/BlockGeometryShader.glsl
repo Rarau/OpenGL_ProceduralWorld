@@ -1,8 +1,8 @@
 #version 430
  
 layout(points) in;
-layout (triangle_strip, max_vertices=15) out;
 
+layout (triangle_strip, max_vertices=15) out;
 out vec4 vColor;
 
 // texture array with density function values
@@ -10,8 +10,6 @@ layout(location = 3) uniform sampler2DArray uTextureArray;
 
 // numpolys case table
 uniform uint case_to_numpolys[256];
-
-
 
 // Edge connection lookup table
 //layout(location = 5) uniform int edge_connect_list[3840];
@@ -24,7 +22,7 @@ layout (std430) buffer edge_table
 // even if its only one float, the geometry shader receives an array
 in vec3 localPosition[];
 
-in mat4 MVP[];
+uniform mat4 uModelToProjection;
 
 
 // density values at the corners of the voxel
@@ -118,14 +116,14 @@ void main()
 {
 	// Calculate positions of the 8 corners of the voxel:
 	// pPos[0] = gl_in[0].gl_Position;
-	// pPos[1] = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0, 0.0, 0.0);
-	// pPos[2] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 1.0/32.0, 0.0, 0.0);
-	// pPos[3] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0, 0.0, 0.0);
+	// pPos[1] = gl_in[0].gl_Position + uModelToProjection*vec4(0.0, 1.0/32.0, 0.0, 0.0);
+	// pPos[2] = gl_in[0].gl_Position + uModelToProjection*vec4(1.0/32.0, 1.0/32.0, 0.0, 0.0);
+	// pPos[3] = gl_in[0].gl_Position + uModelToProjection*vec4(1.0/32.0, 0.0, 0.0, 0.0);
 	
-	// pPos[4] = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 0.0, 1.0/32.0, 0.0);
-	// pPos[5] = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0, 1.0/32.0, 0.0);
-	// pPos[6] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 1.0/32.0, 1.0/32.0, 0.0);
-	// pPos[7] = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0, 1.0/32.0, 0.0);
+	// pPos[4] = gl_in[0].gl_Position + uModelToProjection*vec4(0.0, 0.0, 1.0/32.0, 0.0);
+	// pPos[5] = gl_in[0].gl_Position + uModelToProjection*vec4(0.0, 1.0/32.0, 1.0/32.0, 0.0);
+	// pPos[6] = gl_in[0].gl_Position + uModelToProjection*vec4(1.0/32.0, 1.0/32.0, 1.0/32.0, 0.0);
+	// pPos[7] = gl_in[0].gl_Position + uModelToProjection*vec4(1.0/32.0, 0.0, 1.0/32.0, 0.0);
 	
 	// Calculate positions of the 8 corners of the voxel:
 	float separation = 1.0/32.0;
@@ -259,11 +257,11 @@ void main()
 			
 			//emit one triangle per point
 			//Test triangles. To-do: create the real triangles.
-			// gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, float(j), 0.0, 0.0);
+			// gl_Position = gl_in[0].gl_Position + uModelToProjection*vec4(0.0, float(j), 0.0, 0.0);
 			// EmitVertex();
-			// gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(0.0, 1.0/32.0 + float(j), 0.0, 0.0);
+			// gl_Position = gl_in[0].gl_Position + uModelToProjection*vec4(0.0, 1.0/32.0 + float(j), 0.0, 0.0);
 			// EmitVertex();
-			// gl_Position = gl_in[0].gl_Position + MVP[0]*vec4(1.0/32.0, 0.0 + float(j), 0.0, 0.0);
+			// gl_Position = gl_in[0].gl_Position + uModelToProjection*vec4(1.0/32.0, 0.0 + float(j), 0.0, 0.0);
 			// EmitVertex();  
 			
 			// EndPrimitive();
@@ -272,11 +270,11 @@ void main()
 		
 		// emit first triangle
 		// Test triangles. To-do: create the real triangles.
-		gl_Position = MVP[0]*finalTriangle1[0];
+		gl_Position = uModelToProjection*finalTriangle1[0];
 		EmitVertex();
-		gl_Position = MVP[0]*finalTriangle1[1];
+		gl_Position = uModelToProjection*finalTriangle1[1];
 		EmitVertex();
-		gl_Position = MVP[0]*finalTriangle1[2];
+		gl_Position = uModelToProjection*finalTriangle1[2];
 		EmitVertex();  
 		
 		EndPrimitive();
@@ -284,11 +282,11 @@ void main()
 		if(numpolys > 1)
 		{
 			// emit second triangle
-			gl_Position = MVP[0]*finalTriangle2[0];
+			gl_Position = uModelToProjection*finalTriangle2[0];
 			EmitVertex();
-			gl_Position = MVP[0]*finalTriangle2[1];
+			gl_Position = uModelToProjection*finalTriangle2[1];
 			EmitVertex();
-			gl_Position = MVP[0]*finalTriangle2[2];
+			gl_Position = uModelToProjection*finalTriangle2[2];
 			EmitVertex();  
 			
 			EndPrimitive();
@@ -296,11 +294,11 @@ void main()
 			if(numpolys > 2)
 			{
 				// emit third triangle
-				gl_Position = MVP[0]*finalTriangle3[0];
+				gl_Position = uModelToProjection*finalTriangle3[0];
 				EmitVertex();
-				gl_Position = MVP[0]*finalTriangle3[1];
+				gl_Position = uModelToProjection*finalTriangle3[1];
 				EmitVertex();
-				gl_Position = MVP[0]*finalTriangle3[2];
+				gl_Position = uModelToProjection*finalTriangle3[2];
 				EmitVertex();  
 				
 				EndPrimitive();
@@ -308,11 +306,11 @@ void main()
 				if(numpolys > 3)
 				{
 					// emit fourth triangle
-					gl_Position = MVP[0]*finalTriangle4[0];
+					gl_Position = uModelToProjection*finalTriangle4[0];
 					EmitVertex();
-					gl_Position = MVP[0]*finalTriangle4[1];
+					gl_Position = uModelToProjection*finalTriangle4[1];
 					EmitVertex();
-					gl_Position = MVP[0]*finalTriangle4[2];
+					gl_Position = uModelToProjection*finalTriangle4[2];
 					EmitVertex();  
 					
 					EndPrimitive();
@@ -320,11 +318,11 @@ void main()
 					if(numpolys > 4)
 					{
 						// emit fourth triangle
-						gl_Position = MVP[0]*finalTriangle5[0];
+						gl_Position = uModelToProjection*finalTriangle5[0];
 						EmitVertex();
-						gl_Position = MVP[0]*finalTriangle5[1];
+						gl_Position = uModelToProjection*finalTriangle5[1];
 						EmitVertex();
-						gl_Position = MVP[0]*finalTriangle5[2];
+						gl_Position = uModelToProjection*finalTriangle5[2];
 						EmitVertex();  
 						
 						EndPrimitive();

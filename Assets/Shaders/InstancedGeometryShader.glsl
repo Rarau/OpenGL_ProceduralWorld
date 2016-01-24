@@ -5,6 +5,7 @@ layout (triangle_strip, max_vertices=3) out;
 
 in VS_OUT {
 	int instanceID;
+	vec4 globalPos;
 } gs_in[];
 
 out flat int _layer;
