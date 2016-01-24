@@ -39,16 +39,16 @@ namespace engine
 			Vector3 up = transform.up();
 			Vector3 target = position + forward.normalized();
 
-			Matrix4x4 viewMat;
-			viewMat.Translate(position);
-			viewMat.LookAt(target, up);
+			//Matrix4x4 viewMat;
+			//viewMat.Translate(position);
+			////_currentCamera->transform().LookAt(target, up);
+			//viewMat.LookAt(target, up);
 
 			
-			//CameraSystem cs = CameraSystem::GetCameraSystem();
+			
 			// Build the model-view-projection matrix
-			//Matrix4x4 modelViewProj = entity->transform() * viewMat * cs.GetProjectionMatrix();
-
-			Matrix4x4 modelViewProj = entity->transform() * viewMat * GetProjectionMatrix();
+			Matrix4x4 modelViewProj = entity->transform() * _currentCamera->transform().Inverse() * GetProjectionMatrix();
+			//Matrix4x4 modelViewProj = entity->transform() * viewMat * GetProjectionMatrix();
 
 
 			// set the color uniform

@@ -37,7 +37,7 @@ namespace engine
 		}
 
 		void InitViewport(float fov, float aspectRatio, float zNear, float zFar) {
-			projectionMatrix.Perspective(aspectRatio, aspectRatio, zNear, zFar);
+			projectionMatrix.Perspective(fov, aspectRatio, zNear, zFar);
 		}
 
 		const Matrix4x4& GetProjectionMatrix() {

@@ -110,6 +110,25 @@ namespace engine {
 			m[2].z() *= z;
 		}
 
+		/// Quick invert, assumes the matrix is a rotate and translate only.
+		// works for orthonormal rotation component matrices
+		Matrix4x4 Inverse() const
+		{
+			Matrix4x4 d;
+			// transpose x, y, z
+			for (int i = 0; i != 3; ++i) 
+			{
+				d[i] = Vector4(m[0][i], -m[1][i], -m[2][i], 0.0f);
+			}
+			d[3] = Vector4(0, 0, 0, 1);
+
+			// translate by new matrix
+			d[3] = Vector4(-m[3][0], -m[3][1], -m[3][2], 1.0f) * d;
+
+			return d;
+			
+		}
+
 		void LookAt(Vector3 point, Vector3 up)
 		{
 			Vector3 pos = getPosition();
@@ -133,7 +152,7 @@ namespace engine {
 			float fW, fH;
 			fH = tan(fov / 360.0f * 3.14159f) * zNear;
 			fW = fH * aspect;
-			Frustum(-fW, fW, -fH, fH, zNear, zFar);
+			Frustum(fW, -fW, fH, -fH, zNear, zFar);
 		}
 
 		/// Like glFrustum 
