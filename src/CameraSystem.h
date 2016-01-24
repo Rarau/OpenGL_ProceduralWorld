@@ -12,14 +12,14 @@ namespace engine
 		CameraSystem()
 		{
 
-		}		
-
-	public:
+		}	
 
 		~CameraSystem()
 		{
 
 		}
+
+	public:		
 
 		Entity* GetCurrentCamera()
 		{
