@@ -57,11 +57,11 @@ namespace engine
 				}
 				if (glfwGetKey(_window, GLFW_KEY_A))
 				{
-					_currentPlayer->transform().Translate(_currentPlayer->transform().right() * -0.03f);
+					_currentPlayer->transform().Translate(_currentPlayer->transform().right() * 0.03f);
 				}
 				if (glfwGetKey(_window, GLFW_KEY_D))
 				{
-					_currentPlayer->transform().Translate(_currentPlayer->transform().right() * 0.03f);
+					_currentPlayer->transform().Translate(_currentPlayer->transform().right() * -0.03f);
 				}
 				if (glfwGetKey(_window, GLFW_KEY_Q))
 				{
@@ -70,6 +70,14 @@ namespace engine
 				if (glfwGetKey(_window, GLFW_KEY_E))
 				{
 					_currentPlayer->transform().Translate(_currentPlayer->transform().up() * -0.03f);
+				}
+				if (glfwGetKey(_window, GLFW_KEY_N))
+				{
+					_currentPlayer->transform().Rotate(0.5f, 0.0f, 1.0f, 0.0f);
+				}
+				if (glfwGetKey(_window, GLFW_KEY_M))
+				{
+					_currentPlayer->transform().Rotate(-0.5f, 0.0f, 1.0f, 0.0f);
 				}
 				
 			}

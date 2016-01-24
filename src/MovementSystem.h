@@ -38,7 +38,7 @@ namespace engine
 				Entity *entity = *iterator;
 
 				// For the moment it's just a cinematic integrator
-				entity->transform().Translate(entity->transform().getPosition() + entity->GetVelocity());
+				entity->transform().Translate(entity->GetVelocity());
 				entity->transform().Rotate(Vector3(entity->GetRotationVelocity().x(), entity->GetRotationVelocity().y(), entity->GetRotationVelocity().z()));
 
 			}

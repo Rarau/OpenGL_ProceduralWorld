@@ -35,13 +35,14 @@ namespace engine
 			Vector3 position = transform.getPosition();
 			Vector3 forward = transform.forward();
 			Vector3 up = transform.up();
+			Vector3 target = position + forward.normalized();
 			gluLookAt(
 				position.x(),
 				position.y(),
 				position.z(),
-				forward.x(),
-				forward.y(),
-				forward.z(),
+				target.x(),
+				target.y(),
+				target.z(),
 				up.x(),
 				up.y(),
 				up.z()
@@ -56,7 +57,12 @@ namespace engine
 			m2.Rotate(entity->GetRotation().y, 0.0f, 1.0f, 0.0f);
 			m2.Rotate(entity->GetRotation().z, 1.0f, 0.0f, 0.0f);*/
 
-			glMultMatrixf(m2.data());
+			//glMultMatrixf(m2.data());
+
+			//transform the entity			
+			glTranslatef(0.0f, 0.0f, 5.0f);
+
+			
 
 
 			// set the color uniform
