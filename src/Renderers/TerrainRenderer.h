@@ -158,22 +158,22 @@ namespace engine
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			Matrix4x4 m = Matrix4x4(Vector3(-1.0f), 2.0f);
-			glLoadIdentity();
-			glLoadMatrixf(m.data());
+			/*glLoadIdentity();
+			glLoadMatrixf(m.data());*/
 			glViewport(0, 0, 33, 33);
 
-			Matrix4x4 proj;
-			proj.Frustum(0.0f, 33.0f, 0.0f, 33.0f, 0.0f, 33.0f);
+			//Matrix4x4 proj;
+			//proj.Frustum(0.0f, 33.0f, 0.0f, 33.0f, 0.0f, 33.0f);
 
 
 			// Build the model-view-projection matrix
-			Matrix4x4 modelToProj = entity->transform() * m.Inverse() * proj;
+			//Matrix4x4 modelToProj = entity->transform() * m.Inverse() * proj;
 
 			// send the model-world matrix to the shader
 			glUniformMatrix4fv(3, 1, GL_FALSE, entity->transform().data());
 
 			//glUniformMatrix4fv(_functionEvaluatorShader->get_uModelToWorld(), 1, GL_FALSE, entity->transform().data());
-			glUniformMatrix4fv(4, 1, GL_FALSE, modelToProj.data());
+			glUniformMatrix4fv(4, 1, GL_FALSE, m.data());
 
 			// configure our camera and viewport to render properly to the 3d texture
 			/*

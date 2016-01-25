@@ -22,6 +22,6 @@ void main()
 	
 	vs_out.instanceID = gl_InstanceID;
 	
-	vs_out.globalPos =  uModelToWorld * vec4(instancePos, 1.0);
+	vs_out.globalPos =  uModelToWorld * vec4(instancePos, 1.0);	
 	gl_Position = uModelToProjection * vec4(instancePos, 1.0);
 }

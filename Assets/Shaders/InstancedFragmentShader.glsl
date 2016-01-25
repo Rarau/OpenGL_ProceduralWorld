@@ -18,18 +18,20 @@ void main()
 	
 	// we are rendering to a texture buffer with 1 float per pixel
 	
-	 if(ps_in.wCoords.y > 0.5)
+	 if(ps_in.wCoords.z > 0.5)
 	 {
 		 
-		float sphereSurface = (pos.x - 18.0)*(pos.x - 18.0)+ (pos.y - 18.0)*(pos.y - 18.0) + (pos.z - 18.0)*(pos.z - 18.0);
+		float sphereSurface = (pos.x - 18.0)*(pos.x - 18.0)+ (pos.y - 18.0)*(pos.y - 18.0) + (pos.z - 15.0)*(pos.z - 15.0);
 		if(sphereSurface < 200f)
 		{
-			gl_FragColor.r = 10.0f;	
+			gl_FragColor.r = 0.8f;	
 		}
 		else
 		{
-			gl_FragColor.r = -10.0f;
+			gl_FragColor.r = -0.8f;
 		}	
+		
+		
 	 }
 	
 	
