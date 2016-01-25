@@ -62,6 +62,15 @@ namespace engine
 				CHECK_GL_ERROR();
 				while (1);;
 			}
+			
+			GLsizei logLen;
+			GLsizei maxLogLen = 255;
+			GLchar logMsg[255];
+
+			glGetShaderInfoLog(shaderHandle, maxLogLen, &logLen, logMsg);
+
+			printf("Shader compilation log: %s\n", logMsg);
+
 
 			return shaderHandle;
 		}
