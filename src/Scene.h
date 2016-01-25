@@ -54,8 +54,7 @@ namespace engine
 			//// Terrain entity
 			Entity *entity = new Entity(nullptr, Matrix4x4());
 			// Add terrain renderer.
-			entity->SetRenderer(_resourceManager->GetRendererArray()->at(0));
-			entity->SetRotationVelocity(Vector3(0.0f, 0.0f, 0.3f));
+			entity->SetRenderer(_resourceManager->GetRendererArray()->at(0));		
 			
 			_children->push_back(entity);
 

@@ -4,11 +4,11 @@ layout(triangles) in;
 layout (triangle_strip, max_vertices=3) out;
 
 in VS_OUT {
-	int instanceID;	
-	vec4 worldCoord;
+	int instanceID;
+	vec4 globalPos; 
 } gs_in[];
 
-out gl_PerVertex {
+out GS_OUT {
     vec4 wCoords;    
 } gs_out;
 
@@ -20,8 +20,8 @@ void main()
 	{
 		gl_Layer = gs_in[i].instanceID;
 		gl_Position = gl_in[i].gl_Position;
-		_layer = gs_in[i].instanceID;	
-		gs_out.wCoords = gs_in[i].worldCoord;		
+		_layer = gs_in[i].instanceID;
+		gs_out.wCoords = gs_in[i].globalPos;
 		EmitVertex();
 	}
 	
