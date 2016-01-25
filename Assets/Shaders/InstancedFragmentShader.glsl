@@ -11,18 +11,19 @@ in GS_OUT {
  
 void main()
 {
-	vec4 pos = gl_FragCoord;
-	
-	
-	pos.z = _layer;	
+
+	vec4 pos = ps_in.wCoords;
+
+	//vec4 localPos;
+	//pos.z = _layer;	
 	
 	// we are rendering to a texture buffer with 1 float per pixel
 	
-	 if(ps_in.wCoords.z > 0.5)
+	 if(pos.z > 0.5)
 	 {
 		 
-		float sphereSurface = (pos.x - 18.0)*(pos.x - 18.0)+ (pos.y - 18.0)*(pos.y - 18.0) + (pos.z - 15.0)*(pos.z - 15.0);
-		if(sphereSurface < 200f)
+		float sphereSurface = (pos.x - 0.0)*(pos.x - 0.0)+ (pos.y - 0.0)*(pos.y - 0.0) + (pos.z - 0.0)*(pos.z - 0.0);
+		if(sphereSurface < 0.5)
 		{
 			gl_FragColor.r = 0.8f;	
 		}
