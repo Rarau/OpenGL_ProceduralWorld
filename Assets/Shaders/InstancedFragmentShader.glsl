@@ -3,34 +3,41 @@
 uniform vec4 uColor;
 in flat int _layer;
 
+in gl_PerVertex {
+    vec4 wCoords;    
+} ps_in;
+
+//in vec4 worldCoords;
+
 void main()
 {
 	vec4 pos = gl_FragCoord;
 	
-	pos.z = _layer;
-	
-	//TO-DO: Evaluate the density function here
+	pos.z = _layer;	
 	
 	// we are rendering to a texture buffer with 1 float per pixel
 	
-	 
-	float sphereSurface = (pos.x - 18.0)*(pos.x - 18.0)+ (pos.y - 18.0)*(pos.y - 18.0) + (pos.z - 15.0)*(pos.z - 18.0);
-	if(sphereSurface < 200f)
+	 if(ps_in.wCoords.y == 0)
 	{
-		gl_FragColor.r = 10.0f;	
+		float sphereSurface = (pos.x - 18.0)*(pos.x - 18.0)+ (pos.y - 18.0)*(pos.y - 18.0) + (pos.z - 15.0)*(pos.z - 18.0);
+		if(sphereSurface < 200f)
+		{
+			gl_FragColor.r = 10.0f;	
+		}
+		else
+		{
+			gl_FragColor.r = -10.0f;
+		}	
 	}
-	else
-	{
-		gl_FragColor.r = -10.0f;
-	}	
 	
-	// if(pos.z < 15f)
+	
+	// if(pos.z < 1f)
 	// {
 		// gl_FragColor.r = 10.0f;	
 	// }
 	// else
 	// {
 		// gl_FragColor.r = -10.0f;
-	// }	
+	// }		
 	
 }

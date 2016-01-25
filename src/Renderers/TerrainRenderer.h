@@ -144,6 +144,20 @@ namespace engine
 			// TO-DO: hardcoded 0.03, it should be the block side length/32
 			glUniform1f(_functionEvaluatorShader->get_uInstanceSeparation(), 0.03f);
 
+			Matrix4x4 cameraWorld = Matrix4x4(Vector3(-1.0f), 2.0f);
+			Matrix4x4 proj = Matrix4x4();
+			proj.Frustum(0.0f, 33.0f, 0.0f, 33.0f, -1.0f, 2.0f);
+
+			glLoadIdentity();
+			glLoadMatrixf(cameraWorld.data());
+			glViewport(0, 0, 33, 33);
+
+			// Build the model-view-projection matrix
+			Matrix4x4 modelViewM = entity->transform() * cameraWorld * proj;
+			// send the model-world matrix to the shader
+			glUniformMatrix4fv(_functionEvaluatorShader->get_uModelToWorld(), 1, GL_FALSE, entity->transform().data());
+			//glUniformMatrix4fv(_functionEvaluatorShader->get_uModelToProjection(), 1, GL_FALSE, modelViewM.data());
+
 
 			// bind 3d texture buffer
 			glBindFramebuffer(GL_FRAMEBUFFER, frameBufferObjectId);
@@ -157,17 +171,10 @@ namespace engine
 			// clear the texture buffer
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			Matrix4x4 m = Matrix4x4(Vector3(-1.0f), 2.0f);
-			glLoadIdentity();
-			glLoadMatrixf(m.data());
-			glViewport(0, 0, 33, 33);
+			
 
-			// Build the model-view-projection matrix
-			//Matrix4x4 modelViewM = entity->transform() * m.Inverse();
 
-			// send the model-world matrix to the shader
-			glUniformMatrix4fv(_functionEvaluatorShader->get_uModelToWorld(), 1, GL_FALSE, entity->transform().data());
-			//glUniformMatrix4fv(_functionEvaluatorShader->get_uModelToProjection(), 1, GL_FALSE, modelViewM.data());
+			
 
 			// configure our camera and viewport to render properly to the 3d texture
 			/*
@@ -185,6 +192,7 @@ namespace engine
 			glEnableVertexAttribArray(_functionEvaluatorShader->Get_aPositionVertex());
 			glVertexAttribPointer(_functionEvaluatorShader->Get_aPositionVertex(), 3, GL_FLOAT, GL_FALSE, sizeof(VertexDataP), 0);
 
+			
 			// execute sampler shader
 			glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 33);
 
