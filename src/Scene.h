@@ -56,8 +56,14 @@ namespace engine
 			// Add terrain renderer.
 			entity->SetRenderer(_resourceManager->GetRendererArray()->at(0));	
 			//entity->SetRotationVelocity(Vector3(0.3f, 0.0f, 0.0f));
-			
 			_children->push_back(entity);
+
+			//Entity *entity3 = new Entity(nullptr, Matrix4x4(Vector3(-1.0f, 0.0f, 0.0f), 1.0));
+			//// Add terrain renderer.
+			//entity3->SetRenderer(_resourceManager->GetRendererArray()->at(0));
+			////entity->SetRotationVelocity(Vector3(0.3f, 0.0f, 0.0f));
+			//
+			//_children->push_back(entity3);
 
 			// rotating Sphere
 			Entity *entity2 = new Entity(_resourceManager->GetVertexBufferArray()->at(0), Matrix4x4());
