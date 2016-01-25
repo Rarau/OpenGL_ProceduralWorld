@@ -70,7 +70,7 @@ namespace engine
 			return _uLightPosition;
 		}
 
-		GLint get_uInstanceSeparation()
+		GLuint get_uInstanceSeparation()
 		{
 			return _uInstanceSeparation;
 		}

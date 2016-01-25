@@ -63,7 +63,7 @@ namespace engine
 			entity2->transform().Translate(0.0f, 0.0f, 5.0f);
 			entity2->transform().Scale(2.0f, 2.0f, 2.0f);
 			
-			entity2->SetRotationVelocity(Vector3(0.3f, 0.0f, 0.0f));
+			entity2->SetRotationVelocity(Vector3(0.3f, 0.0f, 0.0f)); 
 			entity2->SetRenderer(_resourceManager->GetRendererArray()->at(1));
 			_children->push_back(entity2);			
 
