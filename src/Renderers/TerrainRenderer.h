@@ -56,15 +56,22 @@ namespace engine
 
 		ShaderInterface *_blockShader;	
 
+		ShaderInterface *_debugGridShader;
+
+
 		GLuint ubo = 0;		
 		shader_edge_table edge_table;
 
 		Entity* _currentCamera;
 
+		float time;
+
 	public:
 
 		TerrainRenderer(Entity* camera)
 		{
+			time = 0.0f;
+
 			_currentCamera = camera;
 
 			// Create hard-coded the quad vertex buffer
@@ -92,6 +99,12 @@ namespace engine
 				"Assets/Shaders/BlockFragmentShader.glsl",
 				"Assets/Shaders/BlockGeometryShader.glsl");
 
+			/*
+			_debugGridShader = new ShaderInterface(
+				"Assets/Shaders/DebugGridVertexShader.glsl",
+				"Assets/Shaders/DebugGridFragmentShader.glsl"
+				);
+*/
 			// Create texture 3D 
 			glGenTextures(1, &textureId);
 			glBindTexture(GL_TEXTURE_2D_ARRAY, textureId);
@@ -135,6 +148,7 @@ namespace engine
 
 		void Render(Entity* entity)
 		{
+			time += 1.0f / 33.0f;
 
 			for (int j = -2; j < 2; j++)
 			{
@@ -149,6 +163,7 @@ namespace engine
 					// set uniforms						
 					// TO-DO: hardcoded 0.03, it should be the block side length/32
 					glUniform1f(_functionEvaluatorShader->get_uInstanceSeparation(), 0.03f);
+					glUniform1f(6, time);
 
 
 					// bind 3d texture buffer
@@ -251,6 +266,17 @@ namespace engine
 
 					// execute drawing shader
 					glDrawArrays(GL_POINTS, 0, 32 * 32 * 32);
+
+
+					// Draw the debug grid
+					/*
+					glUseProgram(_debugGridShader->GetProgramHandle());
+					glBindBuffer(GL_ARRAY_BUFFER, _blockVertexBufferID);
+					glUniformMatrix4fv(3, 1, GL_FALSE, modelToWorld.data());
+
+					glDrawArrays(GL_POINTS, 0, 32 * 32 * 32);
+					*/
+
 				}
 			}
 		}

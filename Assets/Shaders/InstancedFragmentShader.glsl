@@ -3,6 +3,8 @@
 uniform vec4 uColor;
 in flat int _layer;
 
+layout(location = 6) uniform float time;
+
 in GS_OUT {
     vec4 wCoords;    
 } ps_in;
@@ -119,7 +121,7 @@ void main()
 	
 	// we are rendering to a texture buffer with 1 float per pixel
 	float density = -0.5 * pos.y;
-	density += 0.5 * snoise(1.25 * vec3(pos.x, pos.y, pos.z));
+	density += 0.5 * snoise(1.25 * vec3(pos.x +time, pos.y, pos.z));
 	//density += 1.25 * snoise(0.75 * vec3(pos.x, pos.y, pos.z));
 
 	//density -= pos.y;

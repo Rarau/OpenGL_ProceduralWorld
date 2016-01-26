@@ -143,7 +143,7 @@ void main()
 	// check sign of each voxel vertex	
 	
 	// CAREFUL: x[0-1], y[0-1], z[0-31]
-	vec3 scaledLocalPosition = vec3(localPosition[0].x, localPosition[0].y, localPosition[0].z * 32); // to match the 3d texture size (33x33x33)
+	vec3 scaledLocalPosition = vec3(localPosition[0].x + 1.0/66.0, localPosition[0].y + 1.0/66.0, localPosition[0].z * 32); // to match the 3d texture size (33x33x33)
 	
 	vec4 vertex0Value = texture(uTextureArray, vec3(scaledLocalPosition.x, scaledLocalPosition.y, scaledLocalPosition.z));	
 	int v0 = 0;
