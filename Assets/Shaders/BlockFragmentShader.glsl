@@ -11,8 +11,10 @@ void main()
 	// }
 	// else
 	{
-		gl_FragColor = vColor;
+		gl_FragColor = vColor* 0.5;
 		gl_FragColor.r *= 1.50;
+		gl_FragColor.b *= 2.0;
+
 	}
 	/*
 	gl_FragColor.g = 0.1;
