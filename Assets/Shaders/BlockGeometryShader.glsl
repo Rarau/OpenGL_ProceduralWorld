@@ -3,7 +3,13 @@
 layout(points) in;
 
 layout (triangle_strip, max_vertices=15) out;
-out vec4 vColor;
+//out vec4 vColor;
+//out vec4 faceNormal;
+out fData
+{
+    vec3 normal;
+    vec4 vColor;
+}frag;   
 
 // texture array with density function values
 layout(location = 3) uniform sampler2DArray uTextureArray;
@@ -239,7 +245,7 @@ void main()
 	
 	
 	// debug numpolys
-	float col = float(voxelCase)/255;
+	float col = 0.5;
 	vec4 face_color = vec4(col, col, col, 1.0);
 	//vec4 face_color = vec4(float(numpolys)/10, 0.0, 0.0, 1.0);
 	
@@ -251,7 +257,7 @@ void main()
 	//if(voxelCase != 0 && voxelCase != 255)
 	if(numpolys > 0)
 	{	
-		vColor = face_color;
+		frag.vColor = face_color;
 		// for(uint j = 0; j < numpolys; j++)
 		// {
 			// vColor = face_color;		
@@ -271,11 +277,17 @@ void main()
 		
 		// emit first triangle
 		// Test triangles. To-do: create the real triangles.
+		vec3 faceNormal = -cross((finalTriangle1[0].xyz - finalTriangle1[1].xyz), (finalTriangle1[0].xyz - finalTriangle1[2].xyz));
+		normalize(faceNormal);
+		//faceNormal = vec3(1);
 		gl_Position = uModelToProjection*finalTriangle1[0];
+		frag.normal = faceNormal;
 		EmitVertex();
 		gl_Position = uModelToProjection*finalTriangle1[1];
+		frag.normal = faceNormal;
 		EmitVertex();
 		gl_Position = uModelToProjection*finalTriangle1[2];
+		frag.normal = faceNormal;
 		EmitVertex();  
 		
 		EndPrimitive();
@@ -283,11 +295,17 @@ void main()
 		if(numpolys > 1)
 		{
 			// emit second triangle
+			faceNormal = -cross((finalTriangle2[0].xyz - finalTriangle2[1].xyz), (finalTriangle2[0].xyz - finalTriangle2[2].xyz));
+			normalize(faceNormal);
+
 			gl_Position = uModelToProjection*finalTriangle2[0];
+			frag.normal = faceNormal;
 			EmitVertex();
 			gl_Position = uModelToProjection*finalTriangle2[1];
+			frag.normal = faceNormal;
 			EmitVertex();
 			gl_Position = uModelToProjection*finalTriangle2[2];
+			frag.normal = faceNormal;
 			EmitVertex();  
 			
 			EndPrimitive();
@@ -295,35 +313,53 @@ void main()
 			if(numpolys > 2)
 			{
 				// emit third triangle
-				gl_Position = uModelToProjection*finalTriangle3[0];
-				EmitVertex();
-				gl_Position = uModelToProjection*finalTriangle3[1];
-				EmitVertex();
-				gl_Position = uModelToProjection*finalTriangle3[2];
-				EmitVertex();  
+			faceNormal = -cross((finalTriangle3[0].xyz - finalTriangle3[1].xyz), (finalTriangle3[0].xyz - finalTriangle3[2].xyz));
+			normalize(faceNormal);
+
+			gl_Position = uModelToProjection*finalTriangle3[0];
+			frag.normal = faceNormal;
+			EmitVertex();
+			gl_Position = uModelToProjection*finalTriangle3[1];
+			frag.normal = faceNormal;
+			EmitVertex();
+			gl_Position = uModelToProjection*finalTriangle3[2];
+			frag.normal = faceNormal;
+			EmitVertex();   
 				
 				EndPrimitive();
 				
 				if(numpolys > 3)
 				{
 					// emit fourth triangle
+					faceNormal = -cross((finalTriangle4[0].xyz - finalTriangle4[1].xyz), (finalTriangle4[0].xyz - finalTriangle4[2].xyz));
+					normalize(faceNormal);
+
 					gl_Position = uModelToProjection*finalTriangle4[0];
+					frag.normal = faceNormal;
 					EmitVertex();
 					gl_Position = uModelToProjection*finalTriangle4[1];
+					frag.normal = faceNormal;
 					EmitVertex();
 					gl_Position = uModelToProjection*finalTriangle4[2];
+					frag.normal = faceNormal;
 					EmitVertex();  
 					
 					EndPrimitive();
 					
 					if(numpolys > 4)
 					{
-						// emit fourth triangle
+						// emit fifth triangle
+						faceNormal = -cross((finalTriangle5[0].xyz - finalTriangle5[1].xyz), (finalTriangle5[0].xyz - finalTriangle5[2].xyz));
+						normalize(faceNormal);
+
 						gl_Position = uModelToProjection*finalTriangle5[0];
+						frag.normal = faceNormal;
 						EmitVertex();
 						gl_Position = uModelToProjection*finalTriangle5[1];
+						frag.normal = faceNormal;
 						EmitVertex();
 						gl_Position = uModelToProjection*finalTriangle5[2];
+						frag.normal = faceNormal;
 						EmitVertex();  
 						
 						EndPrimitive();

@@ -120,9 +120,10 @@ void main()
 	//pos.z = _layer;	
 	
 	// we are rendering to a texture buffer with 1 float per pixel
-	float density = -0.5 * pos.y;
-	density += 0.5 * snoise(1.25  * sin(time * 0.05) * vec3(pos.x, pos.y, pos.z));
-	//density += 1.25 * snoise(0.75 * vec3(pos.x, pos.y, pos.z));
+	float density =  0.7 + pos.y + 0.05251 * sin(time + 3.0 * pos.x) + 0.05251 * sin(time + 3.0 * pos.z);
+	density += 0.0251 * sin(time + 7.0 * pos.x) + 0.0251 * sin(time + 7.0 * pos.z);
+	density += 0.15 * snoise(vec3(pos.x + time * 0.25, pos.y, pos.z));
+	density += 1.25 * snoise(0.75 * vec3(pos.x, pos.y, pos.z));
 
 	//density -= pos.y;
 	gl_FragColor.r = density;// > 0.1 ? 1.0 : -1.0;

@@ -145,7 +145,7 @@ namespace engine
 			{
 				for (int j = -2; j < 2; j++)
 				{
-					for (int i = -1; i < 1; i++)
+					for (int i = -2; i < 2; i++)
 					{
 
 						// FIRST PASS - Sample density function in a 3D texture
@@ -184,7 +184,7 @@ namespace engine
 
 						// send the model-world matrix to the shader
 						Matrix4x4 modelToWorld = Matrix4x4();
-						modelToWorld.Translate(Vector3((float)i* (1.0f - 1.0f / 33.0f), (float)j* (1.0f - 1.0f / 33.0f), (float)k* (1.0f - 1.0f / 33.0f)));
+						modelToWorld.Translate(Vector3((float)i* (1.0f - 1.0f / 33.0f), (float)j* (1.0f - 1.0f / 33.0f), (float)k* (1.0f - 2.0f / 33.0f)));
 						glUniformMatrix4fv(3, 1, GL_FALSE, modelToWorld.data());
 
 						//glUniformMatrix4fv(_functionEvaluatorShader->get_uModelToWorld(), 1, GL_FALSE, entity->transform().data());
@@ -227,15 +227,15 @@ namespace engine
 						// turn off linear texture interpolation so we can sample the texture correctly
 						glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 						glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-						glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-						glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+						glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP);
+						glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
 
 						// resets all the transformations
 						glLoadIdentity();
 
 						modelToWorld = Matrix4x4();
-						modelToWorld.Translate(Vector3((float)i, (float)j, (float)k));
+						modelToWorld.Translate(Vector3((float)i, (float)j, (float)k * (1.0f - (1.0f / 33.0f))));
 
 						// Build the model-view-projection matrix
 						Matrix4x4 modelViewProj = modelToWorld * _currentCamera->transform().Inverse() * GetProjectionMatrix();
