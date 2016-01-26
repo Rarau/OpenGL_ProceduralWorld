@@ -177,7 +177,7 @@ namespace engine
 
 					// send the model-world matrix to the shader
 					Matrix4x4 modelToWorld = Matrix4x4();
-					modelToWorld.Translate(Vector3((float)i, (float)j, 0.0f));
+					modelToWorld.Translate(Vector3((float)i* (1.0f - 1.0f / 33.0f), (float)j* (1.0f - 1.0f / 33.0f), 0.0f));
 					glUniformMatrix4fv(3, 1, GL_FALSE, modelToWorld.data());
 
 					//glUniformMatrix4fv(_functionEvaluatorShader->get_uModelToWorld(), 1, GL_FALSE, entity->transform().data());
@@ -228,7 +228,7 @@ namespace engine
 					glLoadIdentity();
 
 					modelToWorld = Matrix4x4();
-					modelToWorld.Translate(Vector3((float)i, (float)j, 0.0f));
+					modelToWorld.Translate(Vector3((float)i * (1.0f ), (float)j * (1.0f), 0.0f));
 
 					// Build the model-view-projection matrix
 					Matrix4x4 modelViewProj = modelToWorld * _currentCamera->transform().Inverse() * GetProjectionMatrix();

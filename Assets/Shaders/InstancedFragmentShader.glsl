@@ -120,10 +120,24 @@ void main()
 	// we are rendering to a texture buffer with 1 float per pixel
 	float density = -0.5 * pos.y;
 	density += 0.5 * snoise(1.25 * vec3(pos.x, pos.y, pos.z));
-	//density += 1.25 * snoise(0.75 * vec3(pos.x, pos.y, pos.z));
-
-	//density -= pos.y;
+	
 	gl_FragColor.r = density;// > 0.1 ? 1.0 : -1.0;
+	
+	
+	// if (pos.y < pos.x + 0.5)
+	// {
+		// gl_FragColor.r = 0.8f;
+	// }
+	// else
+	// {
+		// gl_FragColor.r = -0.8f;
+	// }
+	
+	
+	
+	
+	
+	
 /*	
 	if(density > 0.0)
 	{
