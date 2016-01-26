@@ -69,7 +69,8 @@ namespace engine
 
 			glGetShaderInfoLog(shaderHandle, maxLogLen, &logLen, logMsg);
 
-			printf("Shader compilation log: %s\n", logMsg);
+			if (logLen > 0)
+				printf("Shader compilation log: %s\n", logMsg);
 
 
 			return shaderHandle;
