@@ -73,11 +73,11 @@ namespace engine
 				}
 				if (glfwGetKey(_window, GLFW_KEY_N))
 				{
-					_currentPlayer->transform().Rotate(0.5f, 0.0f, 1.0f, 0.0f);
+					_currentPlayer->transform().Rotate(2.0f, 0.0f, 1.0f, 0.0f);
 				}
 				if (glfwGetKey(_window, GLFW_KEY_M))
 				{
-					_currentPlayer->transform().Rotate(-0.5f, 0.0f, 1.0f, 0.0f);
+					_currentPlayer->transform().Rotate(-2.0f, 0.0f, 1.0f, 0.0f);
 				}
 				
 			}
