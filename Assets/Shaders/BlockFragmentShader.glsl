@@ -18,7 +18,7 @@ void main()
 	vec4 fresnelColor = vec4(0.10, 0.76, 1.00, 1.0);
 	vec3 lightDir = vec3(0, -1.0, 0);
 	vec3 eyeDir = (modelToWorld * pos).xyz - eyePos;
-	vec4 worldNormal = modelToWorld * vec4(normal, 0.0);
+	vec3 worldNormal = normalize((modelToWorld * vec4(normal, 0.0)).xyz);
 
 	/*
 	float fZero = 0.9510;
@@ -29,9 +29,9 @@ void main()
 	float fresnel = exp+fZero*(1.0-exp);
 	*/
 
-	float fresnel = 1 - clamp(abs(dot(normalize(worldNormal.xyz), normalize(eyeDir))), 0, 1);
-	float diffuse = clamp(abs(dot(normalize(lightDir), normalize(worldNormal.xyz))), 0, 1);
+	float fresnel = 1 - clamp(abs(dot(worldNormal, normalize(eyeDir))), 0, 1);
+	float diffuse = clamp(abs(dot(lightDir, worldNormal)), 0, 1);
 	gl_FragColor = pow(fresnel, 1.5) * fresnelColor + ambient + diffuse * diffuseColor;
 
-	gl_FragColor.a = 0.1;
+	//gl_FragColor.a = 0.1;
 }

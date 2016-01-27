@@ -64,10 +64,27 @@ void corners_to_point(in int point1, in int point2, out vec4 position)
 	//position = vec4((pPos[point1].x + pPos[point2].x)*0.5, (pPos[point1].y + pPos[point2].y)*0.5, (pPos[point1].z + pPos[point2].z)*0.5, 1.0);
 }
 
+uniform ivec2 edge_to_point_table[12] = {
+	ivec2(0, 1),
+	ivec2(1, 2),
+	ivec2(2, 3),
+	ivec2(3, 0),
+	ivec2(4, 5),
+	ivec2(5, 6),
+	ivec2(6, 7),
+	ivec2(7, 4),
+	ivec2(4, 0),
+	ivec2(1, 5),
+	ivec2(2, 6),
+	ivec2(3, 7)
+};
+
 void edge_to_point(in uint edge, out vec4 position)
 {	
 	position = vec4(0.0, 0.0, 0.0, 0.0);
-
+	ivec2 p = edge_to_point_table[edge];
+	corners_to_point(p.x, p.y, position);
+	/*
 	if(edge == 0)
 	{
 		corners_to_point(0,1, position);
@@ -115,7 +132,7 @@ void edge_to_point(in uint edge, out vec4 position)
 	if(edge == 11)
 	{
 		corners_to_point(3,7, position);
-	}
+	}*/
 }
 
 
