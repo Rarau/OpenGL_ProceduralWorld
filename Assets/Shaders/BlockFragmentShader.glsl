@@ -16,7 +16,7 @@ void main()
 	vec4 ambient = vec4(0.015, 0.015, 0.015, 1.0);
 	vec4 diffuseColor = vec4(0.16, 0.31, 1.00, 1.0);
 	vec4 fresnelColor = vec4(0.10, 0.76, 1.00, 1.0);
-	vec3 lightDir = vec3(0.5, 0.5, 0.5);
+	vec3 lightDir = vec3(0, -1.0, 0);
 	vec3 eyeDir = (modelToWorld * pos).xyz - eyePos;
 	vec4 worldNormal = modelToWorld * vec4(normal, 0.0);
 
@@ -33,4 +33,5 @@ void main()
 	float diffuse = clamp(abs(dot(normalize(lightDir), normalize(worldNormal.xyz))), 0, 1);
 	gl_FragColor = pow(fresnel, 1.5) * fresnelColor + ambient + diffuse * diffuseColor;
 
+	gl_FragColor.a = 0.1;
 }
