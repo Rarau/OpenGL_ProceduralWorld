@@ -46,7 +46,9 @@ namespace engine
 				exit(EXIT_FAILURE);
 			}			
 
-			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			glClearColor(0, 0, 0, 0);
+
 
 			// set the camera projection
 			
@@ -118,7 +120,6 @@ namespace engine
 		void Render(std::vector<Entity*> *entityArray)
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);			
-
 			for (std::vector<Entity*>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
 			{
 				Entity *entity = *iterator;

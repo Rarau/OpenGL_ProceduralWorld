@@ -123,7 +123,7 @@ void main()
 	float density =  0.7 + pos.y + 0.05251 * sin(time + 3.0 * pos.x) + 0.05251 * sin(time + 3.0 * pos.z);
 	density += 0.0251 * sin(time + 7.0 * pos.x) + 0.0251 * sin(time + 7.0 * pos.z);
 	density += 0.15 * snoise(vec3(pos.x + time * 0.25, pos.y, pos.z));
-	density += 1.25 * snoise(0.75 * vec3(pos.x, pos.y, pos.z));
+	//density += 1.25 * snoise(0.75 * vec3(pos.x, pos.y, pos.z));
 
 	//density -= pos.y;
 	gl_FragColor.r = density;// > 0.1 ? 1.0 : -1.0;

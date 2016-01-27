@@ -7,10 +7,14 @@ namespace engine
 
 		Entity *_currentPlayer;
 		GLFWwindow *_window;
+		double mouseX;
+		double mouseY;
+		double prevMouseX;
+		double prevMouseY;
 
 		PlayerInputSystem() : _window(glfwGetCurrentContext())
 		{
-
+			mouseX = mouseY = prevMouseX = prevMouseY = 0.0;
 		}
 
 		~PlayerInputSystem()
@@ -47,6 +51,8 @@ namespace engine
 			// TO-DO: We should call the entity setVelocity() method instead of moving directly.
 			if (_currentPlayer != nullptr && glfwGetInputMode(glfwGetCurrentContext(), GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
 			{
+				glfwGetCursorPos(_window, &mouseX, &mouseY);
+
 				if (glfwGetKey(_window, GLFW_KEY_W))
 				{
 					_currentPlayer->transform().Translate(_currentPlayer->transform().forward() * 0.03f);
@@ -80,6 +86,17 @@ namespace engine
 					_currentPlayer->transform().Rotate(-2.0f, 0.0f, 1.0f, 0.0f);
 				}
 				
+				//_currentPlayer->transform().Rotate(-0.1f * (mouseX - prevMouseX), 0.0f, 1.0f, 0.0f);
+				Vector3 playerRight = Vector4(1.0f, 0.0f, 0.0f, 0.0f) * _currentPlayer->transform().Inverse();
+				Vector3 playerUp = Vector4(0.0f, 1.0f, 0.0f, 0.0f) * _currentPlayer->transform().Inverse();
+
+				_currentPlayer->transform().Rotate(0.1f * (mouseX - prevMouseX), playerUp.x(), playerUp.y(), playerUp.z());
+				//_currentPlayer->transform().Rotate(-0.1f * (mouseY - prevMouseY), playerRight.x(), playerRight.y(), playerRight.z());
+
+				_currentPlayer->transform().Rotate(0.1f * (mouseY - prevMouseY), 1.0f, 0.0f, 0.0f);
+
+				prevMouseX = mouseX;
+				prevMouseY = mouseY;
 			}
 		}
 
