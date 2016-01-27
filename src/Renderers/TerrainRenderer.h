@@ -141,11 +141,11 @@ namespace engine
 		{
 			time += 1.0f / 33.0f;
 
-			for (int k = -1; k < 1; k++)
+			for (int k = -4; k < 4; k++)
 			{
 				for (int j = -2; j < 2; j++)
 				{
-					for (int i = -2; i < 2; i++)
+					for (int i = -4; i < 4; i++)
 					{
 
 						// FIRST PASS - Sample density function in a 3D texture
