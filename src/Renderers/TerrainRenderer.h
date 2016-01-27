@@ -242,6 +242,10 @@ namespace engine
 
 						// send the model-view-projection matrix to the shader
 						glUniformMatrix4fv(_blockShader->get_uModelToProjection(), 1, GL_FALSE, modelViewProj.data());
+						glUniformMatrix4fv(7, 1, GL_FALSE, modelToWorld.data());
+						Vector3 camPos = _currentCamera->transform().getPosition();
+						glUniform3f(8, camPos.x(), camPos.y(), camPos.z());
+
 
 						// enable block vertex buffer
 						glBindBuffer(GL_ARRAY_BUFFER, _blockVertexBufferID);

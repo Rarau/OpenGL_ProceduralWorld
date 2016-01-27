@@ -9,6 +9,7 @@ out fData
 {
     vec3 normal;
     vec4 vColor;
+	vec4 pos;
 }frag;   
 
 // texture array with density function values
@@ -282,12 +283,15 @@ void main()
 		//faceNormal = vec3(1);
 		gl_Position = uModelToProjection*finalTriangle1[0];
 		frag.normal = faceNormal;
+		frag.pos = finalTriangle1[0];
 		EmitVertex();
 		gl_Position = uModelToProjection*finalTriangle1[1];
 		frag.normal = faceNormal;
+		frag.pos = finalTriangle1[0];
 		EmitVertex();
 		gl_Position = uModelToProjection*finalTriangle1[2];
 		frag.normal = faceNormal;
+		frag.pos = finalTriangle1[0];
 		EmitVertex();  
 		
 		EndPrimitive();
@@ -300,12 +304,15 @@ void main()
 
 			gl_Position = uModelToProjection*finalTriangle2[0];
 			frag.normal = faceNormal;
+			frag.pos = finalTriangle2[0];
 			EmitVertex();
 			gl_Position = uModelToProjection*finalTriangle2[1];
 			frag.normal = faceNormal;
+			frag.pos = finalTriangle2[1];
 			EmitVertex();
 			gl_Position = uModelToProjection*finalTriangle2[2];
 			frag.normal = faceNormal;
+			frag.pos = finalTriangle2[2];
 			EmitVertex();  
 			
 			EndPrimitive();
@@ -318,12 +325,15 @@ void main()
 
 			gl_Position = uModelToProjection*finalTriangle3[0];
 			frag.normal = faceNormal;
+			frag.pos = finalTriangle3[0];
 			EmitVertex();
 			gl_Position = uModelToProjection*finalTriangle3[1];
 			frag.normal = faceNormal;
+			frag.pos = finalTriangle3[1];
 			EmitVertex();
 			gl_Position = uModelToProjection*finalTriangle3[2];
 			frag.normal = faceNormal;
+			frag.pos = finalTriangle3[2];
 			EmitVertex();   
 				
 				EndPrimitive();
@@ -336,12 +346,15 @@ void main()
 
 					gl_Position = uModelToProjection*finalTriangle4[0];
 					frag.normal = faceNormal;
+					frag.pos = finalTriangle4[0];
 					EmitVertex();
 					gl_Position = uModelToProjection*finalTriangle4[1];
 					frag.normal = faceNormal;
+					frag.pos = finalTriangle4[1];
 					EmitVertex();
 					gl_Position = uModelToProjection*finalTriangle4[2];
 					frag.normal = faceNormal;
+					frag.pos = finalTriangle4[2];
 					EmitVertex();  
 					
 					EndPrimitive();
@@ -354,12 +367,15 @@ void main()
 
 						gl_Position = uModelToProjection*finalTriangle5[0];
 						frag.normal = faceNormal;
+						frag.pos = finalTriangle5[0];
 						EmitVertex();
 						gl_Position = uModelToProjection*finalTriangle5[1];
 						frag.normal = faceNormal;
+						frag.pos = finalTriangle5[1];
 						EmitVertex();
 						gl_Position = uModelToProjection*finalTriangle5[2];
 						frag.normal = faceNormal;
+						frag.pos = finalTriangle5[2];
 						EmitVertex();  
 						
 						EndPrimitive();
