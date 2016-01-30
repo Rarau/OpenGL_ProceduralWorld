@@ -20,8 +20,13 @@ namespace engine
 		Entity *_currentCamera;
 		ViewParameters *_viewParameters;
 
+		TwBar *myBar;
+		int testVar = 0;
+
 		RenderSystem()
 		{
+			initTweakBars();
+
 			//OpenGL initialization code
 			glfwInit();
 
@@ -69,6 +74,8 @@ namespace engine
 			_viewParameters->zFar = 1000.0f;
 			
 			glEnable(GL_DEPTH_TEST);
+
+			
 			
 		}
 
@@ -77,6 +84,20 @@ namespace engine
 			GLFWwindow *window = glfwGetCurrentContext();
 			glfwDestroyWindow(window);
 			glfwTerminate();
+		}
+
+		void initTweakBars()
+		{
+			TwWindowSize(1280, 720);
+
+			int success = TwInit(TW_OPENGL, NULL);
+
+			myBar = TwNewBar("Info");
+
+			TwAddVarRO(myBar, "Tree Id", TW_TYPE_INT8, &(testVar), " label='Test field ' ");
+			
+
+			TwDefine(" GLOBAL help='Parameters' "); // Message added to the help bar.
 		}
 
 	public:
