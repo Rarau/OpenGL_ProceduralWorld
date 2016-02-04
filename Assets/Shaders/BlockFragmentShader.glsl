@@ -16,7 +16,7 @@ void main()
 	vec4 ambient = vec4(0.015, 0.015, 0.015, 1.0);
 	vec4 diffuseColor = vec4(0.16, 0.31, 1.00, 1.0);
 	vec4 fresnelColor = vec4(0.10, 0.76, 1.00, 1.0);
-	vec3 lightDir = vec3(0, -1.0, 0);
+	vec3 lightDir = vec3(-1.0, -1.0, 0.10);
 	vec3 eyeDir = (modelToWorld * pos).xyz - eyePos;
 	vec3 worldNormal = normalize((modelToWorld * vec4(normal, 0.0)).xyz);
 

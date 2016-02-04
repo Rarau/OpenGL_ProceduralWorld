@@ -273,7 +273,7 @@ void main()
 	//if(true)
 	//if(table[62] == 10)
 	//if(voxelCase != 0 && voxelCase != 255)
-	if(numpolys > 0)
+	//if(numpolys > 0)
 	{	
 		frag.vColor = face_color;
 		// for(uint j = 0; j < numpolys; j++)
@@ -313,7 +313,7 @@ void main()
 		
 		EndPrimitive();
 		
-		if(numpolys > 1)
+		//if(numpolys > 1)
 		{
 			// emit second triangle
 			faceNormal = -cross((finalTriangle2[0].xyz - finalTriangle2[1].xyz), (finalTriangle2[0].xyz - finalTriangle2[2].xyz));
@@ -334,7 +334,7 @@ void main()
 			
 			EndPrimitive();
 			
-			if(numpolys > 2)
+			//if(numpolys > 2)
 			{
 				// emit third triangle
 			faceNormal = -cross((finalTriangle3[0].xyz - finalTriangle3[1].xyz), (finalTriangle3[0].xyz - finalTriangle3[2].xyz));
@@ -355,7 +355,7 @@ void main()
 				
 				EndPrimitive();
 				
-				if(numpolys > 3)
+				//if(numpolys > 3)
 				{
 					// emit fourth triangle
 					faceNormal = -cross((finalTriangle4[0].xyz - finalTriangle4[1].xyz), (finalTriangle4[0].xyz - finalTriangle4[2].xyz));
@@ -376,7 +376,7 @@ void main()
 					
 					EndPrimitive();
 					
-					if(numpolys > 4)
+					//if(numpolys > 4)
 					{
 						// emit fifth triangle
 						faceNormal = -cross((finalTriangle5[0].xyz - finalTriangle5[1].xyz), (finalTriangle5[0].xyz - finalTriangle5[2].xyz));
