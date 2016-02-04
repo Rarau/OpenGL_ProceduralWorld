@@ -11,6 +11,7 @@ namespace engine
 #include "..\Dependencies\glew\glew.h"
 #include "..\Dependencies\glfw\glfw3.h"
 #include "..\Dependencies\freeglut\freeglut.h"
+#include "..\Dependencies\AntTweakBar\AntTweakBar.h"
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
