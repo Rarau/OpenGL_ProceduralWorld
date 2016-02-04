@@ -141,7 +141,9 @@ namespace engine
 
 		void Render(Entity* entity)
 		{
-			time += 1.0f / 33.0f;
+			time += (1.0f / 33.0f) * UISystem::GetUISystem().timeScale * 0.1f;
+			noiseAmplitude = UISystem::GetUISystem().amplitude;
+			//printf("Amplitude %f\n", UISystem::GetUISystem().diffuseColor[0]);
 
 			for (int k = -2; k < 2; k++)
 			{
@@ -160,7 +162,6 @@ namespace engine
 						glUniform1f(_functionEvaluatorShader->get_uInstanceSeparation(), 0.03f);
 						glUniform1f(6, time);
 						glUniform1f(7, noiseAmplitude);
-
 
 						// bind 3d texture buffer
 						glBindFramebuffer(GL_FRAMEBUFFER, frameBufferObjectId);
@@ -249,6 +250,7 @@ namespace engine
 						glUniformMatrix4fv(7, 1, GL_FALSE, modelToWorld.data());
 						Vector3 camPos = _currentCamera->transform().getPosition();
 						glUniform3f(8, camPos.x(), camPos.y(), camPos.z());
+						glUniform3f(14, UISystem::GetUISystem().diffuseColor[0], UISystem::GetUISystem().diffuseColor[1], UISystem::GetUISystem().diffuseColor[2]);
 
 
 						// enable block vertex buffer

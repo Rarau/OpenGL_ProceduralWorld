@@ -1,6 +1,5 @@
 #pragma once
 #include "Renderers/TerrainRenderer.h"
-
 namespace engine
 {	
 	struct ViewParameters
@@ -19,9 +18,7 @@ namespace engine
 		GLFWwindow *_window;
 		Entity *_currentCamera;
 		ViewParameters *_viewParameters;
-		
-		UISystem a;
-		
+				
 		TwBar *myBar;
 		int testVar = 0;
 
@@ -76,8 +73,6 @@ namespace engine
 			
 			glEnable(GL_DEPTH_TEST);
 
-			initTweakBars();
-
 			
 		}
 
@@ -87,24 +82,6 @@ namespace engine
 			glfwDestroyWindow(window);
 			glfwTerminate();
 		}
-		int randomness = 0;
-
-
-		void initTweakBars()
-		{
-			TwWindowSize(1280, 720);
-
-			int success = TwInit(TW_OPENGL, NULL);
-			myBar = TwNewBar("Info");
-
-			TwAddVarRO(myBar, "Tree Id", TW_TYPE_INT8, &(testVar), " label='Test field ' ");
-			TwAddVarRW(myBar, "Whatever", TW_TYPE_INT32, &randomness, "label='Test field 2'");
-
-			TwDefine(" GLOBAL help='Parameters' "); // Message added to the help bar.
-			
-		}
-
-
 
 
 	public:
@@ -156,7 +133,7 @@ namespace engine
 				entity->Render();				
 			}
 			
-			TwDraw();
+			UISystem::GetUISystem().Render();
 
 			glfwSwapBuffers(_window);
 		}
