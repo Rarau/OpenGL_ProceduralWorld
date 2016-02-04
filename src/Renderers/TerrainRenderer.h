@@ -61,14 +61,16 @@ namespace engine
 
 		Entity* _currentCamera;
 
+
 		float time;
 
 	public:
+		float noiseAmplitude;
 
 		TerrainRenderer(Entity* camera)
 		{
 			time = 0.0f;
-
+			noiseAmplitude = 1.0f;
 			_currentCamera = camera;
 
 			// Create hard-coded the quad vertex buffer
@@ -141,11 +143,11 @@ namespace engine
 		{
 			time += 1.0f / 33.0f;
 
-			for (int k = -4; k < 4; k++)
+			for (int k = -2; k < 2; k++)
 			{
 				for (int j = -2; j < 2; j++)
 				{
-					for (int i = -4; i < 4; i++)
+					for (int i = -2; i < 2; i++)
 					{
 
 						// FIRST PASS - Sample density function in a 3D texture
@@ -157,6 +159,8 @@ namespace engine
 						// TO-DO: hardcoded 0.03, it should be the block side length/32
 						glUniform1f(_functionEvaluatorShader->get_uInstanceSeparation(), 0.03f);
 						glUniform1f(6, time);
+						glUniform1f(7, noiseAmplitude);
+
 
 						// bind 3d texture buffer
 						glBindFramebuffer(GL_FRAMEBUFFER, frameBufferObjectId);

@@ -38,6 +38,7 @@
     <ClInclude Include="src\Vector4.h" />
     <ClInclude Include="src\VertexBuffer.h" />
     <ClInclude Include="src\VertexData.h" />
+    <ClInclude Include="UISystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />

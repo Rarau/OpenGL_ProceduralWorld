@@ -19,13 +19,14 @@ namespace engine
 		GLFWwindow *_window;
 		Entity *_currentCamera;
 		ViewParameters *_viewParameters;
-
+		
+		UISystem a;
+		
 		TwBar *myBar;
 		int testVar = 0;
 
 		RenderSystem()
 		{
-			initTweakBars();
 
 			//OpenGL initialization code
 			glfwInit();
@@ -75,7 +76,8 @@ namespace engine
 			
 			glEnable(GL_DEPTH_TEST);
 
-			
+			initTweakBars();
+
 			
 		}
 
@@ -85,20 +87,25 @@ namespace engine
 			glfwDestroyWindow(window);
 			glfwTerminate();
 		}
+		int randomness = 0;
+
 
 		void initTweakBars()
 		{
 			TwWindowSize(1280, 720);
 
 			int success = TwInit(TW_OPENGL, NULL);
-
 			myBar = TwNewBar("Info");
 
 			TwAddVarRO(myBar, "Tree Id", TW_TYPE_INT8, &(testVar), " label='Test field ' ");
-			
+			TwAddVarRW(myBar, "Whatever", TW_TYPE_INT32, &randomness, "label='Test field 2'");
 
 			TwDefine(" GLOBAL help='Parameters' "); // Message added to the help bar.
+			
 		}
+
+
+
 
 	public:
 
@@ -140,12 +147,16 @@ namespace engine
 
 		void Render(std::vector<Entity*> *entityArray)
 		{
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);			
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		
+
+			
 			for (std::vector<Entity*>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
 			{
 				Entity *entity = *iterator;
 				entity->Render();				
 			}
+			
+			TwDraw();
 
 			glfwSwapBuffers(_window);
 		}

@@ -37,6 +37,12 @@ namespace engine
 					glfwSetInputMode(glfwGetCurrentContext(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 				}
 			}
+			TwEventKeyGLFW(key, action);
+		}
+
+		void mouseCallBack(GLFWwindow *window, int button, int action, int mods) {
+			// Notify AntTweakBar about button events
+			TwEventMouseButtonGLFW(button, action);
 		}
 
 	public:
@@ -48,10 +54,11 @@ namespace engine
 
 		void Update()
 		{
+			glfwGetCursorPos(_window, &mouseX, &mouseY);
+			TwMouseMotion(mouseX, mouseY);
 			// TO-DO: We should call the entity setVelocity() method instead of moving directly.
 			if (_currentPlayer != nullptr && glfwGetInputMode(glfwGetCurrentContext(), GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
 			{
-				glfwGetCursorPos(_window, &mouseX, &mouseY);
 
 				if (glfwGetKey(_window, GLFW_KEY_W))
 				{
@@ -108,13 +115,28 @@ namespace engine
 			playerInputSystem->keyCallBack(window, key, scancode, action, mods);
 		}
 
+		static void mouseCallBackFun(GLFWwindow *window, int button, int action, int mods)
+		{
+			PlayerInputSystem *playerInputSystem = &GetPlayerInputSystem();
+			playerInputSystem->mouseCallBack(window, button, action, mods);
+		}
+
+		static void charCallBackFun(GLFWwindow *window, int character)
+		{
+			TwEventCharGLFW(character, 1);
+		}
+
 		static PlayerInputSystem& GetPlayerInputSystem()
 		{
 			static PlayerInputSystem *playerInputSystem = nullptr;
 			if (playerInputSystem == nullptr)
 			{
+				GLFWwindow *window = glfwGetCurrentContext();
 				// bind the keyPress to our static function
-				glfwSetKeyCallback(glfwGetCurrentContext(), *keyCallBackFun);
+				glfwSetKeyCallback(window, *keyCallBackFun);
+
+				glfwSetMouseButtonCallback(window, *mouseCallBackFun);
+
 				// disable the cursor
 				glfwSetInputMode(glfwGetCurrentContext(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 

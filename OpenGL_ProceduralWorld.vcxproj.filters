@@ -96,6 +96,9 @@
     <ClInclude Include="src\RendererAux.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="UISystem.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
