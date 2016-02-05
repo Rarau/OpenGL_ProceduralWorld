@@ -161,7 +161,10 @@ namespace engine
 						// TO-DO: hardcoded 0.03, it should be the block side length/32
 						glUniform1f(_functionEvaluatorShader->get_uInstanceSeparation(), 0.03f);
 						glUniform1f(6, time);
-						glUniform1f(7, noiseAmplitude);
+						glUniform1f(7, noiseAmplitude * 0.1f);
+						glUniform1f(8, UISystem::GetUISystem().amplitude2 * 0.1f);
+						glUniform1f(9, UISystem::GetUISystem().amplitude3 * 0.1f);
+
 
 						// bind 3d texture buffer
 						glBindFramebuffer(GL_FRAMEBUFFER, frameBufferObjectId);
@@ -250,8 +253,11 @@ namespace engine
 						glUniformMatrix4fv(7, 1, GL_FALSE, modelToWorld.data());
 						Vector3 camPos = _currentCamera->transform().getPosition();
 						glUniform3f(8, camPos.x(), camPos.y(), camPos.z());
-						glUniform3f(14, UISystem::GetUISystem().diffuseColor[0], UISystem::GetUISystem().diffuseColor[1], UISystem::GetUISystem().diffuseColor[2]);
-
+						glUniform3f(9, UISystem::GetUISystem().diffuseColor[0], UISystem::GetUISystem().diffuseColor[1], UISystem::GetUISystem().diffuseColor[2]);
+						glUniform3f(10, UISystem::GetUISystem().lightDirection[0], UISystem::GetUISystem().lightDirection[1], UISystem::GetUISystem().lightDirection[2]);
+						glUniform3f(11, UISystem::GetUISystem().ambientColor[0], UISystem::GetUISystem().ambientColor[1], UISystem::GetUISystem().ambientColor[2]);
+						glUniform3f(12, UISystem::GetUISystem().fresnelColor[0], UISystem::GetUISystem().fresnelColor[1], UISystem::GetUISystem().fresnelColor[2]);
+						glUniform1f(13, UISystem::GetUISystem().fresnelPower * 0.01f);
 
 						// enable block vertex buffer
 						glBindBuffer(GL_ARRAY_BUFFER, _blockVertexBufferID);
