@@ -72,7 +72,7 @@ namespace engine
 			
 			entity2->SetRotationVelocity(Vector3(0.3f, 0.0f, 0.0f)); 
 			entity2->SetRenderer(_resourceManager->GetRendererArray()->at(1));
-			_children->push_back(entity2);			
+			//_children->push_back(entity2);			
 
 			//TO-DO: this is hardcoded, can't be here -----------------------------------------------------------------------------
 

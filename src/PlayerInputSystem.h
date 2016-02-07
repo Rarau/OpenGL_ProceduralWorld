@@ -54,11 +54,15 @@ namespace engine
 
 		void Update()
 		{
-			glfwGetCursorPos(_window, &mouseX, &mouseY);
-			TwMouseMotion(mouseX, mouseY);
+			double mouseX_tw, mouseY_tw;
+			glfwGetCursorPos(_window, &mouseX_tw, &mouseY_tw);
+
+				TwMouseMotion(mouseX_tw, mouseY_tw);
+
 			// TO-DO: We should call the entity setVelocity() method instead of moving directly.
 			if (_currentPlayer != nullptr && glfwGetInputMode(glfwGetCurrentContext(), GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
 			{
+				glfwGetCursorPos(_window, &mouseX, &mouseY);
 
 				if (glfwGetKey(_window, GLFW_KEY_W))
 				{
